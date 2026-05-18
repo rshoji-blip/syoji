@@ -23,8 +23,18 @@ export class EnemyManager {
 
   spawnEnemy(type: EnemyType, scaleFactor: number = 1): Enemy {
     const config = ENEMY_CONFIGS[type]
-    const x = Phaser.Math.Between(config.size + 10, GAME_WIDTH - config.size - 10)
-    const y = GAME_CONSTANTS.ENEMY_SPAWN_Y
+    let x: number
+    let y: number
+
+    if (config.movePattern === 'sidewind') {
+      // 鉄モグラ: 画面の左右どちらかから出現
+      const fromLeft = Math.random() < 0.5
+      x = fromLeft ? -(config.size + 5) : GAME_WIDTH + config.size + 5
+      y = Phaser.Math.Between(130, 520)
+    } else {
+      x = Phaser.Math.Between(config.size + 10, GAME_WIDTH - config.size - 10)
+      y = GAME_CONSTANTS.ENEMY_SPAWN_Y
+    }
 
     const enemy = new Enemy(this.scene, x, y, config, scaleFactor, this.bulletPool)
     this.enemies.push(enemy)
@@ -40,8 +50,11 @@ export class EnemyManager {
       }
       enemy.update(delta, playerX, playerY)
 
-      // 画面下に抜けたら削除
-      if (enemy.y > 900) {
+      // 画面外に抜けたら削除 (sidewind は左右判定)
+      const outOfBounds = enemy.config.movePattern === 'sidewind'
+        ? enemy.x < -(enemy.config.size + 60) || enemy.x > GAME_WIDTH + enemy.config.size + 60
+        : enemy.y > 920
+      if (outOfBounds) {
         enemy.die()
         this.enemies.splice(i, 1)
       }

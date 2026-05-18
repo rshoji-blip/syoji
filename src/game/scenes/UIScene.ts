@@ -14,6 +14,7 @@ export class UIScene extends Phaser.Scene {
   private waveText!: Phaser.GameObjects.Text
   private killText!: Phaser.GameObjects.Text
   private muteBtn!: Phaser.GameObjects.Text
+  private comboText!: Phaser.GameObjects.Text
 
   // ── ボスHPバー ─────────────────────────────────────────────
   private bossBarBg!: Phaser.GameObjects.Rectangle
@@ -103,6 +104,18 @@ export class UIScene extends Phaser.Scene {
 
     // 初期状態は非表示
     this.setBossBarVisible(false)
+
+    // ── コンボ表示 ────────────────────────────────────────────
+    this.comboText = this.add
+      .text(GAME_WIDTH / 2, 50, '', {
+        fontSize: '14px',
+        fontStyle: 'bold',
+        color: '#ffdd00',
+        stroke: '#000000',
+        strokeThickness: 3,
+      })
+      .setOrigin(0.5, 0.5)
+      .setVisible(false)
   }
 
   private setBossBarVisible(visible: boolean): void {
@@ -114,7 +127,7 @@ export class UIScene extends Phaser.Scene {
   }
 
   update(): void {
-    const { playerStats, score, currentWave, killCount, bossState } = useGameStore.getState()
+    const { playerStats, score, currentWave, killCount, bossState, comboCount, comboMultiplier } = useGameStore.getState()
 
     // ── プレイヤーHP更新 ──────────────────────────────────────
     const hpRatio = Math.max(0, playerStats.hp / playerStats.maxHp)
@@ -153,6 +166,20 @@ export class UIScene extends Phaser.Scene {
       )
     } else if (this.bossVisible) {
       this.setBossBarVisible(false)
+    }
+
+    // ── コンボ表示 ────────────────────────────────────────────
+    if (comboCount >= 3) {
+      const color = comboMultiplier >= 3.0 ? '#ff2200'
+        : comboMultiplier >= 2.0 ? '#ff6600'
+        : comboMultiplier >= 1.5 ? '#ffaa00'
+        : '#ffdd00'
+      this.comboText
+        .setText(`${comboCount} COMBO  ×${comboMultiplier.toFixed(1)}`)
+        .setColor(color)
+        .setVisible(true)
+    } else {
+      this.comboText.setVisible(false)
     }
   }
 }

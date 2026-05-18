@@ -8,6 +8,7 @@ import { WaveSystem } from '../systems/WaveSystem'
 import { ScrollSystem } from '../systems/ScrollSystem'
 import { EffectSystem } from '../systems/EffectSystem'
 import { SkillSystem } from '../systems/SkillSystem'
+import { ComboSystem } from '../systems/ComboSystem'
 import { GAME_CONSTANTS } from '../GameConfig'
 import { useGameStore } from '../../store/gameStore'
 import { soundSystem } from '../systems/SoundSystem'
@@ -20,6 +21,7 @@ export class GameScene extends Phaser.Scene {
   private waveSystem!: WaveSystem
   private scrollSystem!: ScrollSystem
   private effectSystem!: EffectSystem
+  private combo!: ComboSystem
   private gameOver: boolean = false
   private paused: boolean = false
 
@@ -42,6 +44,7 @@ export class GameScene extends Phaser.Scene {
     // システム初期化
     this.scrollSystem = new ScrollSystem(this)
     this.effectSystem = new EffectSystem(this)
+    this.combo = new ComboSystem()
     this.bulletPool = new BulletPool(this)
     this.enemyManager = new EnemyManager(this, this.bulletPool)
 
@@ -126,13 +129,21 @@ export class GameScene extends Phaser.Scene {
 
           const died = this.enemyManager.damageEnemy(enemy, bullet.damage)
           if (died) {
-            store.addScore(enemy.config.score * Math.ceil(store.currentWave * 0.5))
+            const comboResult = this.combo.onKill(this.time.now)
+            store.setCombo(comboResult.combo, comboResult.multiplier)
+            const baseScore = enemy.config.score * Math.ceil(store.currentWave * 0.5)
+            store.addScore(Math.round(baseScore * comboResult.multiplier))
+
             if (this.waveSystem.isBossWave()) {
               this.effectSystem.bigExplosion(enemy.x, enemy.y)
               soundSystem.bossDie()
             } else {
               this.effectSystem.explodeEnemy(enemy.x, enemy.y, enemy.config.color)
               soundSystem.enemyDie()
+            }
+
+            if (comboResult.isNewMilestone) {
+              this.spawnComboMilestoneText(enemy.x, enemy.y, comboResult)
             }
           }
 
@@ -183,7 +194,38 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
+  private spawnComboMilestoneText(
+    x: number,
+    y: number,
+    result: { combo: number; multiplier: number }
+  ): void {
+    const color = result.multiplier >= 3.0 ? '#ff2200'
+      : result.multiplier >= 2.0 ? '#ff6600'
+      : result.multiplier >= 1.5 ? '#ffaa00'
+      : '#ffdd00'
+    const label = this.add
+      .text(x, y - 30, `×${result.multiplier.toFixed(1)} COMBO!`, {
+        fontSize: result.multiplier >= 2.0 ? '22px' : '17px',
+        fontStyle: 'bold',
+        color,
+        stroke: '#000',
+        strokeThickness: 3,
+      })
+      .setOrigin(0.5)
+      .setDepth(100)
+    this.tweens.add({
+      targets: label,
+      y: label.y - 50,
+      alpha: 0,
+      duration: 900,
+      ease: 'Power2',
+      onComplete: () => label.destroy(),
+    })
+  }
+
   private onWaveComplete(): void {
+    this.combo.reset()
+    useGameStore.getState().setCombo(0, 1.0)
     this.effectSystem.waveCompleteEffect()
     soundSystem.waveClear()
     useGameStore.getState().addScore(GAME_CONSTANTS.WAVE_CLEAR_BONUS)

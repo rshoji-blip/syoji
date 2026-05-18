@@ -1,4 +1,4 @@
-// 敵エンティティ - 5種の造形 + tankbear 3フェーズボスシステム
+// 敵エンティティ - Crash Bandicoot風カートゥーンアニマルデザイン + tankbear 3フェーズボスシステム
 
 import Phaser from 'phaser'
 import type { EnemyConfig } from '../data/EnemyData'
@@ -6,20 +6,15 @@ import type { BulletPool } from './BulletPool'
 import { useGameStore } from '../../store/gameStore'
 import { GAME_WIDTH } from '../GameConfig'
 
-export class Enemy extends Phaser.GameObjects.Arc {
+export class Enemy extends Phaser.GameObjects.Container {
   config: EnemyConfig
   hp: number
   maxHp: number
   scale_factor: number
 
-  // HPバー (シーンレベル)
-  private hpBar: Phaser.GameObjects.Rectangle
+  private gfx: Phaser.GameObjects.Graphics
   private hpBarBg: Phaser.GameObjects.Rectangle
-
-  // ビジュアル装飾 (シーンレベル、位置を毎フレーム同期)
-  private glowRing!: Phaser.GameObjects.Arc
-  private eyeObjects: Phaser.GameObjects.Arc[] = []
-  private armorRing: Phaser.GameObjects.Arc | null = null
+  private hpBar: Phaser.GameObjects.Rectangle
 
   private bulletPool: BulletPool
   private shootTimer: number = 0
@@ -28,12 +23,11 @@ export class Enemy extends Phaser.GameObjects.Arc {
   private chargeSpeed: number = 0
   private isCharging: boolean = false
 
-  // ── ボスシステム ──────────────────────────────────────────────
   private bossPhase: 1 | 2 | 3 = 1
   private specialTimer: number = 0
   private dashTarget: { x: number; y: number } | null = null
   private isDashing = false
-  private glowTween: Phaser.Tweens.Tween | null = null
+  private pulseTween: Phaser.Tweens.Tween | null = null
 
   constructor(
     scene: Phaser.Scene,
@@ -43,144 +37,358 @@ export class Enemy extends Phaser.GameObjects.Arc {
     scaleFactor: number,
     bulletPool: BulletPool
   ) {
-    super(scene, x, y, config.size, config.color)
+    super(scene, x, y)
     this.config = config
     this.scale_factor = scaleFactor
     this.hp = Math.round(config.hp * scaleFactor)
     this.maxHp = this.hp
     this.bulletPool = bulletPool
+    this.targetX = x
+    this.orbitAngle = Math.random() * Math.PI * 2
+
+    this.gfx = scene.add.graphics()
+    this.add(this.gfx)
+
+    const barW = config.size * 2.4
+    const barY = -(config.size + 14)
+    this.hpBarBg = scene.add.rectangle(0, barY, barW, 4, 0x222222).setOrigin(0.5, 0.5)
+    this.hpBar = scene.add.rectangle(-barW / 2, barY, barW, 4, 0x00ff44).setOrigin(0, 0.5)
+    this.add([this.hpBarBg, this.hpBar])
 
     scene.add.existing(this)
     this.setDepth(5)
 
-    // 共通: HPバー
-    this.hpBarBg = scene.add
-      .rectangle(x, y - config.size - 8, config.size * 2, 4, 0x222222)
-      .setDepth(6)
-    this.hpBar = scene.add
-      .rectangle(x, y - config.size - 8, config.size * 2, 4, 0x00ff44)
-      .setDepth(7)
+    this.drawBody()
 
-    this.targetX = x
-    this.orbitAngle = Math.random() * Math.PI * 2
-
-    // 敵タイプ別のビジュアル構築
-    this.buildVisuals(scene)
+    if (config.type === 'tankbear') {
+      useGameStore.getState().setBossState({ hp: this.hp, maxHp: this.maxHp, phase: 1 })
+      this.startBossPulse()
+    }
   }
 
-  // ── ビジュアル構築 ────────────────────────────────────────────
+  // ── ボディ描画 ─────────────────────────────────────────────────
 
-  private buildVisuals(scene: Phaser.Scene): void {
-    const { type, size, color } = this.config
-
-    switch (type) {
-      case 'mechdog':
-        // 外側グロー (オレンジ)
-        this.glowRing = scene.add
-          .circle(this.x, this.y, size + 6, 0xff6600, 0.18)
-          .setDepth(4)
-        // 赤い目 ×2
-        this.eyeObjects = [
-          scene.add.circle(this.x - 6, this.y - 4, 3, 0xff0000).setDepth(8),
-          scene.add.circle(this.x + 6, this.y - 4, 3, 0xff0000).setDepth(8),
-        ]
-        // メカリング
-        this.armorRing = scene.add
-          .circle(this.x, this.y, size - 4, 0x000000, 0)
-          .setStrokeStyle(2, 0x886644, 0.7)
-          .setDepth(6)
-        break
-
-      case 'dronebat':
-        // 外側グロー (紫)
-        this.glowRing = scene.add
-          .circle(this.x, this.y, size + 8, 0xaa00ff, 0.2)
-          .setDepth(4)
-        // 単眼 (シアン)
-        this.eyeObjects = [
-          scene.add.circle(this.x, this.y - 2, 5, 0x00ffff).setDepth(8),
-          scene.add.circle(this.x, this.y - 2, 2, 0xffffff).setDepth(9),
-        ]
-        // 翼の輝き
-        this.armorRing = scene.add
-          .circle(this.x, this.y, size + 3, 0xaa44ff, 0)
-          .setStrokeStyle(1.5, 0xcc66ff, 0.5)
-          .setDepth(4)
-        // グロー脈動アニメ
-        this.glowTween = scene.tweens.add({
-          targets: this.glowRing,
-          alpha: 0.05,
-          duration: 600,
-          yoyo: true,
-          repeat: -1,
-        })
-        break
-
-      case 'ironbird':
-        // 外側グロー (ブルー)
-        this.glowRing = scene.add
-          .circle(this.x, this.y, size + 7, 0x0066ff, 0.2)
-          .setDepth(4)
-        // 白い目 ×2
-        this.eyeObjects = [
-          scene.add.circle(this.x - 7, this.y - 3, 3, 0xffffff).setDepth(8),
-          scene.add.circle(this.x + 7, this.y - 3, 3, 0xffffff).setDepth(8),
-        ]
-        this.armorRing = scene.add
-          .circle(this.x, this.y, size - 2, 0x000000, 0)
-          .setStrokeStyle(2, 0x4488ff, 0.6)
-          .setDepth(6)
-        break
-
-      case 'tankbear':
-        // ボス: 大きなグロー (最初は銀色)
-        this.glowRing = scene.add
-          .circle(this.x, this.y, size + 18, 0x888888, 0.15)
-          .setDepth(4)
-        // 4つの赤眼
-        this.eyeObjects = [
-          scene.add.circle(this.x - 10, this.y - 8, 4, 0xff0000).setDepth(8),
-          scene.add.circle(this.x + 10, this.y - 8, 4, 0xff0000).setDepth(8),
-          scene.add.circle(this.x - 10, this.y + 5, 4, 0xff3300).setDepth(8),
-          scene.add.circle(this.x + 10, this.y + 5, 4, 0xff3300).setDepth(8),
-        ]
-        // 外装リング
-        this.armorRing = scene.add
-          .circle(this.x, this.y, size + 4, 0x000000, 0)
-          .setStrokeStyle(3, 0x666666, 0.8)
-          .setDepth(6)
-        // ボスHP更新 (ゲームストアに通知)
-        useGameStore.getState().setBossState({ hp: this.hp, maxHp: this.maxHp, phase: 1 })
-        break
-
-      case 'cyberwolf':
-        // 外側グロー (サイバーグリーン)
-        this.glowRing = scene.add
-          .circle(this.x, this.y, size + 9, 0x00ffaa, 0.18)
-          .setDepth(4)
-        // シアン目 ×2
-        this.eyeObjects = [
-          scene.add.circle(this.x - 7, this.y - 5, 3, 0x00ffdd).setDepth(8),
-          scene.add.circle(this.x + 7, this.y - 5, 3, 0x00ffdd).setDepth(8),
-        ]
-        this.armorRing = scene.add
-          .circle(this.x, this.y, size - 3, 0x000000, 0)
-          .setStrokeStyle(2, 0x00ffaa, 0.5)
-          .setDepth(6)
-        this.glowTween = this.scene.tweens.add({
-          targets: this.glowRing,
-          alpha: 0.05,
-          duration: 400,
-          yoyo: true,
-          repeat: -1,
-        })
-        break
-
-      default:
-        this.glowRing = scene.add
-          .circle(this.x, this.y, this.config.size + 6, color, 0.15)
-          .setDepth(4)
+  private drawBody(): void {
+    this.gfx.clear()
+    const s = this.config.size
+    switch (this.config.type) {
+      case 'mechdog':     this.drawMechdog(s); break
+      case 'dronebat':    this.drawDronebat(s); break
+      case 'ironbird':    this.drawIronbird(s); break
+      case 'tankbear':    this.drawTankbear(s, 1); break
+      case 'cyberwolf':   this.drawCyberwolf(s); break
+      case 'ironmole':    this.drawIronmole(s); break
+      case 'mechraccoon': this.drawMechraccoon(s); break
     }
+  }
+
+  // ── サイボーグ犬 (mechdog) ────────────────────────────────────
+
+  private drawMechdog(s: number): void {
+    const g = this.gfx
+    // 垂れ耳
+    g.fillStyle(0xc87941, 1)
+    g.fillEllipse(-s * 0.72, -s * 0.5, s * 0.65, s * 1.1)
+    g.fillEllipse(s * 0.72, -s * 0.5, s * 0.65, s * 1.1)
+    // ボディ
+    g.fillStyle(0xc87941, 1)
+    g.fillCircle(0, 2, s)
+    // お腹 (ベージュ)
+    g.fillStyle(0xe8b87a, 1)
+    g.fillCircle(0, s * 0.3, s * 0.62)
+    // 鼻先
+    g.fillStyle(0x221100, 1)
+    g.fillCircle(0, s * 0.38, s * 0.18)
+    // 赤い機械眼
+    g.fillStyle(0xff2200, 1)
+    g.fillCircle(-s * 0.37, -s * 0.12, s * 0.2)
+    g.fillCircle(s * 0.37, -s * 0.12, s * 0.2)
+    // 眼のハイライト
+    g.fillStyle(0xffffff, 0.85)
+    g.fillCircle(-s * 0.31, -s * 0.19, s * 0.08)
+    g.fillCircle(s * 0.44, -s * 0.19, s * 0.08)
+    // メカ首輪
+    g.fillStyle(0x554433, 1)
+    g.fillRect(-s * 0.55, s * 0.56, s * 1.1, s * 0.24)
+    g.lineStyle(1.5, 0x887766, 1)
+    g.strokeRect(-s * 0.55, s * 0.56, s * 1.1, s * 0.24)
+    // 輪郭
+    g.lineStyle(2, 0xa06030, 0.7)
+    g.strokeCircle(0, 2, s)
+  }
+
+  // ── ドローンコウモリ (dronebat) ───────────────────────────────
+
+  private drawDronebat(s: number): void {
+    const g = this.gfx
+    // 翼
+    g.fillStyle(0x5511aa, 0.9)
+    g.fillTriangle(-s * 2.3, s * 0.3, -s * 0.5, -s * 0.7, -s * 0.3, s * 0.6)
+    g.fillTriangle(s * 2.3, s * 0.3, s * 0.5, -s * 0.7, s * 0.3, s * 0.6)
+    // 翼の脈
+    g.lineStyle(1, 0xaa55ff, 0.5)
+    g.lineBetween(-s * 1.6, s * 0.1, -s * 0.45, -s * 0.3)
+    g.lineBetween(s * 1.6, s * 0.1, s * 0.45, -s * 0.3)
+    // ボディ
+    g.fillStyle(0x7733aa, 1)
+    g.fillCircle(0, 0, s)
+    // お腹
+    g.fillStyle(0xaa55cc, 1)
+    g.fillCircle(0, s * 0.2, s * 0.55)
+    // 耳 (コウモリ耳)
+    g.fillStyle(0x7733aa, 1)
+    g.fillTriangle(-s * 0.48, -s * 0.9, -s * 0.72, -s * 1.55, -s * 0.18, -s * 0.88)
+    g.fillTriangle(s * 0.48, -s * 0.9, s * 0.72, -s * 1.55, s * 0.18, -s * 0.88)
+    // 大きな黄色の目
+    g.fillStyle(0xffee00, 1)
+    g.fillCircle(-s * 0.33, -s * 0.1, s * 0.28)
+    g.fillCircle(s * 0.33, -s * 0.1, s * 0.28)
+    g.fillStyle(0x221100, 1)
+    g.fillCircle(-s * 0.33, -s * 0.1, s * 0.15)
+    g.fillCircle(s * 0.33, -s * 0.1, s * 0.15)
+    g.fillStyle(0xffffff, 0.7)
+    g.fillCircle(-s * 0.27, -s * 0.17, s * 0.07)
+    g.fillCircle(s * 0.39, -s * 0.17, s * 0.07)
+    // キバ
+    g.fillStyle(0xffffff, 1)
+    g.fillTriangle(-s * 0.16, s * 0.45, -s * 0.05, s * 0.72, s * 0.04, s * 0.46)
+    g.fillTriangle(s * 0.16, s * 0.45, s * 0.05, s * 0.72, -s * 0.04, s * 0.46)
+    // ドローンロータ
+    g.lineStyle(2, 0xcc99ff, 0.7)
+    g.strokeCircle(0, -s * 0.5, s * 0.3)
+  }
+
+  // ── 鉄鷹 (ironbird) ──────────────────────────────────────────
+
+  private drawIronbird(s: number): void {
+    const g = this.gfx
+    // 羽根 (鋼鉄)
+    g.fillStyle(0x2266cc, 0.9)
+    g.fillTriangle(-s * 2.1, s * 0.2, -s * 0.4, -s * 0.45, -s * 0.3, s * 0.55)
+    g.fillTriangle(s * 2.1, s * 0.2, s * 0.4, -s * 0.45, s * 0.3, s * 0.55)
+    // 羽根の模様
+    g.lineStyle(1, 0x4499ff, 0.6)
+    g.lineBetween(-s * 1.3, 0, -s * 0.4, 0)
+    g.lineBetween(s * 1.3, 0, s * 0.4, 0)
+    g.lineBetween(-s * 0.9, -s * 0.22, -s * 0.38, s * 0.3)
+    g.lineBetween(s * 0.9, -s * 0.22, s * 0.38, s * 0.3)
+    // ボディ (縦長楕円)
+    g.fillStyle(0x4488ee, 1)
+    g.fillEllipse(0, 0, s * 1.3, s * 2.1)
+    // お腹
+    g.fillStyle(0xddeeff, 1)
+    g.fillEllipse(0, s * 0.4, s * 0.7, s * 0.95)
+    // 怒り眉
+    g.lineStyle(3.5, 0x001133, 1)
+    g.lineBetween(-s * 0.52, -s * 0.37, -s * 0.16, -s * 0.22)
+    g.lineBetween(s * 0.16, -s * 0.22, s * 0.52, -s * 0.37)
+    // 目
+    g.fillStyle(0xff7700, 1)
+    g.fillCircle(-s * 0.28, -s * 0.14, s * 0.2)
+    g.fillCircle(s * 0.28, -s * 0.14, s * 0.2)
+    g.fillStyle(0x000000, 1)
+    g.fillCircle(-s * 0.28, -s * 0.14, s * 0.1)
+    g.fillCircle(s * 0.28, -s * 0.14, s * 0.1)
+    // オレンジのくちばし
+    g.fillStyle(0xff8800, 1)
+    g.fillTriangle(0, s * 0.85, -s * 0.22, s * 0.56, s * 0.22, s * 0.56)
+  }
+
+  // ── 機甲クマ BOSS (tankbear) - フェーズ別 ────────────────────
+
+  private drawTankbear(s: number, phase: 1 | 2 | 3): void {
+    const g = this.gfx
+    const bodyColor  = phase === 3 ? 0xcc2200 : phase === 2 ? 0xaa5500 : 0x888888
+    const armorColor = phase === 3 ? 0x880000 : phase === 2 ? 0x774400 : 0x555555
+    const glowColor  = phase === 3 ? 0xff2200 : phase === 2 ? 0xff6600 : 0x888888
+    const glowAlpha  = phase === 3 ? 0.35     : phase === 2 ? 0.25     : 0.12
+    const ringColor  = phase === 3 ? 0xff0000 : phase === 2 ? 0xff6600 : 0x666666
+    const eyeColor   = phase === 3 ? 0xff4400 : 0xff0000
+
+    // ボスグロー
+    g.fillStyle(glowColor, glowAlpha)
+    g.fillCircle(0, 0, s + 18)
+    // 耳 (丸い)
+    g.fillStyle(bodyColor, 1)
+    g.fillCircle(-s * 0.64, -s * 0.88, s * 0.35)
+    g.fillCircle(s * 0.64, -s * 0.88, s * 0.35)
+    g.fillStyle(0x553333, 1)
+    g.fillCircle(-s * 0.64, -s * 0.88, s * 0.19)
+    g.fillCircle(s * 0.64, -s * 0.88, s * 0.19)
+    // 巨大ボディ
+    g.fillStyle(bodyColor, 1)
+    g.fillCircle(0, 0, s)
+    // 腹部装甲プレート
+    g.fillStyle(armorColor, 1)
+    g.fillRect(-s * 0.55, -s * 0.12, s * 1.1, s * 1.05)
+    g.lineStyle(2.5, bodyColor, 1)
+    g.strokeRect(-s * 0.55, -s * 0.12, s * 1.1, s * 1.05)
+    g.lineStyle(1.5, 0xbbbbbb, 0.6)
+    g.lineBetween(-s * 0.55, s * 0.28, s * 0.55, s * 0.28)
+    g.lineBetween(-s * 0.55, s * 0.6, s * 0.55, s * 0.6)
+    // 顔
+    g.fillStyle(bodyColor, 1)
+    g.fillCircle(0, -s * 0.22, s * 0.72)
+    // 鼻先
+    g.fillStyle(phase === 3 ? 0x661100 : phase === 2 ? 0x664400 : 0x666666, 1)
+    g.fillEllipse(0, s * 0.14, s * 0.7, s * 0.52)
+    g.fillStyle(0x221100, 1)
+    g.fillCircle(-s * 0.14, s * 0.18, s * 0.1)
+    g.fillCircle(s * 0.14, s * 0.18, s * 0.1)
+    // 4つの赤い目
+    g.fillStyle(eyeColor, 1)
+    g.fillCircle(-s * 0.36, -s * 0.52, s * 0.17)
+    g.fillCircle(s * 0.36, -s * 0.52, s * 0.17)
+    g.fillCircle(-s * 0.36, -s * 0.28, s * 0.13)
+    g.fillCircle(s * 0.36, -s * 0.28, s * 0.13)
+    g.fillStyle(0xffffff, 0.7)
+    g.fillCircle(-s * 0.3, -s * 0.57, s * 0.07)
+    g.fillCircle(s * 0.43, -s * 0.57, s * 0.07)
+    // 外装リング
+    g.lineStyle(3.5, ringColor, 0.9)
+    g.strokeCircle(0, 0, s + 2)
+  }
+
+  // ── サイバーウルフ (cyberwolf) ────────────────────────────────
+
+  private drawCyberwolf(s: number): void {
+    const g = this.gfx
+    // サイバーグロー
+    g.fillStyle(0x00ffaa, 0.1)
+    g.fillCircle(0, 0, s + 7)
+    // とがった耳
+    g.fillStyle(0x335544, 1)
+    g.fillTriangle(-s * 0.52, -s * 0.78, -s * 0.82, -s * 1.65, -s * 0.18, -s * 0.78)
+    g.fillTriangle(s * 0.52, -s * 0.78, s * 0.82, -s * 1.65, s * 0.18, -s * 0.78)
+    g.fillStyle(0x885544, 1)
+    g.fillTriangle(-s * 0.48, -s * 0.8, -s * 0.72, -s * 1.42, -s * 0.22, -s * 0.8)
+    g.fillTriangle(s * 0.48, -s * 0.8, s * 0.72, -s * 1.42, s * 0.22, -s * 0.8)
+    // ボディ
+    g.fillStyle(0x335544, 1)
+    g.fillCircle(0, 2, s)
+    // お腹
+    g.fillStyle(0x44775a, 1)
+    g.fillEllipse(0, s * 0.48, s * 1.0, s * 0.85)
+    // マズル
+    g.fillStyle(0x4a6655, 1)
+    g.fillEllipse(0, s * 0.27, s * 0.7, s * 0.55)
+    g.fillStyle(0x221100, 1)
+    g.fillCircle(-s * 0.12, s * 0.32, s * 0.09)
+    g.fillCircle(s * 0.12, s * 0.32, s * 0.09)
+    // シアン目 (スリット)
+    g.fillStyle(0x00ffdd, 1)
+    g.fillEllipse(-s * 0.34, -s * 0.16, s * 0.35, s * 0.22)
+    g.fillEllipse(s * 0.34, -s * 0.16, s * 0.35, s * 0.22)
+    g.fillStyle(0x001a11, 1)
+    g.fillEllipse(-s * 0.34, -s * 0.16, s * 0.1, s * 0.22)
+    g.fillEllipse(s * 0.34, -s * 0.16, s * 0.1, s * 0.22)
+    // サイバーインプラント
+    g.lineStyle(1.5, 0x00ffaa, 0.6)
+    g.lineBetween(-s * 0.22, -s * 0.6, s * 0.22, -s * 0.6)
+    g.lineStyle(1, 0x00ffaa, 0.4)
+    g.strokeCircle(0, 2, s)
+  }
+
+  // ── 鉄モグラ (ironmole) ────────────────────────────────────────
+
+  private drawIronmole(s: number): void {
+    const g = this.gfx
+    // ボディ
+    g.fillStyle(0x885533, 1)
+    g.fillCircle(0, 0, s)
+    // お腹
+    g.fillStyle(0xcc9966, 1)
+    g.fillEllipse(0, s * 0.18, s * 0.92, s * 0.82)
+    // 大きな前足 (左右)
+    g.fillStyle(0x885533, 1)
+    g.fillEllipse(-s * 1.0, s * 0.35, s * 0.55, s * 0.38)
+    g.fillEllipse(s * 1.0, s * 0.35, s * 0.55, s * 0.38)
+    g.fillStyle(0x554422, 1)
+    g.fillCircle(-s * 1.18, s * 0.36, s * 0.18)
+    g.fillCircle(s * 1.18, s * 0.36, s * 0.18)
+    // 爪
+    g.lineStyle(2, 0x222222, 1)
+    for (let i = -1; i <= 1; i++) {
+      g.lineBetween(-s * 1.18 + i * s * 0.1, s * 0.48, -s * 1.18 + i * s * 0.1, s * 0.66)
+      g.lineBetween(s * 1.18 + i * s * 0.1, s * 0.48, s * 1.18 + i * s * 0.1, s * 0.66)
+    }
+    // スコップ鼻
+    g.fillStyle(0x999999, 1)
+    g.fillRect(-s * 0.34, s * 0.32, s * 0.68, s * 0.46)
+    g.fillStyle(0xbbbbbb, 1)
+    g.fillRect(-s * 0.4, s * 0.24, s * 0.8, s * 0.18)
+    g.lineStyle(1.5, 0x666666, 1)
+    g.strokeRect(-s * 0.34, s * 0.32, s * 0.68, s * 0.46)
+    // 小さい目
+    g.fillStyle(0x111100, 1)
+    g.fillEllipse(-s * 0.28, -s * 0.08, s * 0.25, s * 0.15)
+    g.fillEllipse(s * 0.28, -s * 0.08, s * 0.25, s * 0.15)
+    // 耳
+    g.fillStyle(0x885533, 1)
+    g.fillCircle(-s * 0.5, -s * 0.85, s * 0.22)
+    g.fillCircle(s * 0.5, -s * 0.85, s * 0.22)
+    // アーマーリング
+    g.lineStyle(2.5, 0x996633, 0.8)
+    g.strokeCircle(0, 0, s)
+  }
+
+  // ── メカアライグマ (mechraccoon) ──────────────────────────────
+
+  private drawMechraccoon(s: number): void {
+    const g = this.gfx
+    // 尻尾 (後ろに描く)
+    g.fillStyle(0x667788, 1)
+    g.fillEllipse(s * 1.15, s * 0.55, s * 0.48, s * 1.25)
+    g.fillStyle(0x222222, 1)
+    for (let i = 0; i < 3; i++) {
+      g.fillRect(s * 0.88, s * 0.05 + i * s * 0.38, s * 0.54, s * 0.16)
+    }
+    // ボディ
+    g.fillStyle(0x778899, 1)
+    g.fillCircle(0, 0, s)
+    // お腹
+    g.fillStyle(0xaabbcc, 1)
+    g.fillEllipse(0, s * 0.24, s * 0.82, s * 0.75)
+    // アライグママスク (黒い目周り)
+    g.fillStyle(0x111111, 1)
+    g.fillEllipse(-s * 0.35, -s * 0.1, s * 0.52, s * 0.36)
+    g.fillEllipse(s * 0.35, -s * 0.1, s * 0.52, s * 0.36)
+    // 目 (赤)
+    g.fillStyle(0xff3300, 1)
+    g.fillCircle(-s * 0.35, -s * 0.1, s * 0.18)
+    g.fillCircle(s * 0.35, -s * 0.1, s * 0.18)
+    g.fillStyle(0xffffff, 0.9)
+    g.fillCircle(-s * 0.3, -s * 0.15, s * 0.07)
+    g.fillCircle(s * 0.4, -s * 0.15, s * 0.07)
+    // マズル
+    g.fillStyle(0x667788, 1)
+    g.fillEllipse(0, s * 0.27, s * 0.55, s * 0.46)
+    g.fillStyle(0x221100, 1)
+    g.fillCircle(-s * 0.1, s * 0.3, s * 0.09)
+    g.fillCircle(s * 0.1, s * 0.3, s * 0.09)
+    // 耳
+    g.fillStyle(0x778899, 1)
+    g.fillTriangle(-s * 0.52, -s * 0.82, -s * 0.78, -s * 1.42, -s * 0.2, -s * 0.82)
+    g.fillTriangle(s * 0.52, -s * 0.82, s * 0.78, -s * 1.42, s * 0.2, -s * 0.82)
+    // メカガン
+    g.fillStyle(0x334455, 1)
+    g.fillRect(-s * 0.12, -s * 0.88, s * 0.24, s * 0.36)
+    g.fillStyle(0x556677, 1)
+    g.fillRect(-s * 0.08, -s * 1.07, s * 0.16, s * 0.22)
+  }
+
+  // ── ボス脈動 ──────────────────────────────────────────────────
+
+  private startBossPulse(): void {
+    if (this.pulseTween) this.pulseTween.stop()
+    const dur = this.bossPhase === 3 ? 180 : this.bossPhase === 2 ? 350 : 600
+    this.pulseTween = this.scene.tweens.add({
+      targets: this,
+      alpha: 0.72,
+      duration: dur,
+      yoyo: true,
+      repeat: -1,
+    })
   }
 
   // ── 更新 ───────────────────────────────────────────────────────
@@ -189,14 +397,12 @@ export class Enemy extends Phaser.GameObjects.Arc {
     if (!this.active) return
     const dt = delta / 1000
 
-    // ボスフェーズ判定
     if (this.config.type === 'tankbear') {
       this.updateBossPhase(delta, playerX, playerY, dt)
     } else {
-      this.updateMovement(delta, dt)
+      this.updateMovement(dt)
     }
 
-    // 通常射撃
     if (this.config.shootable && this.config.shootInterval) {
       const interval = this.config.type === 'tankbear'
         ? this.getBossShootInterval()
@@ -213,18 +419,14 @@ export class Enemy extends Phaser.GameObjects.Arc {
       }
     }
 
-    // ビジュアル位置同期
-    this.syncVisuals()
-
-    // HPバー位置同期
-    const barY = this.y - this.config.size - 8
-    this.hpBar.setPosition(this.x, barY)
-    this.hpBarBg.setPosition(this.x, barY)
+    // HPバー幅更新
+    const ratio = Math.max(0, this.hp / this.maxHp)
+    this.hpBar.setScale(ratio, 1)
   }
 
   // ── 移動パターン ──────────────────────────────────────────────
 
-  private updateMovement(_delta: number, dt: number): void {
+  private updateMovement(dt: number): void {
     const speed = this.config.speed * this.scale_factor * 0.7
 
     switch (this.config.movePattern) {
@@ -255,8 +457,7 @@ export class Enemy extends Phaser.GameObjects.Arc {
         this.orbitAngle += 2.5 * dt
         this.x = Phaser.Math.Clamp(
           this.x + Math.cos(this.orbitAngle) * 1.5,
-          20,
-          GAME_WIDTH - 20
+          20, GAME_WIDTH - 20
         )
         this.y += speed * 0.4 * dt
         break
@@ -265,6 +466,18 @@ export class Enemy extends Phaser.GameObjects.Arc {
       case 'sniper':
         this.y += speed * 0.3 * dt
         this.x += Math.sin(this.y * 0.015) * 40 * dt
+        break
+
+      // 鉄モグラ: 初期x(targetX)が左側(< GAME_WIDTH/2)なら右へ、右側なら左へ横断
+      case 'sidewind':
+        this.x += (this.targetX < GAME_WIDTH / 2 ? 1 : -1) * speed * dt
+        this.y += speed * 0.06 * dt
+        break
+
+      // メカアライグマ: 斜め高速突撃
+      case 'diagonal':
+        this.y += speed * dt
+        this.x += (this.targetX < GAME_WIDTH / 2 ? 1 : -1) * speed * 0.55 * dt
         break
     }
   }
@@ -285,12 +498,10 @@ export class Enemy extends Phaser.GameObjects.Arc {
       this.onBossPhaseChange(newPhase)
     }
 
-    // フェーズ別移動
     const baseSpeed = this.config.speed * this.scale_factor * 0.7
     const phaseSpeed = baseSpeed * (this.bossPhase === 3 ? 1.6 : this.bossPhase === 2 ? 1.25 : 1.0)
 
     if (this.isDashing && this.dashTarget) {
-      // ダッシュ: プレイヤー位置へ高速移動
       const dx = this.dashTarget.x - this.x
       const dy = this.dashTarget.y - this.y
       const dist = Math.sqrt(dx * dx + dy * dy)
@@ -303,17 +514,14 @@ export class Enemy extends Phaser.GameObjects.Arc {
         this.y += (dy / dist) * dashSpeed * dt
       }
     } else {
-      // 通常: 画面上部をゆっくり横移動
       if (this.y < 180) {
         this.y += phaseSpeed * dt
       } else {
-        // 左右往復
         this.x += Math.sin(this.y * 0.008 + this.orbitAngle) * phaseSpeed * 0.5 * dt
         this.x = Phaser.Math.Clamp(this.x, 50, GAME_WIDTH - 50)
       }
     }
 
-    // フェーズ2・3 特殊攻撃タイマー
     if (this.bossPhase >= 2) {
       this.specialTimer += delta
       const specialInterval = this.bossPhase === 3 ? 2200 : 3800
@@ -323,7 +531,6 @@ export class Enemy extends Phaser.GameObjects.Arc {
       }
     }
 
-    // ストア更新 (UIのボスHPバー用)
     useGameStore.getState().setBossState({
       hp: this.hp,
       maxHp: this.maxHp,
@@ -332,30 +539,15 @@ export class Enemy extends Phaser.GameObjects.Arc {
   }
 
   private onBossPhaseChange(phase: 1 | 2 | 3): void {
-    // グロー色をフェーズに合わせて変更
-    const glowColor = phase === 3 ? 0xff2200 : phase === 2 ? 0xff6600 : 0x888888
-    this.glowRing.setFillStyle(glowColor, phase === 3 ? 0.35 : 0.22)
-    if (this.armorRing) {
-      this.armorRing.setStrokeStyle(3, phase === 3 ? 0xff0000 : phase === 2 ? 0xff6600 : 0x666666, 0.8)
-    }
-    // 本体の色変化
-    this.setFillStyle(phase === 3 ? 0xcc2200 : phase === 2 ? 0xaa5500 : 0x888888)
+    // グラフィックスを再描画
+    this.gfx.clear()
+    this.drawTankbear(this.config.size, phase)
+    this.startBossPulse()
 
-    // 脈動アニメ (フェーズ3は高速)
-    if (this.glowTween) this.glowTween.stop()
-    this.glowTween = this.scene.tweens.add({
-      targets: this.glowRing,
-      alpha: phase === 3 ? 0.08 : 0.06,
-      duration: phase === 3 ? 200 : 500,
-      yoyo: true,
-      repeat: -1,
-    })
-
-    // フェーズ告知テキスト
-    const labels = ['', 'PHASE 2', 'BERSERK!!']
     if (phase >= 2) {
+      const labels = ['', 'PHASE 2', 'BERSERK!!']
       const label = this.scene.add
-        .text(this.x, this.y - 60, labels[phase - 1], {
+        .text(this.x, this.y - 70, labels[phase - 1], {
           fontSize: phase === 3 ? '28px' : '22px',
           fontStyle: 'bold',
           color: phase === 3 ? '#ff2200' : '#ff6600',
@@ -367,14 +559,13 @@ export class Enemy extends Phaser.GameObjects.Arc {
 
       this.scene.tweens.add({
         targets: label,
-        y: label.y - 50,
+        y: label.y - 55,
         alpha: 0,
         duration: 1400,
         ease: 'Power2',
         onComplete: () => label.destroy(),
       })
 
-      // ダッシュ予告 (フェーズ3)
       if (phase === 3) this.scene.cameras.main.shake(300, 0.012)
     }
   }
@@ -394,12 +585,10 @@ export class Enemy extends Phaser.GameObjects.Arc {
         ? -spreadAngle * ((spreadCount - 1) / 2) + spreadAngle * i
         : 0
       const angle = baseAngle + offset
-      const speed = 280
       this.bulletPool.fireEnemy(
-        this.x,
-        this.y + this.config.size,
-        Math.cos(angle) * speed,
-        Math.sin(angle) * speed,
+        this.x, this.y + this.config.size,
+        Math.cos(angle) * 280,
+        Math.sin(angle) * 280,
         Math.round(this.config.damage * this.scale_factor * 0.65)
       )
     }
@@ -407,7 +596,6 @@ export class Enemy extends Phaser.GameObjects.Arc {
 
   private doSpecialAttack(playerX: number, playerY: number): void {
     if (this.bossPhase === 3) {
-      // 全方向8方向弾幕
       for (let i = 0; i < 8; i++) {
         const angle = (Math.PI * 2 / 8) * i
         this.bulletPool.fireEnemy(
@@ -417,11 +605,9 @@ export class Enemy extends Phaser.GameObjects.Arc {
           Math.round(this.config.damage * 0.5)
         )
       }
-      // プレイヤー目掛けてダッシュ
       this.dashTarget = { x: playerX, y: playerY }
       this.isDashing = true
     } else {
-      // フェーズ2: 扇形5方向
       const baseAngle = Math.atan2(playerY - this.y, playerX - this.x)
       for (let i = -2; i <= 2; i++) {
         const angle = baseAngle + i * (Math.PI / 10)
@@ -439,66 +625,24 @@ export class Enemy extends Phaser.GameObjects.Arc {
 
   private shoot(targetX: number, targetY: number): void {
     const angle = Math.atan2(targetY - this.y, targetX - this.x)
-    const speed = 265
     this.bulletPool.fireEnemy(
       this.x, this.y,
-      Math.cos(angle) * speed,
-      Math.sin(angle) * speed,
+      Math.cos(angle) * 265,
+      Math.sin(angle) * 265,
       Math.round(this.config.damage * this.scale_factor * 0.68)
     )
-  }
-
-  // ── ビジュアル同期 ────────────────────────────────────────────
-
-  private syncVisuals(): void {
-    const { type } = this.config
-
-    this.glowRing.setPosition(this.x, this.y)
-    if (this.armorRing) this.armorRing.setPosition(this.x, this.y)
-
-    // 目の位置は種別ごとにオフセット
-    switch (type) {
-      case 'mechdog':
-        this.eyeObjects[0]?.setPosition(this.x - 6, this.y - 4)
-        this.eyeObjects[1]?.setPosition(this.x + 6, this.y - 4)
-        break
-      case 'dronebat':
-        this.eyeObjects[0]?.setPosition(this.x, this.y - 2)
-        this.eyeObjects[1]?.setPosition(this.x, this.y - 2)
-        break
-      case 'ironbird':
-        this.eyeObjects[0]?.setPosition(this.x - 7, this.y - 3)
-        this.eyeObjects[1]?.setPosition(this.x + 7, this.y - 3)
-        break
-      case 'tankbear':
-        this.eyeObjects[0]?.setPosition(this.x - 10, this.y - 8)
-        this.eyeObjects[1]?.setPosition(this.x + 10, this.y - 8)
-        this.eyeObjects[2]?.setPosition(this.x - 10, this.y + 5)
-        this.eyeObjects[3]?.setPosition(this.x + 10, this.y + 5)
-        break
-      case 'cyberwolf':
-        this.eyeObjects[0]?.setPosition(this.x - 7, this.y - 5)
-        this.eyeObjects[1]?.setPosition(this.x + 7, this.y - 5)
-        break
-    }
   }
 
   // ── ダメージ・死亡 ────────────────────────────────────────────
 
   takeDamage(damage: number): boolean {
     this.hp -= damage
-    const ratio = Math.max(0, this.hp / this.maxHp)
-    this.hpBar.setScale(ratio, 1)
 
-    // ダメージフラッシュ
-    this.setFillStyle(0xffffff)
+    // ダメージフラッシュ (ボディだけ)
+    this.gfx.setAlpha(0.1)
     this.scene.time.delayedCall(80, () => {
       if (!this.active) return
-      // フェーズに応じた色に戻す
-      const phaseColor = this.bossPhase === 3 ? 0xcc2200
-        : this.bossPhase === 2 ? 0xaa5500
-        : this.config.color
-      this.setFillStyle(this.config.type === 'tankbear' ? phaseColor : this.config.color)
+      this.gfx.setAlpha(1)
     })
 
     return this.hp <= 0
@@ -508,14 +652,7 @@ export class Enemy extends Phaser.GameObjects.Arc {
     if (this.config.type === 'tankbear') {
       useGameStore.getState().setBossState(null)
     }
-
-    this.hpBar.destroy()
-    this.hpBarBg.destroy()
-    this.glowRing.destroy()
-    this.eyeObjects.forEach((e) => e.destroy())
-    this.armorRing?.destroy()
-    this.glowTween?.stop()
-
-    this.destroy()
+    this.pulseTween?.stop()
+    this.destroy(true)
   }
 }
