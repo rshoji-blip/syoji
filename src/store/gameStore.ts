@@ -40,6 +40,10 @@ interface GameState {
   // プレイ時間
   playStartTime: number
   setPlayStartTime: (time: number) => void
+
+  // ボスHPバー (UIScene から参照)
+  bossState: { hp: number; maxHp: number; phase: number } | null
+  setBossState: (state: { hp: number; maxHp: number; phase: number } | null) => void
 }
 
 const DEFAULT_PLAYER_STATS: PlayerStats = {
@@ -98,6 +102,9 @@ export const useGameStore = create<GameState>((set) => ({
   playStartTime: 0,
   setPlayStartTime: (time) => set({ playStartTime: time }),
 
+  bossState: null,
+  setBossState: (state) => set({ bossState: state }),
+
   resetGame: () =>
     set({
       phase: 'title',
@@ -109,5 +116,6 @@ export const useGameStore = create<GameState>((set) => ({
       skillCandidates: [],
       gameResult: null,
       playStartTime: 0,
+      bossState: null,
     }),
 }))

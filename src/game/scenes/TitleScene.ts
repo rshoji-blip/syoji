@@ -4,6 +4,7 @@ import Phaser from 'phaser'
 import { GAME_WIDTH, GAME_HEIGHT } from '../GameConfig'
 import { ScrollSystem } from '../systems/ScrollSystem'
 import { soundSystem } from '../systems/SoundSystem'
+import { bgmSystem } from '../systems/BgmSystem'
 import { highScoreStore } from '../../store/highScoreStore'
 
 export class TitleScene extends Phaser.Scene {
@@ -15,6 +16,9 @@ export class TitleScene extends Phaser.Scene {
 
   create(): void {
     this.scrollSystem = new ScrollSystem(this)
+
+    // タイトルBGM開始 (最初のユーザー操作後に有効になる)
+    bgmSystem.start('title')
 
     // タイトルロゴ
     this.add
@@ -58,6 +62,7 @@ export class TitleScene extends Phaser.Scene {
     })
     btnBg.on('pointerdown', () => {
       soundSystem.buttonClick()
+      bgmSystem.stop()
       this.cameras.main.flash(300, 0, 245, 255)
       this.time.delayedCall(300, () => {
         this.scene.stop('TitleScene')

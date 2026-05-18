@@ -11,6 +11,7 @@ import { SkillSystem } from '../systems/SkillSystem'
 import { GAME_CONSTANTS } from '../GameConfig'
 import { useGameStore } from '../../store/gameStore'
 import { soundSystem } from '../systems/SoundSystem'
+import { bgmSystem } from '../systems/BgmSystem'
 
 export class GameScene extends Phaser.Scene {
   private player!: Player
@@ -31,6 +32,9 @@ export class GameScene extends Phaser.Scene {
     store.resetGame()
     store.setPhase('playing')
     store.setPlayStartTime(Date.now())
+
+    // バトルBGM開始
+    bgmSystem.start('battle')
 
     // 背景色
     this.cameras.main.setBackgroundColor(0x0a0a1a)
@@ -215,6 +219,7 @@ export class GameScene extends Phaser.Scene {
       playTime,
     })
 
+    bgmSystem.stop()
     this.cameras.main.shake(500, 0.015)
     this.time.delayedCall(800, () => {
       store.setPhase('result')
