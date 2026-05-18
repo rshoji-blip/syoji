@@ -2,6 +2,7 @@
 
 import Phaser from 'phaser'
 import { useGameStore } from '../../store/gameStore'
+import { soundSystem } from '../systems/SoundSystem'
 import { GAME_WIDTH } from '../GameConfig'
 
 export class UIScene extends Phaser.Scene {
@@ -11,6 +12,7 @@ export class UIScene extends Phaser.Scene {
   private scoreText!: Phaser.GameObjects.Text
   private waveText!: Phaser.GameObjects.Text
   private killText!: Phaser.GameObjects.Text
+  private muteBtn!: Phaser.GameObjects.Text
 
   constructor() {
     super({ key: 'UIScene' })
@@ -60,6 +62,17 @@ export class UIScene extends Phaser.Scene {
         color: '#aaaacc',
       })
       .setOrigin(0.5, 0.5)
+
+    // ミュートボタン
+    this.muteBtn = this.add
+      .text(GAME_WIDTH - 10, 44, '🔊', { fontSize: '18px' })
+      .setOrigin(1, 0.5)
+      .setInteractive({ useHandCursor: true })
+      .on('pointerdown', () => {
+        const muted = !soundSystem.isMuted()
+        soundSystem.setMuted(muted)
+        this.muteBtn.setText(muted ? '🔇' : '🔊')
+      })
   }
 
   update(): void {

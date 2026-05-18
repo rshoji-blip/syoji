@@ -2,6 +2,7 @@
 
 import { useGameStore } from '../../store/gameStore'
 import { SkillSystem } from '../../game/systems/SkillSystem'
+import { soundSystem } from '../../game/systems/SoundSystem'
 import type { Skill, SkillRarity } from '../../types/skill.types'
 
 interface Props {
@@ -33,6 +34,7 @@ export function SkillSelectOverlay({ onSelect }: Props) {
   const { skillCandidates, currentWave } = useGameStore()
 
   const handleSelect = (skill: Skill) => {
+    soundSystem.skillAcquire()
     SkillSystem.applySkill(skill)
     onSelect(currentWave + 1)
   }

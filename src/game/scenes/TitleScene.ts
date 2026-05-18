@@ -3,6 +3,8 @@
 import Phaser from 'phaser'
 import { GAME_WIDTH, GAME_HEIGHT } from '../GameConfig'
 import { ScrollSystem } from '../systems/ScrollSystem'
+import { soundSystem } from '../systems/SoundSystem'
+import { highScoreStore } from '../../store/highScoreStore'
 
 export class TitleScene extends Phaser.Scene {
   private scrollSystem!: ScrollSystem
@@ -55,6 +57,7 @@ export class TitleScene extends Phaser.Scene {
       this.tweens.add({ targets: btnText, scaleX: 1, scaleY: 1, duration: 100 })
     })
     btnBg.on('pointerdown', () => {
+      soundSystem.buttonClick()
       this.cameras.main.flash(300, 0, 245, 255)
       this.time.delayedCall(300, () => {
         this.scene.stop('TitleScene')
@@ -63,11 +66,39 @@ export class TitleScene extends Phaser.Scene {
       })
     })
 
+    // ハイスコア表示
+    const best = highScoreStore.getBestScore()
+    if (best > 0) {
+      this.add
+        .text(GAME_WIDTH / 2, GAME_HEIGHT * 0.72, `BEST SCORE`, {
+          fontSize: '11px',
+          color: '#888899',
+        })
+        .setOrigin(0.5)
+      this.add
+        .text(GAME_WIDTH / 2, GAME_HEIGHT * 0.77, best.toLocaleString(), {
+          fontSize: '22px',
+          color: '#ffee00',
+          fontStyle: 'bold',
+        })
+        .setOrigin(0.5)
+    }
+
+    // 操作説明
+    this.add
+      .text(GAME_WIDTH / 2, GAME_HEIGHT * 0.88, 'タップ/マウス: 移動  WASD/矢印: キーボード移動', {
+        fontSize: '10px',
+        color: '#445566',
+        wordWrap: { width: 320 },
+        align: 'center',
+      })
+      .setOrigin(0.5)
+
     // バージョン表示
     this.add
-      .text(GAME_WIDTH / 2, GAME_HEIGHT - 30, 'v0.1.0 - Early Access', {
-        fontSize: '11px',
-        color: '#444466',
+      .text(GAME_WIDTH / 2, GAME_HEIGHT - 20, 'v0.2.0', {
+        fontSize: '10px',
+        color: '#333355',
       })
       .setOrigin(0.5)
 

@@ -10,6 +10,7 @@ import { EffectSystem } from '../systems/EffectSystem'
 import { SkillSystem } from '../systems/SkillSystem'
 import { GAME_CONSTANTS } from '../GameConfig'
 import { useGameStore } from '../../store/gameStore'
+import { soundSystem } from '../systems/SoundSystem'
 
 export class GameScene extends Phaser.Scene {
   private player!: Player
@@ -111,12 +112,12 @@ export class GameScene extends Phaser.Scene {
           bullet.x, bullet.y, enemy.x, enemy.y
         )
 
-        if (dist < enemy.config.size + 5) {
-          // ヒット!
+        if (dist < enemy.config.size + 4) {
           if (bullet.isCrit) {
             this.effectSystem.critEffect(enemy.x, enemy.y)
           } else {
             this.effectSystem.hitEffect(bullet.x, bullet.y)
+            soundSystem.hit()
           }
 
           const died = this.enemyManager.damageEnemy(enemy, bullet.damage)
@@ -124,12 +125,13 @@ export class GameScene extends Phaser.Scene {
             store.addScore(enemy.config.score * Math.ceil(store.currentWave * 0.5))
             if (this.waveSystem.isBossWave()) {
               this.effectSystem.bigExplosion(enemy.x, enemy.y)
+              soundSystem.bossDie()
             } else {
               this.effectSystem.explodeEnemy(enemy.x, enemy.y, enemy.config.color)
+              soundSystem.enemyDie()
             }
           }
 
-          // 貫通でなければ弾を消す
           if (!bullet.isPiercing) {
             this.bulletPool.returnBullet(bullet, bi)
             break
@@ -139,16 +141,17 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
-  // 敵 ↔ プレイヤー接触
+  // 敵 ↔ プレイヤー接触 (プレイヤーの実質的な当たり判定を小さく)
   private checkEnemyPlayerCollision(): void {
     if (this.player.isInvincible()) return
     const enemies = this.enemyManager.getEnemies()
+    const hitR = this.player.getHitRadius()
 
     for (const enemy of enemies) {
       const dist = Phaser.Math.Distance.Between(
         this.player.x, this.player.y, enemy.x, enemy.y
       )
-      if (dist < enemy.config.size + 16) {
+      if (dist < enemy.config.size + hitR) {
         this.player.takeDamage(enemy.config.damage)
         this.effectSystem.playerDamageFlash(this.player)
         break
@@ -156,17 +159,18 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
-  // 敵弾 ↔ プレイヤー
+  // 敵弾 ↔ プレイヤー (小さい当たり判定で爽快感を維持)
   private checkEnemyBulletPlayerCollision(): void {
     if (this.player.isInvincible()) return
     const enemyBullets = this.bulletPool.getActiveEnemyBullets()
+    const hitR = this.player.getHitRadius()
 
     for (let i = enemyBullets.length - 1; i >= 0; i--) {
       const bullet = enemyBullets[i]
       const dist = Phaser.Math.Distance.Between(
         bullet.x, bullet.y, this.player.x, this.player.y
       )
-      if (dist < 20) {
+      if (dist < 4 + hitR) {
         this.player.takeDamage(bullet.damage)
         this.effectSystem.playerDamageFlash(this.player)
         this.bulletPool.returnEnemyBullet(bullet, i)
@@ -177,6 +181,7 @@ export class GameScene extends Phaser.Scene {
 
   private onWaveComplete(): void {
     this.effectSystem.waveCompleteEffect()
+    soundSystem.waveClear()
     useGameStore.getState().addScore(GAME_CONSTANTS.WAVE_CLEAR_BONUS)
 
     // スキル選択フェーズへ

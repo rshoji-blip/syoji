@@ -116,7 +116,8 @@ export class BulletPool {
       b.y += b.velocityY * dt
       b.elapsed += delta
 
-      if (b.elapsed >= b.lifespan) {
+      // ライフスパン切れ OR 画面外に出たら回収
+      if (b.elapsed >= b.lifespan || b.y < -40 || b.y > 900 || b.x < -40 || b.x > 440) {
         this.returnBullet(b, i)
       }
     }
@@ -127,7 +128,7 @@ export class BulletPool {
       b.y += b.velocityY * dt
       b.elapsed += delta
 
-      if (b.elapsed >= b.lifespan) {
+      if (b.elapsed >= b.lifespan || b.y > 900 || b.y < -40 || b.x < -40 || b.x > 440) {
         this.returnEnemyBullet(b, i)
       }
     }
