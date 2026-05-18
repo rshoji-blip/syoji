@@ -1,0 +1,220 @@
+// メインゲームシーン
+
+import Phaser from 'phaser'
+import { Player } from '../entities/Player'
+import { EnemyManager } from '../entities/EnemyManager'
+import { BulletPool } from '../entities/BulletPool'
+import { WaveSystem } from '../systems/WaveSystem'
+import { ScrollSystem } from '../systems/ScrollSystem'
+import { EffectSystem } from '../systems/EffectSystem'
+import { SkillSystem } from '../systems/SkillSystem'
+import { GAME_CONSTANTS } from '../GameConfig'
+import { useGameStore } from '../../store/gameStore'
+
+export class GameScene extends Phaser.Scene {
+  private player!: Player
+  private enemyManager!: EnemyManager
+  private bulletPool!: BulletPool
+  private waveSystem!: WaveSystem
+  private scrollSystem!: ScrollSystem
+  private effectSystem!: EffectSystem
+  private gameOver: boolean = false
+  private paused: boolean = false
+
+  constructor() {
+    super({ key: 'GameScene' })
+  }
+
+  create(): void {
+    const store = useGameStore.getState()
+    store.resetGame()
+    store.setPhase('playing')
+    store.setPlayStartTime(Date.now())
+
+    // 背景色
+    this.cameras.main.setBackgroundColor(0x0a0a1a)
+
+    // システム初期化
+    this.scrollSystem = new ScrollSystem(this)
+    this.effectSystem = new EffectSystem(this)
+    this.bulletPool = new BulletPool(this)
+    this.enemyManager = new EnemyManager(this, this.bulletPool)
+
+    // プレイヤー生成
+    this.player = new Player(
+      this,
+      GAME_CONSTANTS.PLAYER_START_X,
+      GAME_CONSTANTS.PLAYER_START_Y,
+      this.bulletPool
+    )
+
+    // ウェーブシステム
+    this.waveSystem = new WaveSystem(this, this.enemyManager, () =>
+      this.onWaveComplete()
+    )
+    this.enemyManager.setKillCallback(() => {
+      this.waveSystem.onEnemyKilled()
+      store.addKill()
+    })
+
+    // 最初のウェーブ開始
+    this.waveSystem.startWave(1)
+
+    // キーボード操作 (デスクトップ)
+    this.setupKeyboard()
+  }
+
+  private setupKeyboard(): void {
+    // スペースで一時停止 (将来実装)
+    this.input.keyboard?.on('keydown-SPACE', () => {
+      // reserved
+    })
+  }
+
+  update(_time: number, delta: number): void {
+    if (this.gameOver || this.paused) return
+
+    const store = useGameStore.getState()
+    const stats = store.playerStats
+
+    // ゲームオーバー判定
+    if (stats.hp <= 0) {
+      this.triggerGameOver()
+      return
+    }
+
+    // 各システム更新
+    this.scrollSystem.update(delta)
+    this.player.update(delta)
+    this.bulletPool.update(delta)
+    this.enemyManager.update(delta, this.player.x, this.player.y)
+
+    // 衝突判定
+    this.checkBulletEnemyCollision(store)
+    this.checkEnemyPlayerCollision()
+    this.checkEnemyBulletPlayerCollision()
+  }
+
+  // プレイヤー弾 ↔ 敵
+  private checkBulletEnemyCollision(
+    store: ReturnType<typeof useGameStore.getState>
+  ): void {
+    const bullets = this.bulletPool.getActiveBullets()
+    const enemies = this.enemyManager.getEnemies()
+
+    for (let bi = bullets.length - 1; bi >= 0; bi--) {
+      const bullet = bullets[bi]
+
+      for (let ei = enemies.length - 1; ei >= 0; ei--) {
+        const enemy = enemies[ei]
+        const dist = Phaser.Math.Distance.Between(
+          bullet.x, bullet.y, enemy.x, enemy.y
+        )
+
+        if (dist < enemy.config.size + 5) {
+          // ヒット!
+          if (bullet.isCrit) {
+            this.effectSystem.critEffect(enemy.x, enemy.y)
+          } else {
+            this.effectSystem.hitEffect(bullet.x, bullet.y)
+          }
+
+          const died = this.enemyManager.damageEnemy(enemy, bullet.damage)
+          if (died) {
+            store.addScore(enemy.config.score * Math.ceil(store.currentWave * 0.5))
+            if (this.waveSystem.isBossWave()) {
+              this.effectSystem.bigExplosion(enemy.x, enemy.y)
+            } else {
+              this.effectSystem.explodeEnemy(enemy.x, enemy.y, enemy.config.color)
+            }
+          }
+
+          // 貫通でなければ弾を消す
+          if (!bullet.isPiercing) {
+            this.bulletPool.returnBullet(bullet, bi)
+            break
+          }
+        }
+      }
+    }
+  }
+
+  // 敵 ↔ プレイヤー接触
+  private checkEnemyPlayerCollision(): void {
+    if (this.player.isInvincible()) return
+    const enemies = this.enemyManager.getEnemies()
+
+    for (const enemy of enemies) {
+      const dist = Phaser.Math.Distance.Between(
+        this.player.x, this.player.y, enemy.x, enemy.y
+      )
+      if (dist < enemy.config.size + 16) {
+        this.player.takeDamage(enemy.config.damage)
+        this.effectSystem.playerDamageFlash(this.player)
+        break
+      }
+    }
+  }
+
+  // 敵弾 ↔ プレイヤー
+  private checkEnemyBulletPlayerCollision(): void {
+    if (this.player.isInvincible()) return
+    const enemyBullets = this.bulletPool.getActiveEnemyBullets()
+
+    for (let i = enemyBullets.length - 1; i >= 0; i--) {
+      const bullet = enemyBullets[i]
+      const dist = Phaser.Math.Distance.Between(
+        bullet.x, bullet.y, this.player.x, this.player.y
+      )
+      if (dist < 20) {
+        this.player.takeDamage(bullet.damage)
+        this.effectSystem.playerDamageFlash(this.player)
+        this.bulletPool.returnEnemyBullet(bullet, i)
+        break
+      }
+    }
+  }
+
+  private onWaveComplete(): void {
+    this.effectSystem.waveCompleteEffect()
+    useGameStore.getState().addScore(GAME_CONSTANTS.WAVE_CLEAR_BONUS)
+
+    // スキル選択フェーズへ
+    this.paused = true
+    this.time.delayedCall(1500, () => {
+      const candidates = SkillSystem.drawCandidates()
+      useGameStore.getState().setSkillCandidates(candidates)
+      useGameStore.getState().setPhase('skillSelect')
+    })
+  }
+
+  // React側からスキル選択完了を受け取る
+  resumeAfterSkillSelect(nextWave: number): void {
+    this.paused = false
+    this.bulletPool.clear()
+    this.waveSystem.startWave(nextWave)
+    useGameStore.getState().setPhase('playing')
+  }
+
+  private triggerGameOver(): void {
+    if (this.gameOver) return
+    this.gameOver = true
+
+    const store = useGameStore.getState()
+    const playTime = Math.round((Date.now() - store.playStartTime) / 1000)
+
+    store.setGameResult({
+      wave: store.currentWave,
+      killCount: store.killCount,
+      score: store.score,
+      playTime,
+    })
+
+    this.cameras.main.shake(500, 0.015)
+    this.time.delayedCall(800, () => {
+      store.setPhase('result')
+      this.scene.stop('UIScene')
+      this.scene.stop('GameScene')
+    })
+  }
+}
