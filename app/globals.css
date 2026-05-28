@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap');
+
+:root {
+  --bg: #FFF8E1;
+  --fg: #2D2D2D;
+}
+
+.dark {
+  --bg: #1a1a2e;
+  --fg: #f1f5f9;
+}
+
+html,
+body {
+  overflow-x: hidden;
+  font-family: 'M PLUS Rounded 1c', 'Rounded Mplus 1c', Nunito, sans-serif;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #FFB300;
+  border-radius: 9999px;
+}
+
+*, *::before, *::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
