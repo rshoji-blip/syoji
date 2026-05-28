@@ -143,7 +143,7 @@ export default function AnimeSearch({ episodes }: Props) {
       <Header />
 
       {/* Sticky search section */}
-      <div className="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shadow-sm border-b border-amber-100 dark:border-slate-700">
+      <div className="sticky top-0 z-40 bg-[#FFF8E1]/95 dark:bg-[#0f0f1a]/95 backdrop-blur-md shadow-sm border-b-2 border-amber-100 dark:border-slate-800">
         <div className="max-w-2xl mx-auto px-4 py-3">
           <div ref={searchRef}>
             <SearchBar
@@ -183,13 +183,27 @@ export default function AnimeSearch({ episodes }: Props) {
               onSelect={handleGenreSelect}
             />
             {/* Hero illustration */}
-            <div className="flex flex-col items-center py-8 gap-3 text-center animate-fade-in">
-              <div className="text-6xl animate-bounce-gentle select-none">🐵</div>
-              <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed">
-                キャラクター名を入力するか、<br />
-                ジャンルを選んでエピソードを<br />
-                見つけることができるよ！
-              </p>
+            <div className="flex flex-col items-center py-8 gap-4 text-center animate-fade-in">
+              <div className="relative select-none">
+                {/* Hat floating above George */}
+                <div className="absolute -top-8 left-1/2 -translate-x-1/2 text-4xl animate-float">🎩</div>
+                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-yellow-300 via-amber-400 to-orange-400 flex items-center justify-center shadow-xl border-4 border-white dark:border-slate-700">
+                  <span className="text-5xl animate-bounce-gentle">🐵</span>
+                </div>
+                {/* Decorative elements */}
+                <span className="absolute -right-2 top-0 text-xl animate-float-delayed select-none">🍌</span>
+                <span className="absolute -left-3 bottom-2 text-sm animate-float-slow select-none opacity-70">⭐</span>
+              </div>
+              <div className="bg-white dark:bg-slate-800 rounded-3xl px-6 py-4 shadow-md border-2 border-amber-100 dark:border-slate-700 max-w-[260px]">
+                <p className="text-slate-600 dark:text-slate-300 text-sm font-bold leading-relaxed">
+                  キャラクター名を入力するか<br />
+                  ジャンルをタップして<br />
+                  エピソードを探そう！
+                </p>
+                <div className="mt-2 flex justify-center gap-1 text-base">
+                  <span>🔍</span><span>🎩</span><span>🍌</span>
+                </div>
+              </div>
             </div>
           </div>
         )}

@@ -24,6 +24,13 @@ const config: Config = {
         'slide-up': 'slideUp 0.3s ease-out both',
         'bounce-gentle': 'bounceGentle 2s ease-in-out infinite',
         'spin-slow': 'spin 2s linear infinite',
+        'float': 'float 3.5s ease-in-out infinite',
+        'float-delayed': 'float 3.5s ease-in-out 1.75s infinite',
+        'float-slow': 'float 5s ease-in-out 0.8s infinite',
+        'wiggle': 'wiggle 0.5s ease-in-out',
+        'pop': 'pop 0.35s cubic-bezier(0.34,1.56,0.64,1)',
+        'hat-sway': 'hatSway 4s ease-in-out infinite',
+        'pulse-ring': 'pulseRing 2.5s ease-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -36,7 +43,28 @@ const config: Config = {
         },
         bounceGentle: {
           '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-5px)' },
+          '50%': { transform: 'translateY(-6px)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+          '50%': { transform: 'translateY(-12px) rotate(4deg)' },
+        },
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-8deg)' },
+          '50%': { transform: 'rotate(8deg)' },
+        },
+        pop: {
+          '0%': { transform: 'scale(0.75)', opacity: '0' },
+          '80%': { transform: 'scale(1.06)' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+        hatSway: {
+          '0%, 100%': { transform: 'rotate(-7deg) translateY(0px)' },
+          '50%': { transform: 'rotate(7deg) translateY(-8px)' },
+        },
+        pulseRing: {
+          '0%': { transform: 'scale(1)', opacity: '0.4' },
+          '100%': { transform: 'scale(1.8)', opacity: '0' },
         },
       },
     },

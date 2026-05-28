@@ -8,29 +8,36 @@ const EXAMPLE_CHARACTERS = ['ジョージ', 'ビル', 'アリー', 'クィント
 
 export default function NoResults({ query }: NoResultsProps) {
   return (
-    <div className="flex flex-col items-center justify-center py-16 px-4 text-center animate-fade-in">
-      <div className="text-6xl mb-4 animate-bounce-gentle select-none">🙈</div>
-      <h3 className="text-lg font-bold text-slate-700 dark:text-slate-300 mb-2">
-        見つかりませんでした
-      </h3>
-      <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
-        「<span className="font-bold text-amber-600 dark:text-amber-400">{query}</span>」は
-        <br />
-        見つかりませんでした。
-      </p>
-      <p className="text-slate-400 dark:text-slate-500 text-xs mt-3">
-        別のキャラクター名を試してみてください
-      </p>
-      <div className="mt-5 flex flex-wrap gap-2 justify-center">
-        <span className="text-xs text-slate-400 self-center">例：</span>
-        {EXAMPLE_CHARACTERS.map((ex) => (
-          <span
-            key={ex}
-            className="text-xs bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 px-3 py-1 rounded-full border border-amber-200 dark:border-amber-800"
-          >
-            {ex}
-          </span>
-        ))}
+    <div className="flex flex-col items-center justify-center py-14 px-4 text-center animate-fade-in">
+      {/* Sad hat */}
+      <div className="relative mb-2 select-none">
+        <div className="text-6xl animate-bounce-gentle">🙈</div>
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-2xl animate-float opacity-70">🎩</div>
+      </div>
+
+      <div className="mt-4 bg-white dark:bg-slate-800 rounded-3xl shadow-md border-2 border-amber-100 dark:border-slate-700 px-6 py-5 max-w-xs w-full">
+        <h3 className="text-base font-black text-slate-700 dark:text-slate-200 mb-1">
+          見つかりませんでした 😥
+        </h3>
+        {query && (
+          <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-3">
+            「<span className="font-black text-amber-600 dark:text-amber-400">{query}</span>」は
+            まだ登録されていないキャラクターかも？
+          </p>
+        )}
+        <p className="text-xs text-slate-400 dark:text-slate-500 mb-3">
+          こんなキャラクターを試してみて！
+        </p>
+        <div className="flex flex-wrap gap-1.5 justify-center">
+          {EXAMPLE_CHARACTERS.map((ex) => (
+            <span
+              key={ex}
+              className="text-xs bg-amber-400 text-amber-900 font-black px-3 py-1 rounded-full shadow-sm"
+            >
+              {ex}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );
