@@ -14,6 +14,7 @@ import {
   getCharacterSuggestions,
   getPopularCharacters,
 } from '@/lib/search';
+import { filterByGenre, getGenreEpisodeCount, GENRES } from '@/lib/genres';
 import {
   getSearchHistory,
   addToSearchHistory,
@@ -26,6 +27,7 @@ import RecentSearches from './RecentSearches';
 import EpisodeCard from './EpisodeCard';
 import NoResults from './NoResults';
 import LoadingSpinner from './LoadingSpinner';
+import GenreFilter from './GenreFilter';
 
 interface Props {
   episodes: Episode[];
@@ -34,6 +36,7 @@ interface Props {
 export default function AnimeSearch({ episodes }: Props) {
   const [query, setQuery] = useState('');
   const [activeQuery, setActiveQuery] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const [recentSearches, setRecentSearches] = useState<SearchHistoryItem[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -53,10 +56,16 @@ export default function AnimeSearch({ episodes }: Props) {
     [episodes, query]
   );
 
-  const filteredEpisodes = useMemo(
-    () => filterEpisodes(episodes, activeQuery),
-    [episodes, activeQuery]
+  const genreEpisodeCounts = useMemo(
+    () => getGenreEpisodeCount(episodes),
+    [episodes]
   );
+
+  const filteredEpisodes = useMemo(() => {
+    const byCharacter = filterEpisodes(episodes, activeQuery);
+    const pool = activeQuery.trim() ? byCharacter : episodes;
+    return selectedGenre ? filterByGenre(pool, selectedGenre) : pool.filter(() => activeQuery.trim());
+  }, [episodes, activeQuery, selectedGenre]);
 
   const handleQueryChange = useCallback((value: string) => {
     setQuery(value);
@@ -88,6 +97,12 @@ export default function AnimeSearch({ episodes }: Props) {
     setShowSuggestions(false);
   }, []);
 
+  const handleGenreSelect = useCallback((genreId: string | null) => {
+    startTransition(() => {
+      setSelectedGenre(genreId);
+    });
+  }, []);
+
   const handleClearHistory = useCallback(() => {
     clearSearchHistory();
     setRecentSearches([]);
@@ -107,7 +122,21 @@ export default function AnimeSearch({ episodes }: Props) {
   }, []);
 
   const hasQuery = activeQuery.trim().length > 0;
+  const hasGenre = selectedGenre !== null;
+  const isFiltering = hasQuery || hasGenre;
   const hasResults = filteredEpisodes.length > 0;
+
+  const selectedGenreLabel = hasGenre
+    ? GENRES.find((g) => g.id === selectedGenre)
+    : null;
+
+  const resultLabel = (() => {
+    if (hasQuery && hasGenre)
+      return `「${activeQuery}」× ${selectedGenreLabel?.emoji}${selectedGenreLabel?.label}`;
+    if (hasQuery) return `「${activeQuery}」`;
+    if (hasGenre) return `${selectedGenreLabel?.emoji} ${selectedGenreLabel?.label}`;
+    return '';
+  })();
 
   return (
     <main className="min-h-screen bg-george-light dark:bg-slate-900 transition-colors duration-300">
@@ -134,8 +163,8 @@ export default function AnimeSearch({ episodes }: Props) {
       {/* Main content */}
       <div className="max-w-2xl mx-auto px-4 pb-10">
 
-        {/* Initial state */}
-        {!hasQuery && (
+        {/* Initial state (no query, no genre) */}
+        {!isFiltering && (
           <div className="pt-5 space-y-6">
             <CharacterTags
               characters={popularCharacters}
@@ -148,30 +177,57 @@ export default function AnimeSearch({ episodes }: Props) {
                 onClear={handleClearHistory}
               />
             )}
+            <GenreFilter
+              selectedGenre={selectedGenre}
+              episodeCounts={genreEpisodeCounts}
+              onSelect={handleGenreSelect}
+            />
             {/* Hero illustration */}
             <div className="flex flex-col items-center py-8 gap-3 text-center animate-fade-in">
               <div className="text-6xl animate-bounce-gentle select-none">🐵</div>
               <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed">
-                キャラクター名を入力すると<br />
-                そのキャラクターが登場するエピソードを<br />
+                キャラクター名を入力するか、<br />
+                ジャンルを選んでエピソードを<br />
                 見つけることができるよ！
               </p>
             </div>
           </div>
         )}
 
+        {/* Genre selected but no query — show genre filter header inline */}
+        {!hasQuery && hasGenre && (
+          <div className="pt-5 space-y-4">
+            <GenreFilter
+              selectedGenre={selectedGenre}
+              episodeCounts={genreEpisodeCounts}
+              onSelect={handleGenreSelect}
+            />
+          </div>
+        )}
+
         {/* Loading */}
-        {isPending && hasQuery && <LoadingSpinner />}
+        {isPending && isFiltering && <LoadingSpinner />}
 
         {/* Results */}
-        {!isPending && hasQuery && (
+        {!isPending && isFiltering && (
           <div className="pt-4">
             {hasResults ? (
               <>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-3 font-medium">
-                  「<span className="text-amber-600 dark:text-amber-400 font-bold">{activeQuery}</span>」が登場するエピソード：
+                  <span className="text-amber-600 dark:text-amber-400 font-bold">{resultLabel}</span>
+                  {' '}のエピソード：
                   <span className="font-bold text-slate-700 dark:text-slate-300 ml-1">{filteredEpisodes.length}件</span>
                 </p>
+                {/* Genre filter strip when query is active */}
+                {hasQuery && (
+                  <div className="mb-4">
+                    <GenreFilter
+                      selectedGenre={selectedGenre}
+                      episodeCounts={genreEpisodeCounts}
+                      onSelect={handleGenreSelect}
+                    />
+                  </div>
+                )}
                 <div className="flex flex-col gap-4">
                   {filteredEpisodes.map((ep, i) => (
                     <EpisodeCard
@@ -184,7 +240,18 @@ export default function AnimeSearch({ episodes }: Props) {
                 </div>
               </>
             ) : (
-              <NoResults query={activeQuery} />
+              <>
+                {hasQuery && (
+                  <div className="mb-4">
+                    <GenreFilter
+                      selectedGenre={selectedGenre}
+                      episodeCounts={genreEpisodeCounts}
+                      onSelect={handleGenreSelect}
+                    />
+                  </div>
+                )}
+                <NoResults query={activeQuery} />
+              </>
             )}
           </div>
         )}
