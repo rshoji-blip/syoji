@@ -229,7 +229,7 @@ export default function AnimeSearch({ episodes }: Props) {
               <>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-3 font-medium">
                   <span className="text-amber-600 dark:text-amber-400 font-bold">{resultLabel}</span>
-                  {' '}のエピソード：
+                  {' '}に関連するエピソード：
                   <span className="font-bold text-slate-700 dark:text-slate-300 ml-1">{filteredEpisodes.length}件</span>
                 </p>
                 {/* Genre filter strip when query is active */}

@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import { Episode } from '@/types';
 import { normalizeString } from '@/lib/search';
+import { getYouTubeUrl, hasDirectVideo } from '@/lib/youtube';
 
 interface EpisodeCardProps {
   episode: Episode;
@@ -54,12 +55,19 @@ function formatDate(dateStr: string): string {
 
 export default function EpisodeCard({ episode, highlightQuery, index }: EpisodeCardProps) {
   const theme = SEASON_THEMES[(episode.season - 1) % SEASON_THEMES.length];
+  const youtubeUrl = getYouTubeUrl(episode.title);
+  const hasDirect = hasDirectVideo(episode.title);
 
   const matchingCharacters = useMemo(() => {
     if (!highlightQuery) return new Set<string>();
     const norm = normalizeString(highlightQuery);
     return new Set(episode.characters.filter(c => normalizeString(c).includes(norm)));
   }, [episode.characters, highlightQuery]);
+
+  const isTitleMatch = useMemo(() => {
+    if (!highlightQuery) return false;
+    return normalizeString(episode.title).includes(normalizeString(highlightQuery));
+  }, [episode.title, highlightQuery]);
 
   return (
     <div
@@ -108,12 +116,16 @@ export default function EpisodeCard({ episode, highlightQuery, index }: EpisodeC
           </div>
 
           {/* Title */}
-          <h3 className="text-sm font-black text-slate-800 dark:text-slate-100 leading-snug mb-1.5 line-clamp-2">
-            {episode.title}
+          <h3 className={`text-sm font-black leading-snug mb-1.5 line-clamp-2 ${
+            isTitleMatch
+              ? 'text-amber-700 dark:text-amber-300'
+              : 'text-slate-800 dark:text-slate-100'
+          }`}>
+            {isTitleMatch ? highlightText(episode.title, highlightQuery) : episode.title}
           </h3>
 
           {/* Characters */}
-          <div className="flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-1 mb-2">
             {episode.characters.map((char) => {
               const isMatch = matchingCharacters.has(char);
               return (
@@ -130,6 +142,24 @@ export default function EpisodeCard({ episode, highlightQuery, index }: EpisodeC
               );
             })}
           </div>
+
+          {/* YouTube button */}
+          <a
+            href={youtubeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black transition-all duration-150 hover:scale-105 active:scale-95 shadow-sm ${
+              hasDirect
+                ? 'bg-red-500 hover:bg-red-600 text-white'
+                : 'bg-slate-100 hover:bg-red-50 text-slate-500 hover:text-red-600 dark:bg-slate-700 dark:text-slate-400 dark:hover:bg-red-900/30 dark:hover:text-red-400 border border-slate-200 dark:border-slate-600'
+            }`}
+          >
+            <svg className="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+            <span>{hasDirect ? '動画を見る' : 'YouTubeで探す'}</span>
+          </a>
         </div>
       </div>
     </div>

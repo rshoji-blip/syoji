@@ -1,6 +1,29 @@
 import Fuse from 'fuse.js';
 import { Episode } from '@/types';
 
+// Kanji→kana + katakana loanword→English alternatives for common search terms
+const QUERY_ALIASES: Record<string, string[]> = {
+  '新聞': ['しんぶん', 'newspaper'],
+  '電車': ['でんしゃ', 'train'],
+  '料理': ['りょうり', 'cook'],
+  '動物': ['どうぶつ', 'animal'],
+  '友達': ['ともだち', 'friend'],
+  '誕生日': ['たんじょうび', 'birthday'],
+  '音楽': ['おんがく', 'music'],
+  'レース': ['race', 'racer'],
+  'スポーツ': ['sport'],
+  'ピザ': ['pizza'],
+  'アイス': ['ice cream'],
+  'ロケット': ['rocket'],
+  'バルーン': ['balloon'],
+  'マジック': ['magic'],
+  'ロボット': ['robot'],
+  'コンサート': ['concert'],
+  'パーティー': ['party'],
+  'クリスマス': ['christmas'],
+  'ハロウィン': ['halloween'],
+};
+
 export function hiraganaToKatakana(str: string): string {
   return str.replace(/[ぁ-ゖ]/g, (ch) =>
     String.fromCharCode(ch.charCodeAt(0) + 0x60)
@@ -58,11 +81,43 @@ function fuzzyMatchCharacters(
   return matched;
 }
 
+function getSearchQueries(query: string): string[] {
+  const base = query.trim();
+  const queries = new Set([normalizeString(base)]);
+  const aliases = QUERY_ALIASES[base] ?? [];
+  aliases.forEach((a) => queries.add(normalizeString(a)));
+  return Array.from(queries);
+}
+
+function matchesKeyword(text: string, queries: string[]): boolean {
+  const norm = normalizeString(text);
+  return queries.some((q) => norm.includes(q));
+}
+
 export function filterEpisodes(episodes: Episode[], query: string): Episode[] {
   if (!query.trim()) return [];
+
+  const queries = getSearchQueries(query);
   const normalizedChars = buildNormalizedChars(episodes);
-  const matched = fuzzyMatchCharacters(normalizedChars, query);
-  return episodes.filter((ep) => ep.characters.some((c) => matched.has(c)));
+  const matchedChars = fuzzyMatchCharacters(normalizedChars, query);
+
+  const charMatches: Episode[] = [];
+  const keywordMatches: Episode[] = [];
+
+  for (const ep of episodes) {
+    const byChar = ep.characters.some((c) => matchedChars.has(c));
+    if (byChar) {
+      charMatches.push(ep);
+      continue;
+    }
+    const byTitle = matchesKeyword(ep.title, queries);
+    const byDesc = ep.description ? matchesKeyword(ep.description, queries) : false;
+    if (byTitle || byDesc) {
+      keywordMatches.push(ep);
+    }
+  }
+
+  return [...charMatches, ...keywordMatches];
 }
 
 export function getCharacterSuggestions(

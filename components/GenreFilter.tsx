@@ -17,6 +17,8 @@ const GENRE_COLORS: Record<string, { idle: string; active: string }> = {
   music:    { idle: 'bg-pink-100 text-pink-700 border-pink-200 hover:bg-pink-200 dark:bg-pink-900/20 dark:text-pink-300 dark:border-pink-800', active: 'bg-pink-500 text-white border-pink-600 shadow-pink-200/60' },
   nature:   { idle: 'bg-teal-100 text-teal-700 border-teal-200 hover:bg-teal-200 dark:bg-teal-900/20 dark:text-teal-300 dark:border-teal-800', active: 'bg-teal-500 text-white border-teal-600 shadow-teal-200/60' },
   events:   { idle: 'bg-rose-100 text-rose-700 border-rose-200 hover:bg-rose-200 dark:bg-rose-900/20 dark:text-rose-300 dark:border-rose-800', active: 'bg-rose-500 text-white border-rose-600 shadow-rose-200/60' },
+  work:     { idle: 'bg-amber-100 text-amber-700 border-amber-200 hover:bg-amber-200 dark:bg-amber-900/20 dark:text-amber-300 dark:border-amber-800', active: 'bg-amber-500 text-white border-amber-600 shadow-amber-200/60' },
+  emotions: { idle: 'bg-indigo-100 text-indigo-700 border-indigo-200 hover:bg-indigo-200 dark:bg-indigo-900/20 dark:text-indigo-300 dark:border-indigo-800', active: 'bg-indigo-500 text-white border-indigo-600 shadow-indigo-200/60' },
 };
 
 export default function GenreFilter({

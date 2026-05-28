@@ -106,6 +106,33 @@ export const GENRES: Genre[] = [
     ],
   },
   {
+    id: 'work',
+    label: 'おしごと',
+    emoji: '💼',
+    keywords: [
+      // Japanese
+      'おしごと', 'はたらく', 'ドアマン', 'えきちょう', 'やくわり', 'お手伝い',
+      'たすける', 'しんぶん', 'グロサリー', 'スーパー', '配達', 'レスキュー',
+      // English
+      'job', 'work', 'door monkey', 'station master', 'grocer', 'helper',
+      'stain remover', 'deliver', 'rescue', 'chef', 'assistant', 'janitor',
+      'plumber', 'doorman', 'master', 'takes a job',
+    ],
+  },
+  {
+    id: 'emotions',
+    label: 'こわい・きもち',
+    emoji: '😨',
+    keywords: [
+      // Japanese
+      'こわい', 'びっくり', '病気', 'びょうき', 'くらやみ', 'おばけ', 'まよう',
+      'おどろく', 'かなしい', 'なみだ', 'さびしい', '迷子', 'ないしょ', 'うそ',
+      // English
+      'scary', 'afraid', 'sick', 'dark', 'ghost', 'fear', 'lost', 'worry',
+      'creature', 'scare', 'fever', 'night', 'winded', 'trouble', 'uh oh',
+    ],
+  },
+  {
     id: 'events',
     label: 'イベント・きせつ',
     emoji: '🎉',
