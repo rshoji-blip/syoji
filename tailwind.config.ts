@@ -31,6 +31,8 @@ const config: Config = {
         'pop': 'pop 0.35s cubic-bezier(0.34,1.56,0.64,1)',
         'hat-sway': 'hatSway 4s ease-in-out infinite',
         'pulse-ring': 'pulseRing 2.5s ease-out infinite',
+        'george-bounce': 'georgeBounce 0.4s cubic-bezier(0.34,1.56,0.64,1)',
+        'pop-up': 'popUp 0.6s ease-out forwards',
       },
       keyframes: {
         fadeIn: {
@@ -65,6 +67,18 @@ const config: Config = {
         pulseRing: {
           '0%': { transform: 'scale(1)', opacity: '0.4' },
           '100%': { transform: 'scale(1.8)', opacity: '0' },
+        },
+        georgeBounce: {
+          '0%': { transform: 'scale(1)' },
+          '30%': { transform: 'scale(0.85) rotate(-6deg)' },
+          '60%': { transform: 'scale(1.15) rotate(4deg)' },
+          '80%': { transform: 'scale(0.97) rotate(-2deg)' },
+          '100%': { transform: 'scale(1) rotate(0deg)' },
+        },
+        popUp: {
+          '0%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+          '60%': { opacity: '1', transform: 'translateY(-20px) scale(1.2)' },
+          '100%': { opacity: '0', transform: 'translateY(-36px) scale(0.9)' },
         },
       },
     },

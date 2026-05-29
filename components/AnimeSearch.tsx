@@ -29,6 +29,7 @@ import EpisodeCard from './EpisodeCard';
 import NoResults from './NoResults';
 import LoadingSpinner from './LoadingSpinner';
 import GenreFilter from './GenreFilter';
+import GeorgeHero from './GeorgeHero';
 
 interface Props {
   episodes: Episode[];
@@ -223,27 +224,8 @@ export default function AnimeSearch({ episodes }: Props) {
               episodeCounts={genreEpisodeCounts}
               onSelect={handleGenreSelect}
             />
-            {/* Hero illustration */}
-            <div className="flex flex-col items-center py-8 gap-4 text-center animate-fade-in">
-              <div className="relative select-none">
-                <div className="absolute -top-8 left-1/2 -translate-x-1/2 text-4xl animate-float">🎩</div>
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-yellow-300 via-amber-400 to-orange-400 flex items-center justify-center shadow-xl border-4 border-white dark:border-slate-700">
-                  <span className="text-5xl animate-bounce-gentle">🐵</span>
-                </div>
-                <span className="absolute -right-2 top-0 text-xl animate-float-delayed select-none">🍌</span>
-                <span className="absolute -left-3 bottom-2 text-sm animate-float-slow select-none opacity-70">⭐</span>
-              </div>
-              <div className="bg-white dark:bg-slate-800 rounded-3xl px-6 py-4 shadow-md border-2 border-amber-100 dark:border-slate-700 max-w-[260px]">
-                <p className="text-slate-600 dark:text-slate-300 text-sm font-bold leading-relaxed">
-                  キャラクター名を入力するか<br />
-                  ジャンルをタップして<br />
-                  エピソードを探そう！
-                </p>
-                <div className="mt-2 flex justify-center gap-1 text-base">
-                  <span>🔍</span><span>🎩</span><span>🍌</span>
-                </div>
-              </div>
-            </div>
+            {/* Hero illustration — interactive */}
+            <GeorgeHero />
           </div>
         )}
 
