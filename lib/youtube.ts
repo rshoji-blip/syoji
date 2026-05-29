@@ -81,7 +81,7 @@ export function getYouTubeUrl(title: string): string {
 
 export function getThumbnailUrl(title: string): string | null {
   const id = getYouTubeId(title);
-  if (id) return `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
+  if (id) return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
   return null;
 }
 

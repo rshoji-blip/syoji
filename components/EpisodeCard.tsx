@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Episode } from '@/types';
 import { normalizeString } from '@/lib/search';
 import { getYouTubeUrl, hasDirectVideo, getThumbnailUrl } from '@/lib/youtube';
@@ -58,6 +58,9 @@ export default function EpisodeCard({ episode, highlightQuery, index }: EpisodeC
   const youtubeUrl = getYouTubeUrl(episode.title);
   const hasDirect = hasDirectVideo(episode.title);
   const thumbnailUrl = getThumbnailUrl(episode.title);
+  const [thumbnailFailed, setThumbnailFailed] = useState(false);
+
+  const showThumbnail = !thumbnailFailed && (thumbnailUrl ?? episode.thumbnail);
 
   const matchingCharacters = useMemo(() => {
     if (!highlightQuery) return new Set<string>();
@@ -80,13 +83,14 @@ export default function EpisodeCard({ episode, highlightQuery, index }: EpisodeC
         <div
           className={`w-[88px] h-[88px] rounded-2xl bg-gradient-to-br ${theme.gradient} flex-shrink-0 flex flex-col items-center justify-center shadow-md overflow-hidden relative`}
         >
-          {(thumbnailUrl || episode.thumbnail) ? (
+          {showThumbnail ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={thumbnailUrl ?? episode.thumbnail}
+              src={showThumbnail}
               alt={episode.title}
               className="w-full h-full object-cover"
               loading="lazy"
+              onError={() => setThumbnailFailed(true)}
             />
           ) : (
             <>
