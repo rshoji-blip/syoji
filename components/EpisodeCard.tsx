@@ -9,6 +9,8 @@ interface EpisodeCardProps {
   episode: Episode;
   highlightQuery: string;
   index: number;
+  isFavorite: boolean;
+  onToggleFavorite: (id: string) => void;
 }
 
 const SEASON_THEMES = [
@@ -53,7 +55,7 @@ function formatDate(dateStr: string): string {
   }
 }
 
-export default function EpisodeCard({ episode, highlightQuery, index }: EpisodeCardProps) {
+export default function EpisodeCard({ episode, highlightQuery, index, isFavorite, onToggleFavorite }: EpisodeCardProps) {
   const theme = SEASON_THEMES[(episode.season - 1) % SEASON_THEMES.length];
   const youtubeUrl = getYouTubeUrl(episode.title);
   const hasDirect = hasDirectVideo(episode.title);
@@ -94,7 +96,6 @@ export default function EpisodeCard({ episode, highlightQuery, index }: EpisodeC
             />
           ) : (
             <>
-              {/* Decorative circle */}
               <div className="absolute inset-0 flex items-center justify-center opacity-10">
                 <div className="w-16 h-16 rounded-full border-4 border-white" />
               </div>
@@ -108,7 +109,7 @@ export default function EpisodeCard({ episode, highlightQuery, index }: EpisodeC
 
         {/* Content */}
         <div className="flex-1 min-w-0">
-          {/* Episode badge + date */}
+          {/* Episode badge + date + heart */}
           <div className="flex items-center gap-1.5 mb-1.5 flex-wrap">
             <span
               className={`text-[10px] font-black text-white bg-gradient-to-r ${theme.gradient} px-2.5 py-0.5 rounded-full whitespace-nowrap shadow-sm`}
@@ -118,16 +119,36 @@ export default function EpisodeCard({ episode, highlightQuery, index }: EpisodeC
             <span className="text-[10px] text-slate-400 dark:text-slate-500 whitespace-nowrap font-medium">
               {formatDate(episode.date)}
             </span>
+            <button
+              onClick={(e) => { e.stopPropagation(); onToggleFavorite(episode.id); }}
+              className={`ml-auto flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-full transition-all duration-150 active:scale-90 ${
+                isFavorite
+                  ? 'text-red-500 bg-red-50 dark:bg-red-900/30'
+                  : 'text-slate-300 dark:text-slate-600 hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20'
+              }`}
+              aria-label={isFavorite ? 'お気に入りから削除' : 'お気に入りに追加'}
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill={isFavorite ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </button>
           </div>
 
           {/* Title */}
-          <h3 className={`text-sm font-black leading-snug mb-1.5 line-clamp-2 ${
+          <h3 className={`text-sm font-black leading-snug mb-1 line-clamp-2 ${
             isTitleMatch
               ? 'text-amber-700 dark:text-amber-300'
               : 'text-slate-800 dark:text-slate-100'
           }`}>
             {isTitleMatch ? highlightText(episode.title, highlightQuery) : episode.title}
           </h3>
+
+          {/* Synopsis */}
+          {episode.synopsis && (
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-snug mb-1.5 line-clamp-2">
+              {episode.synopsis}
+            </p>
+          )}
 
           {/* Characters */}
           <div className="flex flex-wrap gap-1 mb-2">

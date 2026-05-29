@@ -20,6 +20,7 @@ import {
   addToSearchHistory,
   clearSearchHistory,
 } from '@/lib/history';
+import { useFavorites } from '@/hooks/useFavorites';
 import Header from './Header';
 import SearchBar from './SearchBar';
 import CharacterTags from './CharacterTags';
@@ -37,10 +38,12 @@ export default function AnimeSearch({ episodes }: Props) {
   const [query, setQuery] = useState('');
   const [activeQuery, setActiveQuery] = useState('');
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+  const [showFavoritesView, setShowFavoritesView] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [recentSearches, setRecentSearches] = useState<SearchHistoryItem[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const { favorites, toggle, isFavorite, count: favoriteCount } = useFavorites();
 
   useEffect(() => {
     setRecentSearches(getSearchHistory());
@@ -62,10 +65,16 @@ export default function AnimeSearch({ episodes }: Props) {
   );
 
   const filteredEpisodes = useMemo(() => {
+    if (showFavoritesView) {
+      let pool = episodes.filter((ep) => favorites.has(ep.id));
+      if (activeQuery.trim()) pool = filterEpisodes(pool, activeQuery);
+      if (selectedGenre) pool = filterByGenre(pool, selectedGenre);
+      return pool;
+    }
     const byCharacter = filterEpisodes(episodes, activeQuery);
     const pool = activeQuery.trim() ? byCharacter : episodes;
     return selectedGenre ? filterByGenre(pool, selectedGenre) : pool.filter(() => activeQuery.trim());
-  }, [episodes, activeQuery, selectedGenre]);
+  }, [episodes, activeQuery, selectedGenre, showFavoritesView, favorites]);
 
   const handleQueryChange = useCallback((value: string) => {
     setQuery(value);
@@ -108,6 +117,10 @@ export default function AnimeSearch({ episodes }: Props) {
     setRecentSearches([]);
   }, []);
 
+  const handleToggleFavoritesView = useCallback(() => {
+    setShowFavoritesView((prev) => !prev);
+  }, []);
+
   useEffect(() => {
     const onClickOutside = (e: MouseEvent) => {
       if (
@@ -123,7 +136,7 @@ export default function AnimeSearch({ episodes }: Props) {
 
   const hasQuery = activeQuery.trim().length > 0;
   const hasGenre = selectedGenre !== null;
-  const isFiltering = hasQuery || hasGenre;
+  const isFiltering = hasQuery || hasGenre || showFavoritesView;
   const hasResults = filteredEpisodes.length > 0;
 
   const selectedGenreLabel = hasGenre
@@ -131,6 +144,13 @@ export default function AnimeSearch({ episodes }: Props) {
     : null;
 
   const resultLabel = (() => {
+    if (showFavoritesView) {
+      if (hasQuery && hasGenre)
+        return `お気に入り ×「${activeQuery}」× ${selectedGenreLabel?.emoji}${selectedGenreLabel?.label}`;
+      if (hasQuery) return `お気に入り ×「${activeQuery}」`;
+      if (hasGenre) return `お気に入り × ${selectedGenreLabel?.emoji} ${selectedGenreLabel?.label}`;
+      return 'お気に入り';
+    }
     if (hasQuery && hasGenre)
       return `「${activeQuery}」× ${selectedGenreLabel?.emoji}${selectedGenreLabel?.label}`;
     if (hasQuery) return `「${activeQuery}」`;
@@ -145,17 +165,38 @@ export default function AnimeSearch({ episodes }: Props) {
       {/* Sticky search section */}
       <div className="sticky top-0 z-40 bg-[#FFF8E1]/95 dark:bg-[#0f0f1a]/95 backdrop-blur-md shadow-sm border-b-2 border-amber-100 dark:border-slate-800">
         <div className="max-w-2xl mx-auto px-4 py-3">
-          <div ref={searchRef}>
-            <SearchBar
-              query={query}
-              suggestions={suggestions}
-              showSuggestions={showSuggestions}
-              onQueryChange={handleQueryChange}
-              onSearch={handleSearch}
-              onClear={handleClear}
-              onSuggestionClick={handleSearch}
-              onFocus={() => setShowSuggestions(true)}
-            />
+          <div ref={searchRef} className="flex items-center gap-2">
+            <div className="flex-1">
+              <SearchBar
+                query={query}
+                suggestions={suggestions}
+                showSuggestions={showSuggestions}
+                onQueryChange={handleQueryChange}
+                onSearch={handleSearch}
+                onClear={handleClear}
+                onSuggestionClick={handleSearch}
+                onFocus={() => setShowSuggestions(true)}
+              />
+            </div>
+            {/* Favorites toggle button */}
+            <button
+              onClick={handleToggleFavoritesView}
+              className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl text-[12px] font-black transition-all duration-150 active:scale-95 ${
+                showFavoritesView
+                  ? 'bg-red-500 text-white shadow-md'
+                  : favoriteCount > 0
+                  ? 'bg-red-50 dark:bg-red-900/20 text-red-500 border border-red-200 dark:border-red-800'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-700'
+              }`}
+              aria-label="お気に入りを見る"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill={showFavoritesView ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+              {favoriteCount > 0 && (
+                <span>{favoriteCount}</span>
+              )}
+            </button>
           </div>
         </div>
       </div>
@@ -163,7 +204,7 @@ export default function AnimeSearch({ episodes }: Props) {
       {/* Main content */}
       <div className="max-w-2xl mx-auto px-4 pb-10">
 
-        {/* Initial state (no query, no genre) */}
+        {/* Initial state (no query, no genre, not favorites) */}
         {!isFiltering && (
           <div className="pt-5 space-y-6">
             <CharacterTags
@@ -185,12 +226,10 @@ export default function AnimeSearch({ episodes }: Props) {
             {/* Hero illustration */}
             <div className="flex flex-col items-center py-8 gap-4 text-center animate-fade-in">
               <div className="relative select-none">
-                {/* Hat floating above George */}
                 <div className="absolute -top-8 left-1/2 -translate-x-1/2 text-4xl animate-float">🎩</div>
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-yellow-300 via-amber-400 to-orange-400 flex items-center justify-center shadow-xl border-4 border-white dark:border-slate-700">
                   <span className="text-5xl animate-bounce-gentle">🐵</span>
                 </div>
-                {/* Decorative elements */}
                 <span className="absolute -right-2 top-0 text-xl animate-float-delayed select-none">🍌</span>
                 <span className="absolute -left-3 bottom-2 text-sm animate-float-slow select-none opacity-70">⭐</span>
               </div>
@@ -208,8 +247,8 @@ export default function AnimeSearch({ episodes }: Props) {
           </div>
         )}
 
-        {/* Genre selected but no query — show genre filter header inline */}
-        {!hasQuery && hasGenre && (
+        {/* Genre selected but no query and not favorites — show genre filter header inline */}
+        {!hasQuery && hasGenre && !showFavoritesView && (
           <div className="pt-5 space-y-4">
             <GenreFilter
               selectedGenre={selectedGenre}
@@ -225,15 +264,40 @@ export default function AnimeSearch({ episodes }: Props) {
         {/* Results */}
         {!isPending && isFiltering && (
           <div className="pt-4">
+            {/* Favorites empty state */}
+            {showFavoritesView && !hasQuery && !hasGenre && filteredEpisodes.length === 0 && (
+              <div className="flex flex-col items-center py-12 gap-3 text-center animate-fade-in">
+                <div className="w-16 h-16 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-red-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                  </svg>
+                </div>
+                <p className="text-slate-500 dark:text-slate-400 font-bold text-sm">
+                  まだお気に入りがありません
+                </p>
+                <p className="text-slate-400 dark:text-slate-500 text-xs">
+                  エピソードの ♡ をタップして<br />また見たいリストに追加しよう！
+                </p>
+              </div>
+            )}
+
             {hasResults ? (
               <>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-3 font-medium">
                   <span className="text-amber-600 dark:text-amber-400 font-bold">{resultLabel}</span>
-                  {' '}に関連するエピソード：
-                  <span className="font-bold text-slate-700 dark:text-slate-300 ml-1">{filteredEpisodes.length}件</span>
+                  {showFavoritesView && !hasQuery && !hasGenre ? (
+                    <span className="ml-1 font-bold text-slate-700 dark:text-slate-300">
+                      {filteredEpisodes.length}件
+                    </span>
+                  ) : (
+                    <>
+                      {' '}に関連するエピソード：
+                      <span className="font-bold text-slate-700 dark:text-slate-300 ml-1">{filteredEpisodes.length}件</span>
+                    </>
+                  )}
                 </p>
-                {/* Genre filter strip when query is active */}
-                {hasQuery && (
+                {/* Genre filter strip */}
+                {(hasQuery || showFavoritesView) && (
                   <div className="mb-4">
                     <GenreFilter
                       selectedGenre={selectedGenre}
@@ -249,23 +313,27 @@ export default function AnimeSearch({ episodes }: Props) {
                       episode={ep}
                       highlightQuery={activeQuery}
                       index={i}
+                      isFavorite={isFavorite(ep.id)}
+                      onToggleFavorite={toggle}
                     />
                   ))}
                 </div>
               </>
             ) : (
-              <>
-                {hasQuery && (
-                  <div className="mb-4">
-                    <GenreFilter
-                      selectedGenre={selectedGenre}
-                      episodeCounts={genreEpisodeCounts}
-                      onSelect={handleGenreSelect}
-                    />
-                  </div>
-                )}
-                <NoResults query={activeQuery} />
-              </>
+              !showFavoritesView || hasQuery || hasGenre ? (
+                <>
+                  {(hasQuery || showFavoritesView) && (
+                    <div className="mb-4">
+                      <GenreFilter
+                        selectedGenre={selectedGenre}
+                        episodeCounts={genreEpisodeCounts}
+                        onSelect={handleGenreSelect}
+                      />
+                    </div>
+                  )}
+                  <NoResults query={activeQuery} />
+                </>
+              ) : null
             )}
           </div>
         )}

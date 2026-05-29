@@ -6,6 +6,7 @@ export interface Episode {
   date: string;
   thumbnail: string;
   description?: string;
+  synopsis?: string;
   characters: string[];
 }
 
