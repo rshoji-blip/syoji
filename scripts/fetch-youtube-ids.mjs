@@ -1,0 +1,238 @@
+/**
+ * fetch-youtube-ids.mjs
+ *
+ * Usage:
+ *   node scripts/fetch-youtube-ids.mjs <YOUR_YOUTUBE_API_KEY>
+ *
+ * What it does:
+ *   1. Reads all episode titles from data/anime-data.json
+ *   2. Fetches ALL videos from the @CuriousGeorgeJP channel via YouTube Data API
+ *   3. Matches video titles to episode titles (exact + normalized fuzzy)
+ *   4. Prints newly discovered IDs that are not already in lib/youtube.ts
+ *   5. Asks for confirmation, then rewrites lib/youtube.ts automatically
+ *
+ * Getting a free API key:
+ *   1. Go to https://console.cloud.google.com/
+ *   2. Create a project → Enable "YouTube Data API v3"
+ *   3. Credentials → Create API Key
+ *   4. (Optional) Restrict the key to YouTube Data API v3
+ */
+
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import readline from 'readline';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.resolve(__dirname, '..');
+
+// Channel ID for @CuriousGeorgeJP
+// (can also be found at https://www.youtube.com/@CuriousGeorgeJP/about)
+const CHANNEL_HANDLE = 'CuriousGeorgeJP';
+
+const API_KEY = process.argv[2];
+if (!API_KEY) {
+  console.error('Usage: node scripts/fetch-youtube-ids.mjs <YOUR_YOUTUBE_API_KEY>');
+  process.exit(1);
+}
+
+// ── helpers ──────────────────────────────────────────────────────────────────
+
+function normalize(str) {
+  // hiragana → katakana, lowercase, strip spaces/punctuation for fuzzy compare
+  return str
+    .replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 0x60))
+    .toLowerCase()
+    .replace(/[\s　・。、！？!?]/g, '');
+}
+
+async function apiFetch(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`API error ${res.status}: ${await res.text()}`);
+  return res.json();
+}
+
+// ── Step 1: resolve channel ID from handle ───────────────────────────────────
+
+async function getChannelId() {
+  const url =
+    `https://www.googleapis.com/youtube/v3/channels` +
+    `?part=id&forHandle=${CHANNEL_HANDLE}&key=${API_KEY}`;
+  const data = await apiFetch(url);
+  if (!data.items?.length) throw new Error('Channel not found');
+  return data.items[0].id;
+}
+
+// ── Step 2: fetch all video IDs + titles from the channel ────────────────────
+
+async function getAllVideos(channelId) {
+  const videos = [];
+  let pageToken = '';
+
+  // First get the "uploads" playlist ID
+  const chanData = await apiFetch(
+    `https://www.googleapis.com/youtube/v3/channels` +
+    `?part=contentDetails&id=${channelId}&key=${API_KEY}`
+  );
+  const uploadsId = chanData.items[0].contentDetails.relatedPlaylists.uploads;
+
+  do {
+    const url =
+      `https://www.googleapis.com/youtube/v3/playlistItems` +
+      `?part=snippet&playlistId=${uploadsId}&maxResults=50` +
+      `&pageToken=${pageToken}&key=${API_KEY}`;
+    const data = await apiFetch(url);
+    for (const item of data.items) {
+      videos.push({
+        id: item.snippet.resourceId.videoId,
+        title: item.snippet.title,
+      });
+    }
+    pageToken = data.nextPageToken ?? '';
+    process.stdout.write(`\r  fetched ${videos.length} videos...`);
+  } while (pageToken);
+
+  console.log('');
+  return videos;
+}
+
+// ── Step 3: match videos → episode titles ────────────────────────────────────
+
+function matchVideos(videos, episodeTitles, existingIds) {
+  const existingTitles = new Set(Object.keys(existingIds));
+  const newMatches = {};
+
+  for (const ep of episodeTitles) {
+    if (existingTitles.has(ep)) continue; // already mapped
+
+    const normEp = normalize(ep);
+
+    for (const video of videos) {
+      const normVideo = normalize(video.title);
+
+      // Exact substring: video title contains the episode title (normalized)
+      if (normVideo.includes(normEp) || normEp.includes(normVideo)) {
+        // Prefer shorter video titles (closer match) when multiple candidates
+        if (
+          !newMatches[ep] ||
+          video.title.length < newMatches[ep].videoTitle.length
+        ) {
+          newMatches[ep] = { id: video.id, videoTitle: video.title };
+        }
+      }
+    }
+  }
+
+  return newMatches;
+}
+
+// ── Step 4: read existing IDs from lib/youtube.ts ────────────────────────────
+
+function readExistingIds() {
+  const src = fs.readFileSync(path.join(ROOT, 'lib/youtube.ts'), 'utf8');
+  const ids = {};
+  const re = /['"]([^'"]+)['"]\s*:\s*['"]([A-Za-z0-9_\-]{11})['"]/g;
+  let m;
+  while ((m = re.exec(src))) ids[m[1]] = m[2];
+  return ids;
+}
+
+// ── Step 5: rewrite lib/youtube.ts ───────────────────────────────────────────
+
+function rewriteYoutubeTs(existingIds, newMatches) {
+  // Merge
+  const all = { ...existingIds };
+  for (const [title, { id }] of Object.entries(newMatches)) {
+    all[title] = id;
+  }
+
+  const lines = Object.entries(all)
+    .map(([title, id]) => `  '${title}': '${id}',`)
+    .join('\n');
+
+  const src = `// Known YouTube video IDs for specific episodes, keyed by episode title
+// Auto-generated by scripts/fetch-youtube-ids.mjs — do not edit manually
+const YOUTUBE_IDS: Record<string, string> = {
+${lines}
+};
+
+export function getYouTubeId(title: string): string | null {
+  return YOUTUBE_IDS[title] ?? null;
+}
+
+export function getYouTubeUrl(title: string): string {
+  const id = getYouTubeId(title);
+  if (id) return \`https://www.youtube.com/watch?v=\${id}\`;
+  return \`https://www.youtube.com/results?search_query=\${encodeURIComponent(title + ' おさるのジョージ')}\`;
+}
+
+export function getThumbnailUrl(title: string): string | null {
+  const id = getYouTubeId(title);
+  if (id) return \`https://img.youtube.com/vi/\${id}/mqdefault.jpg\`;
+  return null;
+}
+
+export function hasDirectVideo(title: string): boolean {
+  return title in YOUTUBE_IDS;
+}
+`;
+
+  fs.writeFileSync(path.join(ROOT, 'lib/youtube.ts'), src);
+}
+
+// ── Main ─────────────────────────────────────────────────────────────────────
+
+async function main() {
+  const episodeData = JSON.parse(
+    fs.readFileSync(path.join(ROOT, 'data/anime-data.json'), 'utf8')
+  );
+  const episodeTitles = episodeData.map(e => e.title);
+  const existingIds = readExistingIds();
+
+  console.log(`Episodes in data: ${episodeTitles.length}`);
+  console.log(`Already mapped:   ${Object.keys(existingIds).length}`);
+  console.log(`Remaining:        ${episodeTitles.length - Object.keys(existingIds).length}`);
+  console.log('');
+
+  console.log('Resolving channel ID...');
+  const channelId = await getChannelId();
+  console.log(`Channel ID: ${channelId}`);
+
+  console.log('Fetching channel videos...');
+  const videos = await getAllVideos(channelId);
+  console.log(`Total videos on channel: ${videos.length}`);
+  console.log('');
+
+  console.log('Matching videos to episodes...');
+  const newMatches = matchVideos(videos, episodeTitles, existingIds);
+  const count = Object.keys(newMatches).length;
+
+  if (count === 0) {
+    console.log('No new matches found.');
+    return;
+  }
+
+  console.log(`\nFound ${count} new matches:\n`);
+  for (const [title, { id, videoTitle }] of Object.entries(newMatches)) {
+    console.log(`  ✓ "${title}"`);
+    console.log(`      YouTube: "${videoTitle}" (${id})`);
+  }
+
+  console.log('');
+  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  rl.question(`Apply all ${count} new IDs to lib/youtube.ts? [y/N] `, answer => {
+    rl.close();
+    if (answer.toLowerCase() === 'y') {
+      rewriteYoutubeTs(existingIds, newMatches);
+      console.log(`✓ lib/youtube.ts updated (${Object.keys(existingIds).length + count} total entries)`);
+      console.log('  Run: git add lib/youtube.ts && git commit -m "Update YouTube IDs"');
+    } else {
+      console.log('Aborted. No changes made.');
+    }
+  });
+}
+
+main().catch(err => {
+  console.error('Error:', err.message);
+  process.exit(1);
+});
