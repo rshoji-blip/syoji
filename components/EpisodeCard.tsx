@@ -3,7 +3,7 @@
 import { useMemo } from 'react';
 import { Episode } from '@/types';
 import { normalizeString } from '@/lib/search';
-import { getYouTubeUrl, hasDirectVideo } from '@/lib/youtube';
+import { getYouTubeUrl, hasDirectVideo, getThumbnailUrl } from '@/lib/youtube';
 
 interface EpisodeCardProps {
   episode: Episode;
@@ -57,6 +57,7 @@ export default function EpisodeCard({ episode, highlightQuery, index }: EpisodeC
   const theme = SEASON_THEMES[(episode.season - 1) % SEASON_THEMES.length];
   const youtubeUrl = getYouTubeUrl(episode.title);
   const hasDirect = hasDirectVideo(episode.title);
+  const thumbnailUrl = getThumbnailUrl(episode.title);
 
   const matchingCharacters = useMemo(() => {
     if (!highlightQuery) return new Set<string>();
@@ -79,10 +80,10 @@ export default function EpisodeCard({ episode, highlightQuery, index }: EpisodeC
         <div
           className={`w-[88px] h-[88px] rounded-2xl bg-gradient-to-br ${theme.gradient} flex-shrink-0 flex flex-col items-center justify-center shadow-md overflow-hidden relative`}
         >
-          {episode.thumbnail ? (
+          {(thumbnailUrl || episode.thumbnail) ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={episode.thumbnail}
+              src={thumbnailUrl ?? episode.thumbnail}
               alt={episode.title}
               className="w-full h-full object-cover"
               loading="lazy"
