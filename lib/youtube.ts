@@ -26,6 +26,10 @@ const YOUTUBE_IDS: Record<string, string> = {
   'スパイ大作戦': 'vKtDkVJSug4',
   'ちいさいいけのさかな': 'XurJyyUy7fw',
   '冬ものがたり': 'PzTWZcM-UwU',
+  'ハトさんのおうち': 'RpeGj1xVfpQ',
+  'うきうきボート': '_H_OgosGyPI',
+  'ウサギとかくれんぼ': 'sEiYgfhlNAM',
+  'ドアマンはラクじゃない': 'P73tUqbW0SM',
   // Season 2
   'オリをやぶれ': 'bVuTpSP0Js8',
   'ユニークだぞう': 'UcbFUTpOs1U',
@@ -38,9 +42,19 @@ const YOUTUBE_IDS: Record<string, string> = {
   'カーテンあけて、しめて': 'LiiM-DCJiPI',
   'ゆかいなぼうし': 'nn61b7-3TUs',
   'おしごと、おしごと': 'HOCaJAU5ALQ',
+  'そのゴミまったー！': 'h0ArvGrgmgs',
+  'ゴロンゴロン': 'z3JGvWmzTzU',
+  '見えなーい！': 'C7OiTFk-AOA',
+  'チャリ～ン！': 'taqQVFyINds',
+  'やった！ラッキー': 'UySM0V1_gsk',
+  '妖精になりたい': 'HTCxd6QW-sc',
+  '右かな？左かな？': 'buo5OPnEAf0',
   // Season 3
   'さあ、何こだ？': 'JTQev0e1saM',
   'まっかっか': 'VLTOxnHbfX0',
+  'にじのねっこ': '3rUfcxuY-fg',
+  'やさいはオイシイ': 'DEVAC1xPnKE',
+  'ミミズにょろにょろ（2）': 'PTEZ0GQJJA4',
   // Season 4+
   'ダブル・ハンドリー': 'QItbRa11r9M',
   'イエローパイレーツ': 'rdPcIynFcl8',
@@ -55,6 +69,11 @@ const YOUTUBE_IDS: Record<string, string> = {
   'ブタのおせわ': '9bD9LX0XLQE',
   'お泊り会': 'ja-B35RvWNo',
   'ビックリ・パーティー': 'TUVcFIhGwSM',
+  // Season 6
+  'サル・ウィ・ダンス': 'dhv7f7z_-UU',
+  'えー！ブタを１００ぴき！': 'jolv_ZHvlqI',
+  'ありりりりー！': 'cH5LJyfqZPE',
+  'ニョッキアルデンテ': '5GRC1Mn4aEI',
   // Season 7
   'とんでとんで': 'eTk5jlCMx3E',
   'オー・マイ・ホーム': 'RmhPK4RB36w',
