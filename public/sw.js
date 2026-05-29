@@ -1,35 +1,39 @@
-// Service Worker - オフラインキャッシュ対応
-const CACHE_NAME = 'syoji-v1'
+const CACHE = 'george-v1';
 
-// キャッシュするアセット (ビルド時に生成されるJSとCSSは動的に追加される)
-const STATIC_ASSETS = ['/', '/index.html']
+self.addEventListener('install', (e) => {
+  self.skipWaiting();
+  e.waitUntil(
+    caches.open(CACHE).then((c) => c.addAll(['/', '/manifest.json']))
+  );
+});
 
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
-  )
-  self.skipWaiting()
-})
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches
+      .keys()
+      .then((keys) =>
+        Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))
+      )
+      .then(() => self.clients.claim())
+  );
+});
 
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    )
-  )
-  self.clients.claim()
-})
+// Stale-while-revalidate for same-origin GETs
+self.addEventListener('fetch', (e) => {
+  if (e.request.method !== 'GET') return;
+  const url = new URL(e.request.url);
+  // Skip cross-origin (YouTube thumbnails, Google Fonts, etc.)
+  if (url.origin !== self.location.origin) return;
 
-self.addEventListener('fetch', (event) => {
-  // ネットワーク優先、失敗したらキャッシュにフォールバック
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        // 成功したレスポンスをキャッシュに追加
-        const clone = response.clone()
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone))
-        return response
+  e.respondWith(
+    caches.open(CACHE).then((cache) =>
+      cache.match(e.request).then((cached) => {
+        const network = fetch(e.request).then((res) => {
+          if (res.ok) cache.put(e.request, res.clone());
+          return res;
+        });
+        return cached || network;
       })
-      .catch(() => caches.match(event.request))
-  )
-})
+    )
+  );
+});
