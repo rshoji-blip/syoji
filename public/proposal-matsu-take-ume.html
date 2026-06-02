@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>データサイエンス教育 導入支援サービス｜松竹梅 提案ガイド</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif; background: #f5f5f0; color: #1a1a1a; }
+
+  /* ===== SLIDE BASE ===== */
+  .slide {
+    width: 100%;
+    max-width: 1280px;
+    min-height: 720px;
+    margin: 32px auto;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.10);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    page-break-after: always;
+  }
+
+  /* ===== COVER ===== */
+  .slide-cover {
+    background: linear-gradient(135deg, #0f2540 0%, #1a3a5c 60%, #0f2540 100%);
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 60px;
+    gap: 24px;
+  }
+  .slide-cover .eyebrow { font-size: 13px; letter-spacing: .18em; opacity: .6; text-transform: uppercase; }
+  .slide-cover h1 { font-size: 44px; font-weight: 800; line-height: 1.25; }
+  .slide-cover .sub { font-size: 18px; opacity: .75; margin-top: 8px; }
+  .tier-badges { display: flex; gap: 16px; margin-top: 32px; justify-content: center; }
+  .tier-badge { padding: 10px 28px; border-radius: 40px; font-weight: 700; font-size: 18px; letter-spacing: .08em; }
+  .badge-matsu { background: #1b5e20; color: #e8f5e9; }
+  .badge-take  { background: #4a6741; color: #f1f8e9; }
+  .badge-ume   { background: #880e4f; color: #fce4ec; }
+
+  /* ===== SECTION HEADER ===== */
+  .slide-section-header {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px;
+  }
+  .section-label { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; opacity: .5; margin-bottom: 12px; }
+  .slide-section-header h2 { font-size: 52px; font-weight: 800; }
+  .slide-section-header p  { font-size: 20px; margin-top: 16px; opacity: .7; max-width: 640px; }
+  .accent-line { width: 64px; height: 5px; border-radius: 3px; margin: 20px auto 0; }
+
+  /* tier colors */
+  .matsu { color: #1b5e20; }
+  .take  { color: #4a6741; }
+  .ume   { color: #880e4f; }
+  .accent-matsu { background: #1b5e20; }
+  .accent-take  { background: #4a6741; }
+  .accent-ume   { background: #880e4f; }
+  .bg-matsu { background: #f1f8f1; }
+  .bg-take  { background: #f4f8f1; }
+  .bg-ume   { background: #fdf2f7; }
+  .border-matsu { border-color: #1b5e20; }
+  .border-take  { border-color: #4a6741; }
+  .border-ume   { border-color: #880e4f; }
+
+  /* ===== CONTENT SLIDE ===== */
+  .slide-content { padding: 48px 60px; flex: 1; }
+  .slide-header { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 36px; }
+  .tier-pill { padding: 6px 20px; border-radius: 20px; font-size: 13px; font-weight: 700; letter-spacing: .1em; white-space: nowrap; }
+  .pill-matsu { background: #1b5e20; color: #fff; }
+  .pill-take  { background: #4a6741; color: #fff; }
+  .pill-ume   { background: #880e4f; color: #fff; }
+  .slide-header h2 { font-size: 30px; font-weight: 800; line-height: 1.3; }
+  .slide-header .school { font-size: 14px; opacity: .55; margin-top: 4px; }
+
+  /* ===== PROFILE BOX ===== */
+  .profile-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+  .profile-item { padding: 16px 20px; border-radius: 8px; background: #f8f8f6; }
+  .profile-item .label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; opacity: .5; margin-bottom: 6px; }
+  .profile-item .value { font-size: 15px; font-weight: 700; }
+
+  /* ===== CHALLENGE / APPROACH ===== */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+  .box { border-radius: 10px; padding: 24px 26px; }
+  .box h3 { font-size: 12px; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 14px; opacity: .55; }
+  .box ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .box ul li { font-size: 14px; line-height: 1.55; padding-left: 18px; position: relative; }
+  .box ul li::before { content: '—'; position: absolute; left: 0; opacity: .4; }
+
+  .outcome-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .outcome-card { border-radius: 10px; padding: 20px; background: #f8f8f6; }
+  .outcome-card .num { font-size: 28px; font-weight: 800; line-height: 1; margin-bottom: 6px; }
+  .outcome-card .desc { font-size: 13px; line-height: 1.55; opacity: .75; }
+
+  /* ===== BEFORE / AFTER ===== */
+  .ba-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+  .ba-box { border-radius: 10px; padding: 24px; }
+  .ba-box .ba-label { font-size: 11px; letter-spacing: .15em; font-weight: 700; margin-bottom: 12px; }
+  .ba-box p { font-size: 14px; line-height: 1.65; }
+  .before-box { background: #f5f5f0; }
+  .after-box  { background: #e8f5e9; }
+
+  /* ===== FLOW SLIDE ===== */
+  .flow-wrap { display: flex; align-items: flex-start; gap: 0; margin-bottom: 32px; }
+  .flow-step { flex: 1; text-align: center; padding: 0 8px; position: relative; }
+  .flow-step:not(:last-child)::after {
+    content: '→';
+    position: absolute; right: -12px; top: 28px;
+    font-size: 20px; opacity: .35;
+  }
+  .flow-step .step-num { font-size: 11px; letter-spacing: .12em; opacity: .45; margin-bottom: 8px; }
+  .flow-step .step-icon { font-size: 28px; margin-bottom: 8px; }
+  .flow-step .step-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .flow-step .step-desc { font-size: 12px; opacity: .65; line-height: 1.5; }
+
+  /* ===== OVERVIEW MATRIX ===== */
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .matrix-table th { padding: 12px 16px; text-align: left; font-size: 12px; letter-spacing: .1em; background: #f0f0ec; font-weight: 600; }
+  .matrix-table td { padding: 14px 16px; border-bottom: 1px solid #eee; vertical-align: top; line-height: 1.55; }
+  .matrix-table tr:last-child td { border-bottom: none; }
+  .tag { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+  .tag-matsu { background: #e8f5e9; color: #1b5e20; }
+  .tag-take  { background: #f1f8e9; color: #4a6741; }
+  .tag-ume   { background: #fce4ec; color: #880e4f; }
+
+  /* ===== SLIDE NUMBER ===== */
+  .slide-num { position: absolute; bottom: 20px; right: 28px; font-size: 12px; opacity: .3; }
+
+  /* ===== PAGE DECORATIONS ===== */
+  .deco-bar { height: 5px; width: 100%; }
+  .deco-bar-matsu { background: linear-gradient(90deg, #1b5e20, #43a047); }
+  .deco-bar-take  { background: linear-gradient(90deg, #4a6741, #7cb342); }
+  .deco-bar-ume   { background: linear-gradient(90deg, #880e4f, #e91e63); }
+
+  .voice-box { border-left: 4px solid; padding: 16px 20px; margin-top: 20px; border-radius: 0 8px 8px 0; background: #f9f9f7; font-size: 14px; line-height: 1.7; font-style: italic; }
+  .voice-label { font-size: 11px; letter-spacing: .12em; opacity: .5; margin-bottom: 6px; font-style: normal; }
+
+  @media print {
+    body { background: #fff; }
+    .slide { margin: 0; box-shadow: none; page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     SLIDE 1: COVER
+     ============================================================ -->
+<div class="slide slide-cover">
+  <div class="eyebrow">Proposal for High Schools / Vol. 2026</div>
+  <h1>高校現場のための<br>データサイエンス教育<br>導入支援サービス</h1>
+  <div class="sub">学校の偏差値・課題レベルに合わせた 松竹梅 提案ガイド</div>
+  <div class="tier-badges">
+    <div class="tier-badge badge-matsu">🌲 松｜進学校・難関大志向</div>
+    <div class="tier-badge badge-take">🎋 竹｜中堅〜上位・継続重視</div>
+    <div class="tier-badge badge-ume">🌸 梅｜入門・特色科・スポット</div>
+  </div>
+  <div class="slide-num">01</div>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 2: 松竹梅 全体マトリクス
+     ============================================================ -->
+<div class="slide">
+  <div class="deco-bar" style="background: linear-gradient(90deg,#1b5e20,#4a6741,#880e4f);"></div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div>
+        <h2>学校タイプ別 事例マッチング一覧</h2>
+        <div class="school">課題レベルに合わせた最適な事例を選ぶための全体マップ</div>
+      </div>
+    </div>
+
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th>ランク</th>
+          <th>対象校プロフィール</th>
+          <th>推奨事例</th>
+          <th>提供価値のポイント</th>
+          <th>規模・期間</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tag tag-matsu">🌲 松</span></td>
+          <td>偏差値65以上 / 進学校<br>SSH・難関大志向</td>
+          <td><strong>Case 04</strong><br>大宮高校</td>
+          <td>Tableau×実社会データ<br>大学ゼミレベルのアウトプット</td>
+          <td>12週間フル<br>2トラック並走</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-take">🎋 竹①</span></td>
+          <td>偏差値50〜65 / 普通科<br>予算制約・自走ニーズ</td>
+          <td><strong>Case 02</strong><br>山口中央高校</td>
+          <td>対面+オンライン ハイブリッド<br>指導書・ルーブリックを学校資産に</td>
+          <td>対面3回<br>+隔週オンライン</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-take">🎋 竹②</span></td>
+          <td>偏差値50〜65 / 普通科<br>生成AI活用・グローバル志向</td>
+          <td><strong>Case 03</strong><br>蕨高校</td>
+          <td>AI×英語プレゼン<br>禁止ではなく"正しく使わせる"</td>
+          <td>2日間・4コマ<br>集中プログラム</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-take">🎋 竹③</span></td>
+          <td>DXハイスクール採択校<br>数学×情報 教科連携ニーズ</td>
+          <td><strong>Case 05</strong><br>郡山女子大附属</td>
+          <td>統計的考察×教科横断<br>DX予算の有効活用</td>
+          <td>ワークショップ<br>+ルーブリック納品</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-ume">🌸 梅①</span></td>
+          <td>偏差値〜50 / 商業科<br>探究が調べ学習止まり</td>
+          <td><strong>Case 01</strong><br>伊勢崎商業</td>
+          <td>SWOT×ペルソナで<br>3コマで「提案」まで完成</td>
+          <td>3コマ<br>スポット型</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-ume">🌸 梅②</span></td>
+          <td>偏差値〜50 / 総合学科<br>キャリア教育が軸</td>
+          <td><strong>Case 06</strong><br>城北つばさ</td>
+          <td>キャリア教育×データ探究<br>45分授業に収まる設計</td>
+          <td>45分×13回<br>年間シラバス</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="slide-num">02</div>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 3: 梅 セクションヘッダー
+     ============================================================ -->
+<div class="slide slide-section-header bg-ume">
+  <div class="deco-bar deco-bar-ume"></div>
+  <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px;">
+    <div class="section-label">Entry Level</div>
+    <h2 class="ume">🌸 梅</h2>
+    <p>探究が「調べ学習・感想文」止まりの学校へ<br>商業科・総合学科・職業系専門学科</p>
+    <div class="accent-line accent-ume"></div>
+    <p style="margin-top:28px; font-size:15px; color:#555;">
+      まず「小さな成功体験」を作る。短期間・低コストで<br>「データを根拠にした提案」の型を体感させる。
+    </p>
+  </div>
+  <div class="slide-num">03</div>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 4: 梅① Case 01 伊勢崎商業
+     ============================================================ -->
+<div class="slide">
+  <div class="deco-bar deco-bar-ume"></div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="tier-pill pill-ume">🌸 梅① Entry</div>
+      <div>
+        <h2>ビジネス思考 × データ探究モデル</h2>
+        <div class="school">Case 01｜群馬県立 伊勢崎商業高等学校 / 商業科</div>
+      </div>
+    </div>
+
+    <div class="profile-grid">
+      <div class="profile-item">
+        <div class="label">対象校タイプ</div>
+        <div class="value">商業科・情報ビジネス系列</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">偏差値目安</div>
+        <div class="value">〜 50 前後</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">期間・コスト感</div>
+        <div class="value">3コマ（最小単位）</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="box" style="background:#fdf2f7;">
+        <h3>学校が抱えていた課題</h3>
+        <ul>
+          <li>テーマが浅く毎年似た成果物に収束</li>
+          <li>単調なアプリ開発・調べ学習止まり</li>
+          <li>普通科の探究と差別化できる強みが言語化できない</li>
+          <li>課題設定から逆算する力の育成ができていない</li>
+        </ul>
+      </div>
+      <div class="box" style="background:#f8f8f6;">
+        <h3>解決策（アプローチ）</h3>
+        <ul>
+          <li>SWOT分析で地域・市場を構造的に把握</li>
+          <li>ペルソナ設計で顧客像を具体化・定量化</li>
+          <li>問いの立て方→データ検証→提案の3コマで完走</li>
+          <li>商業科の強みである「ビジネスフレーム」を探究の起点に</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ba-wrap">
+      <div class="ba-box before-box">
+        <div class="ba-label">BEFORE</div>
+        <p>「私たちは、地元のお店を盛り上げたいです」<br>→ 主観・印象論ベース。質疑応答で根拠を問われると詰まる。</p>
+      </div>
+      <div class="ba-box after-box">
+        <div class="ba-label">AFTER</div>
+        <p>「20代女性の来店比率が市平均より17pt低いのは土曜の駐車場混雑が原因。シャトル便の運行を提案します」<br>→ データを根拠に問いと施策が連動。</p>
+      </div>
+    </div>
+
+    <div class="outcome-grid">
+      <div class="outcome-card">
+        <div class="num ume">3コマ</div>
+        <div class="desc">最小コストで「問い→検証→提案」サイクルを習得</div>
+      </div>
+      <div class="outcome-card">
+        <div class="num ume">100%</div>
+        <div class="desc">全チームがデータ根拠付きの提案を完成</div>
+      </div>
+      <div class="outcome-card">
+        <div class="num ume">2本</div>
+        <div class="desc">外部コンテスト出品作品が生徒主導で誕生</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">04</div>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 5: 梅② Case 06 城北つばさ
+     ============================================================ -->
+<div class="slide">
+  <div class="deco-bar deco-bar-ume"></div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="tier-pill pill-ume">🌸 梅② Entry</div>
+      <div>
+        <h2>キャリア教育 × データ探究モデル</h2>
+        <div class="school">Case 06｜愛知県立 城北つばさ高等学校 / 総合学科（情報ビジネス系列）</div>
+      </div>
+    </div>
+
+    <div class="profile-grid">
+      <div class="profile-item">
+        <div class="label">対象校タイプ</div>
+        <div class="value">総合学科・多系列校</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">偏差値目安</div>
+        <div class="value">〜 50 前後</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">期間・コスト感</div>
+        <div class="value">45分 × 13回（年間授業枠内）</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="box" style="background:#fdf2f7;">
+        <h3>学校が抱えていた課題</h3>
+        <ul>
+          <li>「感想・思い込み」で終わる探究。客観的根拠が弱い</li>
+          <li>多様な系列を束ねる「軸」が不在</li>
+          <li>主体的に問いを立て、教科横断で探究する枠組みがない</li>
+          <li>「夢を語る」だけで、データで挑戦ルートを描けない</li>
+        </ul>
+      </div>
+      <div class="box" style="background:#f8f8f6;">
+        <h3>解決策（アプローチ）</h3>
+        <ul>
+          <li>4フェーズ×13回の情報探究シラバスを設計</li>
+          <li>Track A（進路探究型）/ Track B（日常生活型）の2系統</li>
+          <li>生成AIは「壁打ち相手」として活用、考察は自分の言葉で</li>
+          <li>キャリア教育と探究学習を「データ」軸で一本化</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ba-wrap">
+      <div class="ba-box before-box">
+        <div class="ba-label">BEFORE</div>
+        <p>「なんとなく、人と関わる仕事に就きたいです」<br>→ 主観・憧れベースの進路。具体的な挑戦ルートが描けない。</p>
+      </div>
+      <div class="ba-box after-box">
+        <div class="ba-label">AFTER</div>
+        <p>「求人データと将来予測から、10年後も伸びる仕事は◯◯。そこへ向けて、いまこの資格から挑戦します」<br>→ データを根拠に夢から逆算した客観的な挑戦ルート。</p>
+      </div>
+    </div>
+
+    <div class="outcome-grid">
+      <div class="outcome-card">
+        <div class="num ume">13回</div>
+        <div class="desc">既存の授業コマ数内で完走できる年間設計</div>
+      </div>
+      <div class="outcome-card">
+        <div class="num ume">2系統</div>
+        <div class="desc">進路探究型 / 日常生活型で全生徒が入りやすい</div>
+      </div>
+      <div class="outcome-card">
+        <div class="num ume">校訓連動</div>
+        <div class="desc">「夢に挑戦し、しなやかに生き抜く」をデータで支える</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">05</div>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 6: 竹 セクションヘッダー
+     ============================================================ -->
+<div class="slide slide-section-header bg-take">
+  <div class="deco-bar deco-bar-take"></div>
+  <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px;">
+    <div class="section-label">Standard Level</div>
+    <h2 class="take">🎋 竹</h2>
+    <p>探究はやっているが「深さ・継続性・教科連携」に壁がある学校<br>中堅〜上位普通科・DXハイスクール採択校</p>
+    <div class="accent-line accent-take"></div>
+    <p style="margin-top:28px; font-size:15px; color:#555;">
+      課題別に3事例を使い分け。<br>予算制約 / 生成AI活用 / DX予算活用——それぞれのニーズに最適解を。
+    </p>
+  </div>
+  <div class="slide-num">06</div>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 7: 竹① Case 02 山口中央
+     ============================================================ -->
+<div class="slide">
+  <div class="deco-bar deco-bar-take"></div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="tier-pill pill-take">🎋 竹① Standard</div>
+      <div>
+        <h2>DS 伴走 × 学校自走モデル</h2>
+        <div class="school">Case 02｜山口県立 山口中央高等学校 / 普通科</div>
+      </div>
+    </div>
+
+    <div class="profile-grid">
+      <div class="profile-item">
+        <div class="label">対象校タイプ</div>
+        <div class="value">普通科（予算制約・自走重視）</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">偏差値目安</div>
+        <div class="value">50 〜 65 前後</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">期間・コスト感</div>
+        <div class="value">対面3回 + 隔週オンライン</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="box" style="background:#f4f8f1;">
+        <h3>学校が抱えていた課題</h3>
+        <ul>
+          <li>大学生メンターではDS専門性が不足</li>
+          <li>高度な分析・統計指導まで踏み込めない</li>
+          <li>毎年同規模の外部支援を続けるのは予算的に難しい</li>
+          <li>外部依存を脱し、次年度から教員主導で継続したい</li>
+        </ul>
+      </div>
+      <div class="box" style="background:#f8f8f6;">
+        <h3>解決策（アプローチ）</h3>
+        <ul>
+          <li>対面（キックオフ・中間・最終）× オンライン（隔週30分）のハイブリッド</li>
+          <li>企業は「伴走者」、学校は「主役」の設計原則</li>
+          <li>指導書・教材一式・評価ルーブリックを学校資産として納品</li>
+          <li>毎年同じ企業を呼ばなくても回る仕組みを初年度から設計</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="outcome-grid">
+      <div class="outcome-card">
+        <div class="num take">予算内</div>
+        <div class="desc">対面+オンライン組み合わせでコスト抑制しながら専門性を担保</div>
+      </div>
+      <div class="outcome-card">
+        <div class="num take">深化</div>
+        <div class="desc">大学生伴走では届かなかった統計・モデリング指導まで到達</div>
+      </div>
+      <div class="outcome-card">
+        <div class="num take">自走化</div>
+        <div class="desc">指導書・ルーブリック納品で翌年度から教員主導の継続体制を確立</div>
+      </div>
+    </div>
+
+    <div class="voice-box border-take" style="border-color:#4a6741;">
+      <div class="voice-label">VOICE FROM FACULTY（参考）</div>
+      「外部に頼り続けるのではなく、学校に残る指導の型を一緒に作っていただけたのが、来年度を見据えるうえで本当にありがたかった」
+    </div>
+  </div>
+  <div class="slide-num">07</div>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 8: 竹② Case 03 蕨
+     ============================================================ -->
+<div class="slide">
+  <div class="deco-bar deco-bar-take"></div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="tier-pill pill-take">🎋 竹② Standard</div>
+      <div>
+        <h2>生成AI × グローバルプレゼンモデル</h2>
+        <div class="school">Case 03｜埼玉県立 蕨高等学校 / 普通科</div>
+      </div>
+    </div>
+
+    <div class="profile-grid">
+      <div class="profile-item">
+        <div class="label">対象校タイプ</div>
+        <div class="value">普通科（グローバル・英語教育重視）</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">偏差値目安</div>
+        <div class="value">50 〜 65 前後</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">期間・コスト感</div>
+        <div class="value">2日間・4コマ 集中型</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="box" style="background:#f4f8f1;">
+        <h3>学校が抱えていた課題</h3>
+        <ul>
+          <li>海外研修成果を英語で論理的に発表させる指導法がない</li>
+          <li>生成AIの使用が広がる中、安全な活用ガイドラインが必要</li>
+          <li>「禁止」ではなく「正しく使いこなす」リテラシー育成をしたい</li>
+          <li>限られた授業時間で短期間に質を引き上げる枠組みが必要</li>
+        </ul>
+      </div>
+      <div class="box" style="background:#f8f8f6;">
+        <h3>解決策（アプローチ）</h3>
+        <ul>
+          <li>Day1：論理構成の設計 + AIで英作文・添削</li>
+          <li>Day2：AIスライド作成 + 本番プレゼン・質疑応答</li>
+          <li>AIは「下書き役」、生徒は「編集者・最終責任者」と役割を明確化</li>
+          <li>引用とファクトチェックを必須化してリテラシーを担保</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="outcome-grid">
+      <div class="outcome-card">
+        <div class="num take">2days</div>
+        <div class="desc">行事との両立が可能。年間を圧迫せずに導入できる集中型枠組み</div>
+      </div>
+      <div class="outcome-card">
+        <div class="num take">約3倍</div>
+        <div class="desc">AI添削サイクルにより平均推敲回数が従来比約3倍に増加</div>
+      </div>
+      <div class="outcome-card">
+        <div class="num take">定着</div>
+        <div class="desc">「丸投げ」ではなく確認・修正・引用を伴うAI活用が習慣化</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">08</div>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 9: 竹③ Case 05 郡山女子大附属
+     ============================================================ -->
+<div class="slide">
+  <div class="deco-bar deco-bar-take"></div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="tier-pill pill-take">🎋 竹③ Standard</div>
+      <div>
+        <h2>DXハイスクール × 統計的考察モデル</h2>
+        <div class="school">Case 05｜郡山女子大学附属高等学校 / DXハイスクール採択校</div>
+      </div>
+    </div>
+
+    <div class="profile-grid">
+      <div class="profile-item">
+        <div class="label">対象校タイプ</div>
+        <div class="value">DXハイスクール採択校</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">偏差値目安</div>
+        <div class="value">50 〜 65 前後</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">期間・コスト感</div>
+        <div class="value">ワークショップ + ルーブリック納品</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="box" style="background:#f4f8f1;">
+        <h3>学校が抱えていた課題</h3>
+        <ul>
+          <li>3D / メタバース等のツールを導入したが「作って終わり」になりがち</li>
+          <li>円グラフ等の単純な可視化に留まり、統計的考察まで至らない</li>
+          <li>数学（統計）と社会・情報の接点設計が見えていない</li>
+          <li>DX予算を「学びの深化」に直結させる方法を探している</li>
+        </ul>
+      </div>
+      <div class="box" style="background:#f8f8f6;">
+        <h3>解決策（アプローチ）</h3>
+        <ul>
+          <li>日常の疑問から問いを立て→収集→分析→提案の4ステップ設計</li>
+          <li>平均・分散・相関で「読み解き」を深める統計的考察を実装</li>
+          <li>数学・社会・情報の教科融合的探究への接続</li>
+          <li>4軸の評価ルーブリックを学校へ納品（教員が客観評価できる）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ba-wrap">
+      <div class="ba-box before-box">
+        <div class="ba-label">BEFORE</div>
+        <p>「制服のアンケート結果を円グラフにしてみました」<br>→ 可視化止まり。数学（統計）との接点が薄い。</p>
+      </div>
+      <div class="ba-box after-box">
+        <div class="ba-label">AFTER</div>
+        <p>「学年×満足度の相関は弱い負（-0.21）。むしろ部活帰宅時間が満足度を強く左右しています」<br>→ 統計指標を根拠に提案。数学・社会・情報の融合探究へ。</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">09</div>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 10: 松 セクションヘッダー
+     ============================================================ -->
+<div class="slide slide-section-header bg-matsu">
+  <div class="deco-bar deco-bar-matsu"></div>
+  <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px;">
+    <div class="section-label">Premium Level</div>
+    <h2 class="matsu">🌲 松</h2>
+    <p>難関大学進学・本格的DS教育を展開したい学校へ<br>進学校・SSH指定校・偏差値65以上</p>
+    <div class="accent-line accent-matsu"></div>
+    <p style="margin-top:28px; font-size:15px; color:#555;">
+      実社会のデータ×本物のビジネスツール×大学ゼミレベルのアウトプット。<br>総合型選抜の「武器」になる探究実績を作る。
+    </p>
+  </div>
+  <div class="slide-num">10</div>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 11: 松 Case 04 大宮高校
+     ============================================================ -->
+<div class="slide">
+  <div class="deco-bar deco-bar-matsu"></div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="tier-pill pill-matsu">🌲 松 Premium</div>
+      <div>
+        <h2>最高峰DS × Tableau 活用モデル</h2>
+        <div class="school">Case 04｜埼玉県立 大宮高等学校 / 進学校（普通科）</div>
+      </div>
+    </div>
+
+    <div class="profile-grid">
+      <div class="profile-item">
+        <div class="label">対象校タイプ</div>
+        <div class="value">進学校・SSH・難関大志向</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">偏差値目安</div>
+        <div class="value">65 以上</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">期間・コスト感</div>
+        <div class="value">12週間・2トラック並走</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="box" style="background:#f1f8f1;">
+        <h3>学校が抱えていた課題</h3>
+        <ul>
+          <li>トップリーダー育成にふさわしい実社会データを使った高度な分析が必要</li>
+          <li>Tableau の導入・指導ノウハウが学校内にほぼない</li>
+          <li>「生徒の楽しさ」と「教員が運用できる」の両立が難しい</li>
+          <li>探究が「調べ学習」を脱し、大学・社会に通用するレベルに達しない</li>
+        </ul>
+      </div>
+      <div class="box" style="background:#f8f8f6;">
+        <h3>解決策（アプローチ）</h3>
+        <ul>
+          <li>Jリーグ選手データで「生徒が前のめりになる」実データ演習</li>
+          <li>12週間で基礎習得→仮説立案→分析・可視化→最終提案まで一貫設計</li>
+          <li>Track A（生徒向けハンズオン）× Track B（教員向けTableau研修）を並走</li>
+          <li>最終提案「あなたが監督なら誰を起用するか」をデータで論証</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="outcome-grid">
+      <div class="outcome-card">
+        <div class="num matsu">12週</div>
+        <div class="desc">実社会データを使った本格DS学習を完走。全チームが最終提案を完遂。</div>
+      </div>
+      <div class="outcome-card">
+        <div class="num matsu">2トラック</div>
+        <div class="desc">生徒の習得と教員のTableau指導ノウハウ蓄積を同時並行で実現。</div>
+      </div>
+      <div class="outcome-card">
+        <div class="num matsu">100%</div>
+        <div class="desc">「楽しい」と回答した題材で進学校レベルの学習意欲を全期間維持。</div>
+      </div>
+    </div>
+
+    <div class="voice-box border-matsu" style="border-color:#1b5e20;">
+      <div class="voice-label">VOICE FROM FACULTY（参考）</div>
+      「生徒が楽しんでいるのに、出力されるアウトプットは大学のゼミレベル。Tableauという新しい武器が、進学校の探究と綺麗に噛み合った」
+    </div>
+  </div>
+  <div class="slide-num">11</div>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 12: アップセル フロー
+     ============================================================ -->
+<div class="slide">
+  <div class="deco-bar" style="background:linear-gradient(90deg,#880e4f,#4a6741,#1b5e20);"></div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div>
+        <h2>松竹梅 アップセルロードマップ</h2>
+        <div class="school">梅で信頼を作り → 竹でシステム化し → 松で差別化する</div>
+      </div>
+    </div>
+
+    <div class="flow-wrap" style="margin-bottom:40px;">
+      <div class="flow-step">
+        <div class="step-num">STEP 01</div>
+        <div class="step-icon">🌸</div>
+        <div class="step-title ume">梅：小さな成功体験</div>
+        <div class="step-desc">3コマ〜2日間で<br>「データで提案できた」を体感。<br>Case 01 / Case 06</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">STEP 02</div>
+        <div class="step-icon">🎋</div>
+        <div class="step-title take">竹：仕組みを整える</div>
+        <div class="step-desc">年間スケジュール組み込み・<br>自走体制・AI活用・教科連携。<br>Case 02 / 03 / 05</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">STEP 03</div>
+        <div class="step-icon">🌲</div>
+        <div class="step-title matsu">松：差別化を演出</div>
+        <div class="step-desc">Tableau×コンテスト×<br>ポートフォリオで総合型選抜へ。<br>Case 04</div>
+      </div>
+    </div>
+
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th>ランク</th>
+          <th>提案ターゲット</th>
+          <th>刺さる一言</th>
+          <th>事例</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tag tag-ume">🌸 梅</span></td>
+          <td>商業科・総合学科<br>偏差値〜50</td>
+          <td>「まず3コマで。やって終わりの探究が、コンテスト出品できる提案に変わります」</td>
+          <td>Case 01<br>Case 06</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-take">🎋 竹</span></td>
+          <td>中堅〜上位普通科<br>DXハイスクール 偏差値50〜65</td>
+          <td>「外部に頼り続けなくていい。学校に残る指導の型を一緒に作ります」</td>
+          <td>Case 02<br>Case 03<br>Case 05</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-matsu">🌲 松</span></td>
+          <td>難関進学校<br>偏差値65以上</td>
+          <td>「大学のゼミレベルのアウトプットが総合型選抜の武器になります」</td>
+          <td>Case 04</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="slide-num">12</div>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 13: CLOSING
+     ============================================================ -->
+<div class="slide slide-cover">
+  <div class="eyebrow">Next Step</div>
+  <h1>まず、御校の現状を<br>聞かせてください</h1>
+  <div class="sub">課題のレベルに合わせて、最適な事例・プランをご提案します</div>
+  <div style="margin-top:40px; display:flex; gap:32px; justify-content:center; flex-wrap:wrap;">
+    <div style="background:rgba(255,255,255,.1); border-radius:12px; padding:24px 32px; text-align:left; min-width:200px;">
+      <div style="font-size:12px; letter-spacing:.15em; opacity:.5; margin-bottom:8px;">PHASE A</div>
+      <div style="font-weight:700; font-size:16px; margin-bottom:6px;">ヒアリング・設計</div>
+      <div style="font-size:13px; opacity:.7;">現状把握 / カリキュラム設計<br>年間スケジュール調整</div>
+    </div>
+    <div style="background:rgba(255,255,255,.1); border-radius:12px; padding:24px 32px; text-align:left; min-width:200px;">
+      <div style="font-size:12px; letter-spacing:.15em; opacity:.5; margin-bottom:8px;">PHASE B</div>
+      <div style="font-weight:700; font-size:16px; margin-bottom:6px;">実施・伴走</div>
+      <div style="font-size:13px; opacity:.7;">授業デリバリー<br>対面 + オンライン伴走</div>
+    </div>
+    <div style="background:rgba(255,255,255,.1); border-radius:12px; padding:24px 32px; text-align:left; min-width:200px;">
+      <div style="font-size:12px; letter-spacing:.15em; opacity:.5; margin-bottom:8px;">PHASE C / D</div>
+      <div style="font-weight:700; font-size:16px; margin-bottom:6px;">発表・定着・自走</div>
+      <div style="font-size:13px; opacity:.7;">コンテスト出品支援<br>指導書納品 / 自走計画</div>
+    </div>
+  </div>
+  <div class="slide-num">13</div>
+</div>
+
+</body>
+</html>
