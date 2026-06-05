@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAMURAI U-SCHOOL サービス説明資料</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+    background: #111;
+    color: #fff;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .slide-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+  }
+  .slide.active { display: flex; flex-direction: column; }
+
+  /* ===== NAV ===== */
+  .nav {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 100;
+    align-items: center;
+  }
+  .nav button {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+    transition: background 0.2s;
+  }
+  .nav button:hover { background: rgba(255,255,255,0.3); }
+  .nav span {
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  /* ===== COMMON ===== */
+  .footer {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .red { color: #e63329; }
+  .orange { color: #f97316; }
+
+  /* ===== SLIDE 1 — COVER ===== */
+  .s1 {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .s1-inner { position: relative; }
+  .s1 .logo-mark {
+    font-size: 15px;
+    letter-spacing: 6px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .s1 .main-title {
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .s1 .sub-title {
+    font-size: 22px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 4px;
+    margin-bottom: 40px;
+  }
+  .s1 .date-badge {
+    display: inline-block;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 8px 24px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 2px;
+  }
+  .s1-deco {
+    position: absolute;
+    top: -60px; right: -80px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(230,51,41,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ===== SLIDE 2 — 会社概要 ===== */
+  .s2 {
+    background: linear-gradient(180deg, #0d1117 0%, #161b22 100%);
+    flex-direction: column;
+    padding: 0;
+  }
+  .slide-header {
+    background: linear-gradient(90deg, #e63329 0%, #c0392b 100%);
+    padding: 16px 40px;
+    font-size: 13px;
+    letter-spacing: 4px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  .slide-body {
+    flex: 1;
+    padding: 30px 40px 50px;
+    display: flex;
+    flex-direction: column;
+  }
+  .s2 .tagline {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 28px;
+    color: #fff;
+  }
+  .s2 .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 40px;
+    margin-bottom: 20px;
+  }
+  .s2 .info-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 8px 0;
+    font-size: 14px;
+  }
+  .s2 .info-label {
+    color: rgba(255,255,255,0.5);
+    min-width: 100px;
+    flex-shrink: 0;
+  }
+  .s2 .info-value { font-weight: 500; }
+  .s2 .dx-badge {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-left: 3px solid #e63329;
+    padding: 10px 16px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.7;
+    margin-top: 8px;
+  }
+
+  /* ===== SLIDE 3 — 法人導入企業 ===== */
+  .s3 {
+    background: linear-gradient(180deg, #0d1117 0%, #161b22 100%);
+  }
+  .s3 .center-text {
+    text-align: center;
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 30px;
+  }
+  .logo-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    padding: 10px 0;
+  }
+  .logo-box {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ===== SLIDE 4 — 文教分野実績 ===== */
+  .s4 {
+    background: linear-gradient(180deg, #0d1117 0%, #161b22 100%);
+  }
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+  }
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .card-tag {
+    display: inline-block;
+    background: #e63329;
+    color: #fff;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+  .card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+  .card p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.8;
+  }
+  .card .label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 10px;
+    margin-bottom: 2px;
+  }
+
+  /* ===== SLIDE 5 — 団体加入 ===== */
+  .s5 { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); }
+
+  /* ===== SLIDE 6 — 強み ===== */
+  .s6 { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); }
+  .strength-lead {
+    font-size: 15px;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 24px;
+    line-height: 1.7;
+  }
+  .strength-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .strength-card {
+    background: linear-gradient(135deg, rgba(230,51,41,0.1) 0%, rgba(255,255,255,0.04) 100%);
+    border: 1px solid rgba(230,51,41,0.3);
+    border-radius: 8px;
+    padding: 24px 20px;
+    position: relative;
+  }
+  .strength-num {
+    font-size: 40px;
+    font-weight: 900;
+    color: rgba(230,51,41,0.2);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .strength-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+  }
+  .strength-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #fff;
+  }
+  .strength-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.8;
+  }
+
+  /* ===== SLIDE 7 — 事業一覧 ===== */
+  .s7 { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); }
+  .biz-lead { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 20px; line-height: 1.7; }
+  .biz-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 16px;
+  }
+  .biz-col-header {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .biz-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .biz-item-tag {
+    font-size: 10px;
+    color: #e63329;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+  }
+  .biz-item-title { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+  .biz-item-desc { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+  /* ===== SLIDE 8 — U-SCHOOL ===== */
+  .s8 { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); }
+  .uscool-lead {
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 30px;
+    padding: 12px 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.04);
+  }
+  .feature-list { display: flex; flex-direction: column; gap: 14px; }
+  .feature-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .feature-num {
+    background: #e63329;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 900;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .feature-content {}
+  .feature-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .feature-desc { font-size: 12px; color: rgba(255,255,255,0.6); }
+
+  /* ===== SLIDE 9 — 講師 ===== */
+  .s9 { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); }
+  .teacher-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .teacher-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+  }
+  .teacher-stat {
+    font-size: 48px;
+    font-weight: 900;
+    color: #e63329;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .teacher-stat-label { font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+  .teacher-desc { font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.8; }
+
+  /* ===== SLIDE 10-14 — ソリューション ===== */
+  .sol-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .sol-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .sol-icon {
+    width: 40px; height: 40px;
+    background: #e63329;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+  .sol-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; line-height: 1.4; }
+  .sol-desc { font-size: 11px; color: rgba(255,255,255,0.65); line-height: 1.8; }
+
+  /* ===== SLIDE 15 — 担当者 ===== */
+  .s15 { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); }
+  .staff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .staff-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .staff-role { font-size: 10px; color: #e63329; letter-spacing: 1px; margin-bottom: 6px; }
+  .staff-name { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+  .staff-desc { font-size: 11px; color: rgba(255,255,255,0.65); line-height: 1.8; }
+
+  /* ===== SLIDE 16 — コンテンツ ===== */
+  .s16 { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); }
+  .content-sections { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .content-section {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .content-section-tag {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 8px;
+  }
+  .content-section-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  .content-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .pill {
+    background: rgba(230,51,41,0.15);
+    border: 1px solid rgba(230,51,41,0.3);
+    color: #e63329;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+  .content-desc { font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.8; }
+
+  /* ===== SLIDE 17 — 導入の流れ ===== */
+  .s17 { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); }
+  .flow-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+  .flow-step {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 20px 16px;
+    position: relative;
+  }
+  .flow-step:not(:last-child)::after {
+    content: '▶';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #e63329;
+    font-size: 14px;
+    z-index: 2;
+  }
+  .flow-num {
+    font-size: 11px;
+    color: #e63329;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+  .flow-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .flow-desc { font-size: 11px; color: rgba(255,255,255,0.65); line-height: 1.8; }
+
+  /* ===== SLIDE 18 — カリキュラム ===== */
+  .s18 { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); }
+  .curr-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .curr-table th {
+    background: rgba(230,51,41,0.2);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 8px 10px;
+    text-align: center;
+    font-size: 11px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 600;
+  }
+  .curr-table td {
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 7px 10px;
+    color: rgba(255,255,255,0.75);
+    vertical-align: middle;
+    line-height: 1.5;
+  }
+  .curr-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  .curr-table .unit-num {
+    background: #e63329;
+    color: #fff;
+    border-radius: 50%;
+    width: 20px; height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .curr-table .check { color: #4ade80; font-weight: 700; }
+
+  /* ===== SLIDE 19 — 料金 ===== */
+  .s19 { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); }
+  .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .price-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .price-card-header {
+    background: linear-gradient(90deg, #e63329, #c0392b);
+    padding: 14px 16px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .price-amount {
+    font-size: 28px;
+    font-weight: 900;
+    color: #fff;
+    padding: 16px 16px 8px;
+  }
+  .price-amount span { font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.6); }
+  .price-features {
+    padding: 0 16px 16px;
+    list-style: none;
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+  }
+  .price-features li {
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    line-height: 1.5;
+  }
+  .price-features li::before { content: '✓'; color: #e63329; flex-shrink: 0; }
+  .price-note { font-size: 10px; color: rgba(255,255,255,0.4); padding: 0 16px 12px; line-height: 1.7; }
+
+  /* ===== SLIDE 20 — スケジュール ===== */
+  .s20 { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); }
+  .sched-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .sched-table th {
+    background: rgba(230,51,41,0.2);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 12px 16px;
+    text-align: center;
+    font-weight: 700;
+  }
+  .sched-table td {
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 10px 14px;
+    color: rgba(255,255,255,0.8);
+    vertical-align: top;
+    line-height: 1.8;
+  }
+  .sched-table .price-cell {
+    font-size: 20px;
+    font-weight: 900;
+    color: #e63329;
+    text-align: center;
+  }
+  .sched-table .label-cell {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 600;
+    text-align: center;
+  }
+
+  /* ===== SLIDE 21 — END ===== */
+  .s21 {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+    justify-content: center;
+    align-items: center;
+  }
+  .s21 .end-inner { text-align: center; }
+  .s21 .samurai-logo {
+    font-size: 56px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+  }
+  .s21 .samurai-logo span { color: #e63329; }
+  .s21 .end-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+  }
+
+  /* slide title shared */
+  .slide-title {
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 6px;
+    color: #fff;
+  }
+  .slide-subtitle {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-container">
+
+  <!-- ===== SLIDE 1 ===== -->
+  <div class="slide s1 active">
+    <div class="s1-inner">
+      <div class="s1-deco"></div>
+      <div class="logo-mark">SAMURAI U-SCHOOL</div>
+      <div class="main-title">サービス説明資料</div>
+      <div class="sub-title">SERVICE OVERVIEW</div>
+      <div class="date-badge">2025年7月28日更新</div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │1</div>
+  </div>
+
+  <!-- ===== SLIDE 2 ===== -->
+  <div class="slide s2">
+    <div class="slide-header">会社概要</div>
+    <div class="slide-body">
+      <div class="slide-title" style="text-align:center; font-size:20px; margin-bottom:20px;">質の高いIT教育を、すべての人に</div>
+      <div class="s2 info-grid">
+        <div>
+          <div class="info-row"><span class="info-label">会社名</span><span class="info-value">株式会社SAMURAI</span></div>
+          <div class="info-row"><span class="info-label">代表</span><span class="info-value">羽田 吾立</span></div>
+          <div class="info-row"><span class="info-label">設立</span><span class="info-value">2015年3月19日</span></div>
+          <div class="info-row"><span class="info-label">従業員数</span><span class="info-value">133名</span></div>
+          <div class="info-row"><span class="info-label">事業内容</span><span class="info-value" style="font-size:12px;">文教分野向けIT教育/研修事業<br>個人向けIT教育/法人向けIT研修<br>IT教育プラットフォーム<br>人材紹介事業</span></div>
+          <div class="info-row"><span class="info-label">所在地</span><span class="info-value" style="font-size:12px;">東京都港区虎ノ門一丁目3番1号</span></div>
+        </div>
+        <div>
+          <div class="info-row"><span class="info-label">累計指導実績</span><span class="info-value" style="color:#e63329; font-size:20px; font-weight:900;">50,000名以上</span></div>
+          <div class="info-row"><span class="info-label">インストラクター数</span><span class="info-value" style="color:#e63329; font-size:20px; font-weight:900;">約400名</span></div>
+          <div class="info-row"><span class="info-label">累計法人導入実績</span><span class="info-value" style="color:#e63329; font-size:20px; font-weight:900;">500社以上</span></div>
+          <div class="info-row" style="border:none;"><span class="info-label">支援プロジェクト例</span></div>
+          <div style="margin-top:8px;">
+            <div class="dx-badge">
+              株式会社SAMURAIは、経済産業省が定めるデジタルトランスフォーメーション（以下DX）認定制度において、2023年12月1日付で「DX認定取得事業者」としての認定を取得しました。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │2</div>
+  </div>
+
+  <!-- ===== SLIDE 3 ===== -->
+  <div class="slide s3">
+    <div class="slide-header">法人導入企業例</div>
+    <div class="slide-body">
+      <p class="s3 center-text">SAMURAIでは、これまでに大手企業・教育機関をはじめとする<br>多数の法人様にIT・DX人材育成支援を行ってまいりました。</p>
+      <div class="logo-grid">
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+        <div class="logo-box">導入企業ロゴ</div>
+      </div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │3</div>
+  </div>
+
+  <!-- ===== SLIDE 4 ===== -->
+  <div class="slide s4">
+    <div class="slide-header">文教分野実績例</div>
+    <div class="slide-body">
+      <div class="three-col">
+        <div class="card">
+          <div class="card-tag">プログラミング基礎</div>
+          <h3>滋慶学園 福岡デザイン&テクノロジー専門学校 様</h3>
+          <p class="label">・受講対象者</p>
+          <p>専門学校の生徒</p>
+          <p class="label">・指導内容</p>
+          <p>WEBプログラミング、Python、JavaScriptの通年授業を実施</p>
+        </div>
+        <div class="card">
+          <div class="card-tag">DXハイスクール</div>
+          <h3>DXハイスクール採択高校</h3>
+          <p class="label">・受講対象者</p>
+          <p>教員および生徒</p>
+          <p class="label">・指導内容</p>
+          <p>教員研修、生徒向け授業<br>データ分析およびデータ分析ツール活用</p>
+        </div>
+        <div class="card">
+          <div class="card-tag">個人サポート</div>
+          <h3>マンツーマン</h3>
+          <p class="label">・受講対象者</p>
+          <p>前後の中学生/高校生/大学生</p>
+          <p class="label">・累計受講人数</p>
+          <p>700名前後</p>
+          <p class="label">・指導内容</p>
+          <p>総合型選抜支援/データ分析/Python基礎/デザイン/Web制作</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │4</div>
+  </div>
+
+  <!-- ===== SLIDE 5 ===== -->
+  <div class="slide s5">
+    <div class="slide-header">団体加入例</div>
+    <div class="slide-body">
+      <div class="three-col">
+        <div class="card">
+          <div class="card-tag">ICT CONNECT 21</div>
+          <h3>みらいのまなびを共創するICON21（アイコン21）</h3>
+          <p style="font-size:12px; color:rgba(255,255,255,0.7); line-height:1.8; margin-top:10px;">学習・教育オープンプラットフォームを実現するため、業界全体を巻き込んだ体制作りと、そこで実施すべきテーマの具体化を図るとともに、これを着実に実施し、教育情報化の普及促進につなげていく</p>
+        </div>
+        <div class="card">
+          <div class="card-tag">デジ連</div>
+          <h3>一般社団法人 デジタル人材共創連盟</h3>
+          <p style="font-size:12px; color:rgba(255,255,255,0.7); line-height:1.8; margin-top:10px;">高校生・中学生等の"デジタル教育情報"を発信する「デジ連」</p>
+        </div>
+        <div class="card">
+          <div class="card-tag">私塾界</div>
+          <h3>全国私塾情報センター 私塾界</h3>
+          <p style="font-size:12px; color:rgba(255,255,255,0.7); line-height:1.8; margin-top:10px;">学習塾、予備校、私立学校を始めとする教育サービス業界の最前線で働く皆様のために、最先端の情報をお届け</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │5</div>
+  </div>
+
+  <!-- ===== SLIDE 6 ===== -->
+  <div class="slide s6">
+    <div class="slide-header">SAMURAIの特徴/強み</div>
+    <div class="slide-body">
+      <p class="strength-lead">DXハイスクールを含む豊富な指導実績と全国400名超のIT講師、実践的なオリジナル教材で質の高いIT教育を実現</p>
+      <div class="strength-grid">
+        <div class="strength-card">
+          <div class="strength-num">01</div>
+          <div class="strength-label">強み</div>
+          <div class="strength-title">育成ノウハウ</div>
+          <div class="strength-desc">DXハイスクールを含む豊富な育成実績で培ってきたノウハウを活かし、多様なIT課題に合わせた教育を提供</div>
+        </div>
+        <div class="strength-card">
+          <div class="strength-num">02</div>
+          <div class="strength-label">強み</div>
+          <div class="strength-title">講師</div>
+          <div class="strength-desc">当社独自のトレーニングを受けた400名超の講師が学習者の目標達成を支援</div>
+        </div>
+        <div class="strength-card">
+          <div class="strength-num">03</div>
+          <div class="strength-label">強み</div>
+          <div class="strength-title">自社開発教材 学習支援システム</div>
+          <div class="strength-desc">インプットとアウトプットができる実践的な自社開発教材、質問や相談ができる学習支援システムで学習をサポート</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │6</div>
+  </div>
+
+  <!-- ===== SLIDE 7 ===== -->
+  <div class="slide s7">
+    <div class="slide-header">事業一覧</div>
+    <div class="slide-body">
+      <p class="biz-lead">法人向け・個人向けIT教育事業、人材紹介事業、メディア事業を通じて、DX人材の育成と社会全体のデジタルシフトの推進を目指しています。</p>
+      <div class="biz-grid">
+        <div>
+          <div class="biz-col-header">教育事業</div>
+          <div class="biz-item">
+            <div class="biz-item-tag">文教分野</div>
+            <div class="biz-item-title">フルオーダーメイド型 文教IT教育支援</div>
+          </div>
+          <div class="biz-item">
+            <div class="biz-item-tag">個人向け</div>
+            <div class="biz-item-title">日本初の専属マンツーマン、オーダーメイド型のプログラミングスクール</div>
+          </div>
+          <div class="biz-item">
+            <div class="biz-item-tag">法人向け</div>
+            <div class="biz-item-title">現役エンジニアによる個別指導 オーダーメイド型の法人IT研修</div>
+          </div>
+          <div class="biz-item">
+            <div class="biz-item-tag">個人向け・法人向け</div>
+            <div class="biz-item-title">ゼロから始める定額・学び放題のプログラミング学習サービス</div>
+          </div>
+        </div>
+        <div>
+          <div class="biz-col-header">人材紹介事業</div>
+          <div class="biz-item">
+            <div class="biz-item-tag">法人向け・個人向け</div>
+            <div class="biz-item-title">スクール卒業生向けにITエンジニア転職支援を行う転職エージェント</div>
+          </div>
+          <div class="biz-item">
+            <div class="biz-item-tag">法人向け・個人向け</div>
+            <div class="biz-item-title">20代を対象にした転職エージェント事業（23年10月リリース）</div>
+          </div>
+        </div>
+        <div>
+          <div class="biz-col-header">メディア事業</div>
+          <div class="biz-item">
+            <div class="biz-item-tag">法人向け</div>
+            <div class="biz-item-title">月間600万PVを誇る日本最大級のプログラミング学習メディア</div>
+          </div>
+          <div class="biz-item">
+            <div class="biz-item-tag">個人向け</div>
+            <div class="biz-item-title">登録者4万人・100以上のコンテンツを誇るプログラミング学習動画</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │7</div>
+  </div>
+
+  <!-- ===== SLIDE 8 ===== -->
+  <div class="slide s8">
+    <div class="slide-header">事業内容 — SAMURAI U-SCHOOL</div>
+    <div class="slide-body">
+      <div class="uscool-lead">教育現場のためのIT・プログラミングスキル育成支援サービス</div>
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="feature-num">01</div>
+          <div class="feature-content">
+            <div class="feature-title">教育経験豊かな現役エンジニアによる指導</div>
+            <div class="feature-desc">教育経験豊かな現役エンジニアによる指導</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-num">02</div>
+          <div class="feature-content">
+            <div class="feature-title">個々の課題に最適化したカリキュラム提供</div>
+            <div class="feature-desc">100種類以上の豊富な教材</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-num">03</div>
+          <div class="feature-content">
+            <div class="feature-title">進学・キャリアを見据えた実践力重視</div>
+            <div class="feature-desc">講師の指導×LMS提供、＋月1回の学習面談</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │8</div>
+  </div>
+
+  <!-- ===== SLIDE 9 ===== -->
+  <div class="slide s9">
+    <div class="slide-header">弊社が抱える講師について</div>
+    <div class="slide-body">
+      <div class="teacher-grid">
+        <div class="teacher-card">
+          <div class="teacher-stat">90%</div>
+          <div class="teacher-stat-label">3年以上の実務経験者が多数</div>
+          <div style="font-size:11px; color:#e63329; margin-bottom:8px; font-weight:700;">経験値</div>
+          <div class="teacher-desc">累計50,000人の育成実績で培ってきたノウハウを活かし、当社独自のトレーニングを受けた400名超の講師が学習者の目標達成を支援</div>
+        </div>
+        <div class="teacher-card">
+          <div class="teacher-stat" style="font-size:30px; padding-top:10px;">指導経験あり</div>
+          <div style="font-size:11px; color:#e63329; margin-bottom:8px; font-weight:700;">教育経験</div>
+          <div class="teacher-desc">当社独自の指導トレーニングはもちろんのこと、今までにマンツーマンレッスンや学校、職業訓練校、社内などで指導経験があるエンジニア・デザイナーが在籍しているので、学生教育に沿った指導が可能</div>
+        </div>
+        <div class="teacher-card">
+          <div class="teacher-stat" style="font-size:30px; padding-top:10px;">エンジニア経験あり</div>
+          <div style="font-size:11px; color:#e63329; margin-bottom:8px; font-weight:700;">最先端の技術</div>
+          <div class="teacher-desc">教育経験のみならず、エンジニアとして実際の開発経験がある方のみが在籍しているため、現場で使える実践的な技術や最先端の技術を指導可能</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │9</div>
+  </div>
+
+  <!-- ===== SLIDE 10 ===== -->
+  <div class="slide">
+    <div class="slide-header">ソリューションの具体例：「情報」系科目の強化</div>
+    <div class="slide-body">
+      <div class="sol-grid">
+        <div class="sol-card">
+          <div class="sol-icon">📚</div>
+          <div class="sol-title">「情報」系科目の授業</div>
+          <div class="sol-desc">学校や塾への「情報」系科目の授業支援<br>教員不足/工数不足の解消<br>（情報・AI・DS・プログラミングなど）<br>生徒の学習経験の向上（最新・実践的・社会との協働）</div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-icon">🔄</div>
+          <div class="sol-title">両面でのサポート</div>
+          <div class="sol-desc">現場の自走化を目的とした、両面でのサポート<br>本質的な課題解決に特化して、現場だけで遂行可能を実現</div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-icon">🎓</div>
+          <div class="sol-title">「情報」系科目の教員研修</div>
+          <div class="sol-desc">授業に合わせた教員研修を実施<br>研修後は自走して授業可能を実現<br>柔軟な研修実施スケジュール調整</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │10</div>
+  </div>
+
+  <!-- ===== SLIDE 11 ===== -->
+  <div class="slide">
+    <div class="slide-header">ソリューションの具体例：探究学習のサポート</div>
+    <div class="slide-body">
+      <div class="sol-grid">
+        <div class="sol-card">
+          <div class="sol-icon">🔍</div>
+          <div class="sol-title">生徒の興味・関心を引き出す探究活動からスタート</div>
+          <div class="sol-desc">"推しキャラのプロフィール自動生成"や"今日の運勢アプリ"、学習単語アプリなど、身近なテーマからプログラミング構築を体験<br>学校生活や地域のデータを活用し、課題を「自分ごと」として捉え、主体的な探究活動としてスタート</div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-icon">🎯</div>
+          <div class="sol-title">探究の成果を大学受験やキャリア形成に直結</div>
+          <div class="sol-desc">探究活動のプロセスと成果を記録し、大学入試（総合型選抜等）で活用できるポートフォリオの作成を支援<br>ルーブリックによる自己評価＋教師評価を組み込み、生徒の成長を可視化</div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-icon">🏫</div>
+          <div class="sol-title">探究学習プログラム作成の自走化支援</div>
+          <div class="sol-desc">数回にわたる研修で、探究の授業を自走化可能<br>テーマ出しなど、探究の授業において重要な項目に特化<br>同時に生成AIの知識を学ぶことができ、リテラシーも向上</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │11</div>
+  </div>
+
+  <!-- ===== SLIDE 12 ===== -->
+  <div class="slide">
+    <div class="slide-header">ソリューションの具体例：個別最適な学び</div>
+    <div class="slide-body">
+      <div class="sol-grid">
+        <div class="sol-card">
+          <div class="sol-icon">🏛️</div>
+          <div class="sol-title">理系・情報系大学の大学受験支援</div>
+          <div class="sol-desc">生徒一人ひとりの興味・関心や志望分野に合わせ、専門的なテーマの探究活動を個別指導で支援<br>個別レッスン形式で、①スキル習得→②活動成果（制作物）→③志望理由書作成までを一貫サポート</div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-icon">💻</div>
+          <div class="sol-title">キャリア形成に直結するITスキルの習得支援</div>
+          <div class="sol-desc">個別指導でプログラミング基礎・データ分析・資格取得を支援<br>文系・理系問わず必要となる「実務レベルのICTスキル」の獲得を支援<br>就職活動における競争力強化に貢献</div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-icon">🧭</div>
+          <div class="sol-title">一人ひとりのキャリアに合わせた伴走型支援</div>
+          <div class="sol-desc">探究活動を通して自己の適性や興味関心を深く理解し、将来のキャリアに繋げるための自己表現をサポート<br>高校での進路選択から大学での学び、さらにその先のキャリア形成まで、長期的な視点で生徒に伴走支援</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │12</div>
+  </div>
+
+  <!-- ===== SLIDE 13 ===== -->
+  <div class="slide">
+    <div class="slide-header">ソリューションの具体例：DXハイスクール導入の支援</div>
+    <div class="slide-body">
+      <div class="sol-grid">
+        <div class="sol-card">
+          <div class="sol-icon">🏫</div>
+          <div class="sol-title">教育ビジョンの実現を支援</div>
+          <div class="sol-desc">学校の強み・特色を活かした事業テーマの設定と貴校の教育ビジョンの実現をサポート<br>DXハイスクール事業のご導入（カリキュラム作成など）を支援</div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-icon">📋</div>
+          <div class="sol-title">貴校にあうカリキュラムや計画の支援</div>
+          <div class="sol-desc">「情報Ⅱ×探究」など、貴校にあった具体的なカリキュラムの作成<br>成果目標（KPI）や計画の策定を支援</div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-icon">🤝</div>
+          <div class="sol-title">授業運営や事業パートナーのご提案</div>
+          <div class="sol-desc">貴校の事業テーマに沿った授業、取り組み、外部パートナーをご提案。パートナーによる授業を提供<br>共同研究など、様々な連携プログラムの企画を支援</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │13</div>
+  </div>
+
+  <!-- ===== SLIDE 14 ===== -->
+  <div class="slide">
+    <div class="slide-header">ソリューションの具体例：校務DX</div>
+    <div class="slide-body">
+      <div class="sol-grid">
+        <div class="sol-card">
+          <div class="sol-icon">⚙️</div>
+          <div class="sol-title">DX推進による業務効率化と教育品質向上を両立</div>
+          <div class="sol-desc">教室運営・保護者対応・進捗共有のデジタル化による時間創出<br>校舎間・講師間の情報連携をスムーズにし、属人的な運営を脱却<br>DX導入後も現場が継続的に運用できるサポート体制を提供</div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-icon">👩‍🏫</div>
+          <div class="sol-title">教育現場のスキルアップを体系的に支援</div>
+          <div class="sol-desc">講師のICT活用力・授業設計力を高める研修プログラムを設計<br>生成AI・データ活用・情報共有ツールを使った研修コンテンツを提供<br>オンライン・オンデマンド型研修により、全講師が平準的にスキル習得可能</div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-icon">📝</div>
+          <div class="sol-title">教材作成の効率化と品質の標準化を支援</div>
+          <div class="sol-desc">教材テンプレート・題材データベースを整備し、講師の作業負荷を軽減<br>学年・科目・レベル別に教材構成を標準化し、指導品質を均一化</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │14</div>
+  </div>
+
+  <!-- ===== SLIDE 15 ===== -->
+  <div class="slide s15">
+    <div class="slide-header">サービスサポート担当者例</div>
+    <div class="slide-body">
+      <div class="staff-grid">
+        <div class="staff-card">
+          <div class="staff-role">プランニング責任者</div>
+          <div class="staff-name">草郷雅幸</div>
+          <div class="staff-desc">教育事業に20年以上携わり、通信教育企業で大学受験教室、ICT事業などを経験。執行役員ICT事業部長としてAI学習事業、STEM事業、総合探究学習事業、及び米国でのSTEM事業を推進。<br>経済産業省の「未来の教室とEdTech研究会」専門委員。「未来の教室」「Edu-Port」などで採択。</div>
+        </div>
+        <div class="staff-card">
+          <div class="staff-role">カリキュラム設計</div>
+          <div class="staff-name">教育業界経験者</div>
+          <div class="staff-desc">S氏：前職は高校教員。経験は教員向け研修の企画・運営から登壇、県教育委員会とともに県内の探究的な学びやSTEAM教育の推進など。<br><br>M氏：現在はエンジニア。経験は長年高校教員として活躍。その後、教員経験を活かして高校生の総合型選抜対策のアドバイザーや、フリースクールでの教育支援、STEAM教育の講習等を行う。</div>
+        </div>
+        <div class="staff-card">
+          <div class="staff-role">カスタマーサポート</div>
+          <div class="staff-name">西山有紀</div>
+          <div class="staff-desc">カスタマーサポート/サクセスグループリーダー<br>現在は10名前後のチームをまとめる。<br>教育業界のカスタマーサポート/サクセスに数年携わる。<br>お問い合わせ対応からFAQ、ナレッジリストの作成まで行い、顧客満足度の向上に努める。</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │15</div>
+  </div>
+
+  <!-- ===== SLIDE 16 ===== -->
+  <div class="slide s16">
+    <div class="slide-header">サービスのコンテンツ例</div>
+    <div class="slide-body">
+      <div class="content-sections">
+        <div class="content-section">
+          <div class="content-section-tag">基礎編 — ITリテラシーの土台づくり</div>
+          <div class="content-section-title">基礎知識からプログラミングを教育</div>
+          <div class="content-pills">
+            <span class="pill">情報Ⅰ・Ⅱ</span>
+            <span class="pill">ITパスポート</span>
+            <span class="pill">プログラミング</span>
+          </div>
+          <div class="content-desc">情報をはじめ、ITリテラシーやプログラミングの基礎を教育。また、ITパスポートの資格取得支援にも対応しており、個々のレベルや学びたい内容に応じて、教育支援が可能</div>
+        </div>
+        <div class="content-section">
+          <div class="content-section-tag">応用編 — 社会とつながる実践IT × 探究学習</div>
+          <div class="content-section-title">生成AIなどの最先端技術を教育</div>
+          <div class="content-pills">
+            <span class="pill">アプリ開発</span>
+            <span class="pill">データサイエンス</span>
+            <span class="pill">生成AI</span>
+            <span class="pill">探究学習</span>
+          </div>
+          <div class="content-desc">生徒一人ひとりの興味関心に合わせ、生成AI・アプリ開発・データ分析などの先端技術を学ぶとともに、探究学習や課題解決型プロジェクトにも対応。「なぜ学ぶのか」「社会にどう役立つのか」を実感できる構成で、将来の進路や自己理解を深め、発表・協働・自己表現の力も育成</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │16</div>
+  </div>
+
+  <!-- ===== SLIDE 17 ===== -->
+  <div class="slide s17">
+    <div class="slide-header">導入の流れと活用イメージ</div>
+    <div class="slide-body">
+      <div class="flow-grid">
+        <div class="flow-step">
+          <div class="flow-num">STEP 01</div>
+          <div class="flow-title">ヒアリング</div>
+          <div style="font-size:11px; color:#e63329; margin-bottom:6px; font-weight:600;">導入目的の明確化 × 課題整理</div>
+          <div class="flow-desc">教育方針や学習環境に合わせて、目的に沿ったご提案。講座設計は、現役エンジニアや教育設計の専門チームが監修</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">STEP 02</div>
+          <div class="flow-title">ご提案</div>
+          <div style="font-size:11px; color:#e63329; margin-bottom:6px; font-weight:600;">目的別で最適化提案</div>
+          <div class="flow-desc">教育方針や学習環境に合わせて、目的に沿ったご提案。講座設計は、現役エンジニアや教育設計の専門チームが監修</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">STEP 03</div>
+          <div class="flow-title">プログラム実施</div>
+          <div style="font-size:11px; color:#e63329; margin-bottom:6px; font-weight:600;">学習支援のプログラム実施</div>
+          <div class="flow-desc">LMSで100種類以上の教材から学びたい内容を選び、学習進捗を可視化。わからない部分はチャットでいつでも質問可能、AI先生が一次回答。詳細な回答は講師がQA対応しフォロー</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">STEP 04</div>
+          <div class="flow-title">効果測定</div>
+          <div style="font-size:11px; color:#e63329; margin-bottom:6px; font-weight:600;">導入効果を分析→改善提案</div>
+          <div class="flow-desc">テスト・課題提出状況・LMSログ・アンケートなどを通じて学習定着を測定。報告書（管理者向け）や学習者向けフィードバックレポートも作成可能。ご希望に応じて、次年度以降の改善提案や、新規講座の追加設計もご支援</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │17</div>
+  </div>
+
+  <!-- ===== SLIDE 18 ===== -->
+  <div class="slide s18">
+    <div class="slide-header">カリキュラム例（情報Iコース 4月〜11月 半年間 24回のケース）</div>
+    <div class="slide-body" style="padding-top:16px;">
+      <table class="curr-table">
+        <thead>
+          <tr>
+            <th style="width:30px;">#</th>
+            <th>単元</th>
+            <th>主な内容</th>
+            <th>Python演習</th>
+            <th>定期テスト・大学入試対策</th>
+            <th>実践・探究・振り返り</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="unit-num">1</span></td>
+            <td>情報社会と問題解決</td>
+            <td>情報社会の特徴と問題解決のプロセス</td>
+            <td>ー</td>
+            <td><span class="check">○</span> 用語/短答式演習</td>
+            <td>ー</td>
+          </tr>
+          <tr>
+            <td><span class="unit-num">2</span></td>
+            <td>情報モラルとセキュリティ</td>
+            <td>パスワード管理/暗号化 ネット詐欺の仕組み</td>
+            <td>ー</td>
+            <td><span class="check">○</span> 選択/記述</td>
+            <td>ミニケースワーク</td>
+          </tr>
+          <tr>
+            <td><span class="unit-num">3</span></td>
+            <td>情報の表現</td>
+            <td>2進数・文字コード・画像/音声のデジタル化</td>
+            <td>bit/byte演算演習</td>
+            <td><span class="check">○</span> 計算問題</td>
+            <td>ー</td>
+          </tr>
+          <tr>
+            <td><span class="unit-num">4</span></td>
+            <td>データの活用</td>
+            <td>統計/度数分布/ヒストグラム/相関係数</td>
+            <td>pandasでデータ操作</td>
+            <td><span class="check">○</span> 表の読み取り/統計</td>
+            <td>ミニ探究：自分の興味あるデータ探し</td>
+          </tr>
+          <tr>
+            <td><span class="unit-num">5</span></td>
+            <td>プログラミング基礎①</td>
+            <td>変数/代入/条件分岐</td>
+            <td>Python構文演習(if/else)</td>
+            <td><span class="check">○</span> 擬似コード読解</td>
+            <td>コードリーディングシート</td>
+          </tr>
+          <tr>
+            <td><span class="unit-num">6</span></td>
+            <td>プログラミング基礎②</td>
+            <td>繰り返し/リスト 入出力</td>
+            <td>Python演習(for/while)</td>
+            <td><span class="check">○</span> 出力予測／変数追跡</td>
+            <td>コーディング振り返り</td>
+          </tr>
+          <tr>
+            <td><span class="unit-num">7</span></td>
+            <td>模試＋探究振り返り</td>
+            <td>真理値表/論理回路 問題解決手法</td>
+            <td>Pythonで論理演算実装</td>
+            <td><span class="check">○</span> 回路図選択</td>
+            <td>自作アルゴリズムで小問題作成</td>
+          </tr>
+          <tr>
+            <td><span class="unit-num">8</span></td>
+            <td>アルゴリズムと倫理(総まとめ)</td>
+            <td>模試形式問題の実施と解説</td>
+            <td>応用コード実装(if＋for＋リスト)</td>
+            <td><span class="check">◎</span> 大学入試対応模試(選択・記述)</td>
+            <td>ルーブリック評価＋振り返り ポートフォリオ作成支援</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │18</div>
+  </div>
+
+  <!-- ===== SLIDE 19 ===== -->
+  <div class="slide s19">
+    <div class="slide-header">サービスプラン別のご料金</div>
+    <div class="slide-body">
+      <div class="price-grid">
+        <div class="price-card">
+          <div class="price-card-header">① LMSご提供</div>
+          <div class="price-amount">2,500<span>円/人</span></div>
+          <ul class="price-features">
+            <li>1名単位で提供人数の調整可能</li>
+            <li>100種類以上の豊富な教材</li>
+            <li>Q&A掲示板の使用</li>
+          </ul>
+          <div class="price-note">＊生徒：買取型となりご卒業まで使用可<br>＊教員：月額課金型</div>
+        </div>
+        <div class="price-card">
+          <div class="price-card-header">② 授業支援/研修</div>
+          <div class="price-amount">50,000<span>円/コマ</span></div>
+          <ul class="price-features">
+            <li>授業を実施</li>
+            <li>個別の質問にチャットサポート</li>
+            <li>教育経験豊富なエンジニア経験者が学習支援</li>
+          </ul>
+          <div class="price-note">＊時間は50〜90分を想定<br>＊上記時間を超えるケースはコマ数を追加して実施可</div>
+        </div>
+        <div class="price-card">
+          <div class="price-card-header">③ パッケージ型導入</div>
+          <div class="price-amount" style="font-size:22px; padding-top:20px;">お見積り</div>
+          <ul class="price-features">
+            <li>左記2つのプラン全て</li>
+            <li>フルオーダメイドカリキュラム</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │19</div>
+  </div>
+
+  <!-- ===== SLIDE 20 ===== -->
+  <div class="slide s20">
+    <div class="slide-header">スケジュール一例</div>
+    <div class="slide-body">
+      <table class="sched-table">
+        <thead>
+          <tr>
+            <th style="width:120px;"></th>
+            <th>12週間</th>
+            <th>24週間</th>
+            <th>36週間</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-cell">ご料金</td>
+            <td class="price-cell">600,000円</td>
+            <td class="price-cell">1,200,000円</td>
+            <td class="price-cell">1,800,000円</td>
+          </tr>
+          <tr>
+            <td class="label-cell">コース概要</td>
+            <td style="vertical-align:top;">
+              <div style="margin-bottom:10px; padding:8px; background:rgba(230,51,41,0.1); border-radius:4px; border-left:3px solid #e63329;">
+                <div style="font-size:11px; color:#e63329; font-weight:700; margin-bottom:4px;">情報I実践探究コース</div>
+                <div style="font-size:11px;">情報Iの基礎＋Python入門</div>
+              </div>
+              <div style="margin-bottom:10px; padding:8px; background:rgba(230,51,41,0.1); border-radius:4px; border-left:3px solid #e63329;">
+                <div style="font-size:11px; color:#e63329; font-weight:700; margin-bottom:4px;">AI実践型探究コース</div>
+                <div style="font-size:11px;">生成AI体験・プロンプト演習</div>
+              </div>
+              <div style="padding:8px; background:rgba(230,51,41,0.1); border-radius:4px; border-left:3px solid #e63329;">
+                <div style="font-size:11px; color:#e63329; font-weight:700; margin-bottom:4px;">情報Ⅱ実践Pythonコース</div>
+                <div style="font-size:11px;">Python応用と統計の演習</div>
+              </div>
+            </td>
+            <td style="vertical-align:top;">
+              <div style="margin-bottom:10px; padding:8px; background:rgba(230,51,41,0.1); border-radius:4px; border-left:3px solid #e63329;">
+                <div style="font-size:11px; color:#e63329; font-weight:700; margin-bottom:4px;">情報I実践探究コース</div>
+                <div style="font-size:11px;">情報I全範囲対応</div>
+              </div>
+              <div style="margin-bottom:10px; padding:8px; background:rgba(230,51,41,0.1); border-radius:4px; border-left:3px solid #e63329;">
+                <div style="font-size:11px; color:#e63329; font-weight:700; margin-bottom:4px;">AI実践型探究コース</div>
+                <div style="font-size:11px;">AI活用の探究活動 ポートフォリオ作成</div>
+              </div>
+              <div style="padding:8px; background:rgba(230,51,41,0.1); border-radius:4px; border-left:3px solid #e63329;">
+                <div style="font-size:11px; color:#e63329; font-weight:700; margin-bottom:4px;">情報Ⅱ実践Pythonコース</div>
+                <div style="font-size:11px;">構造化思考のトレーニング＋データ分析演習</div>
+              </div>
+            </td>
+            <td style="vertical-align:top;">
+              <div style="margin-bottom:10px; padding:8px; background:rgba(230,51,41,0.1); border-radius:4px; border-left:3px solid #e63329;">
+                <div style="font-size:11px; color:#e63329; font-weight:700; margin-bottom:4px;">情報I実践探究コース</div>
+                <div style="font-size:11px;">24週間プラン ＋ルーブリック評価など提供</div>
+              </div>
+              <div style="margin-bottom:10px; padding:8px; background:rgba(230,51,41,0.1); border-radius:4px; border-left:3px solid #e63329;">
+                <div style="font-size:11px; color:#e63329; font-weight:700; margin-bottom:4px;">AI実践型探究コース</div>
+                <div style="font-size:11px;">24週間プラン ＋発表方学習方法などを支援</div>
+              </div>
+              <div style="padding:8px; background:rgba(230,51,41,0.1); border-radius:4px; border-left:3px solid #e63329;">
+                <div style="font-size:11px; color:#e63329; font-weight:700; margin-bottom:4px;">情報Ⅱ実践Pythonコース</div>
+                <div style="font-size:11px;">24週間プラン ＋ルーブリック評価など提供</div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │20</div>
+  </div>
+
+  <!-- ===== SLIDE 21 ===== -->
+  <div class="slide s21">
+    <div class="end-inner">
+      <div class="samurai-logo"><span>SAMURAI</span> U-SCHOOL</div>
+      <div class="end-sub">Quality IT Education for Everyone</div>
+    </div>
+    <div class="footer">© 2025 SAMURAI, Inc. │21</div>
+  </div>
+
+</div>
+
+<!-- ===== NAV ===== -->
+<div class="nav">
+  <button onclick="prev()">◀ 前へ</button>
+  <span id="counter">1 / 21</span>
+  <button onclick="next()">次へ ▶</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let cur = 0;
+  const counter = document.getElementById('counter');
+
+  function show(n) {
+    slides[cur].classList.remove('active');
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add('active');
+    counter.textContent = (cur + 1) + ' / ' + slides.length;
+  }
+  function next() { show(cur + 1); }
+  function prev() { show(cur - 1); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') next();
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prev();
+  });
+</script>
+</body>
+</html>
