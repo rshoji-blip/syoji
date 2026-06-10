@@ -1,12 +1,12 @@
 'use client';
 
 import { GameState, GameAction, SkillId } from '@/lib/memory-kingdom-game/types';
-import { SET_DEFS } from '@/lib/memory-kingdom-game/constants';
 import CardGrid from '../game/CardGrid';
 import PlayerPanel from '../game/PlayerPanel';
 import SetProgressBar from '../game/SetProgressBar';
 import SkillBar from '../game/SkillBar';
 import KingdomDisplay from '../game/KingdomDisplay';
+import EffectsLayer from '../effects/EffectsLayer';
 
 interface Props {
   state: GameState;
@@ -72,46 +72,6 @@ export default function GameScreen({ state, dispatch, myPlayerIdx, isMyTurn, opp
 
   const hint = getHint();
 
-  // ── セットボーナスポップアップ ────────────────────────────────────────────
-  const SetBonusPopup = () => {
-    if (!pendingBonus) return null;
-    const setDef = SET_DEFS.find(s => s.type === pendingBonus.setType)!;
-    const bonusPlayer = players[pendingBonus.player];
-    return (
-      <div className="absolute inset-0 flex items-center justify-center z-50"
-        style={{ background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(4px)' }}>
-        <div
-          className="mx-8 rounded-3xl p-6 text-center"
-          style={{
-            background: `linear-gradient(145deg, ${setDef.color}33, ${setDef.color}11)`,
-            border: `2px solid ${setDef.color}88`,
-            boxShadow: `0 0 40px ${setDef.color}44`,
-          }}
-        >
-          <div className="text-6xl mb-2">{setDef.icon}</div>
-          <p className="text-white font-bold text-base mb-1">{setDef.name} コンプリート！</p>
-          <p
-            className="font-black text-2xl mb-1"
-            style={{ color: setDef.color }}
-          >
-            {setDef.bonusName}
-          </p>
-          <p className="text-gray-300 text-sm mb-1">{setDef.bonusDesc}</p>
-          <p className="text-gray-400 text-xs mb-4">{bonusPlayer.name} に適用</p>
-          <button
-            onClick={() => dispatch({ type: 'CLOSE_BONUS' })}
-            className="px-8 py-3 rounded-2xl font-black text-white text-lg active:scale-95"
-            style={{
-              background: `linear-gradient(135deg, ${setDef.color}, ${setDef.color}aa)`,
-              boxShadow: `0 4px 20px ${setDef.color}66`,
-            }}
-          >
-            OK！
-          </button>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div
@@ -208,8 +168,8 @@ export default function GameScreen({ state, dispatch, myPlayerIdx, isMyTurn, opp
         ))}
       </div>
 
-      {/* セットボーナスオーバーレイ */}
-      {phase === 'set_bonus' && <SetBonusPopup />}
+      {/* エフェクト演出レイヤー */}
+      <EffectsLayer state={state} dispatch={dispatch} myPlayerIdx={myPlayerIdx} />
     </div>
   );
 }

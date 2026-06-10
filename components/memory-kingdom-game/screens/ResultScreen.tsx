@@ -220,9 +220,19 @@ interface KingdomPhaseProps {
   dispatch: (a: GameAction) => void;
 }
 
+const RAIN_ICONS = ['💰', '🪵', '💎', '✨', '⭐'];
+const RAIN_COUNT = 18;
+
 function KingdomPhase({ players, p0res, p1res, dispatch }: KingdomPhaseProps) {
   const [animIdx, setAnimIdx] = useState(0);
+  const [showRain, setShowRain] = useState(false);
   const resources = [p0res, p1res];
+
+  useEffect(() => {
+    const t1 = setTimeout(() => setShowRain(true), 200);
+    const t2 = setTimeout(() => setShowRain(false), 2000);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, []);
 
   useEffect(() => {
     if (animIdx < 2) {
@@ -233,15 +243,53 @@ function KingdomPhase({ players, p0res, p1res, dispatch }: KingdomPhaseProps) {
 
   return (
     <div
-      className="w-full h-full flex flex-col overflow-y-auto"
+      className="w-full h-full flex flex-col overflow-y-auto relative"
       style={{ background: 'linear-gradient(175deg, #0a1a0a 0%, #0d2a0d 60%, #0a0a1a 100%)' }}
     >
-      <div className="pt-14 pb-4 flex flex-col items-center">
+      {/* resource rain particles */}
+      {showRain && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-10">
+          {Array.from({ length: RAIN_COUNT }, (_, i) => (
+            <div
+              key={i}
+              className="absolute mk-resource-rain text-xl"
+              style={{
+                left: `${5 + (i / RAIN_COUNT) * 90}%`,
+                top: '-20px',
+                ['--rot' as string]: `${-30 + (i % 7) * 12}deg`,
+                animationDelay: `${(i * 0.08)}s`,
+                animationDuration: `${0.8 + (i % 4) * 0.15}s`,
+              }}
+            >
+              {RAIN_ICONS[i % RAIN_ICONS.length]}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* level-up ring pulse (behind content) */}
+      <div className="absolute pointer-events-none overflow-hidden inset-0 z-0">
+        <div
+          className="mk-levelup-ring absolute rounded-full"
+          style={{
+            left: '50%',
+            top: '40%',
+            width: 200,
+            height: 200,
+            marginLeft: -100,
+            marginTop: -100,
+            border: '3px solid #22c55e',
+            boxShadow: '0 0 30px #22c55e66',
+          }}
+        />
+      </div>
+
+      <div className="pt-14 pb-4 flex flex-col items-center relative z-10">
         <p className="text-green-300 text-xs tracking-[0.3em] mb-1">KINGDOM GROWTH</p>
         <h2 className="text-white font-bold text-2xl">王国が成長した！</h2>
       </div>
 
-      <div className="px-5 space-y-4">
+      <div className="px-5 space-y-4 relative z-10">
         {players.map((player, i) => {
           const res = resources[i];
           const isVisible = animIdx > i;
@@ -307,7 +355,7 @@ function KingdomPhase({ players, p0res, p1res, dispatch }: KingdomPhaseProps) {
         })}
       </div>
 
-      <div className="px-5 py-8">
+      <div className="px-5 py-8 relative z-10">
         <button
           onClick={() => dispatch({ type: 'RESET' })}
           className="w-full py-4 rounded-2xl font-black text-xl text-white active:scale-95 transition-transform"

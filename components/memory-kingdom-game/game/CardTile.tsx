@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import { Card, GamePhase } from '@/lib/memory-kingdom-game/types';
 import { SET_DEFS } from '@/lib/memory-kingdom-game/constants';
 
@@ -18,12 +19,25 @@ export default function CardTile({
 }: Props) {
   const setDef = SET_DEFS.find(s => s.type === card.setType)!;
   const isVisible = card.revealed || card.scouted || isMageRevealed;
+  const [justMatched, setJustMatched] = useState(false);
+  const prevTakenRef = useRef(card.taken);
+
+  useEffect(() => {
+    if (!prevTakenRef.current && card.taken) {
+      setJustMatched(true);
+      setTimeout(() => setJustMatched(false), 900);
+    }
+    prevTakenRef.current = card.taken;
+  }, [card.taken]);
 
   if (card.taken) {
     return (
       <div
-        className="aspect-[3/4] rounded-lg"
-        style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+        className={`aspect-[3/4] rounded-lg${justMatched ? ' mk-card-glow' : ''}`}
+        style={{
+          background: justMatched ? `${setDef.color}22` : 'rgba(255,255,255,0.03)',
+          border: `1px solid ${justMatched ? setDef.color + '66' : 'rgba(255,255,255,0.06)'}`,
+        }}
       />
     );
   }
