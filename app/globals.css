@@ -59,3 +59,21 @@ body::before {
   transition-duration: 200ms;
   transition-timing-function: ease;
 }
+
+/* Memory Kingdom animations */
+@keyframes fall0 {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(140px) rotate(30deg); opacity: 0; }
+}
+@keyframes fall1 {
+  0%   { transform: translateY(0) rotate(-10deg); opacity: 1; }
+  100% { transform: translateY(160px) rotate(-40deg); opacity: 0; }
+}
+@keyframes fall2 {
+  0%   { transform: translateY(0) rotate(5deg); opacity: 1; }
+  100% { transform: translateY(150px) rotate(60deg); opacity: 0; }
+}
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+  40%            { transform: scale(1.2); opacity: 1; }
+}
