@@ -6,9 +6,11 @@ import CardTile from './CardTile';
 interface Props {
   state: GameState;
   dispatch: (a: GameAction) => void;
+  /** オンラインモード：自分のターンのみ操作可能にする */
+  isInteractive?: boolean;
 }
 
-export default function CardGrid({ state, dispatch }: Props) {
+export default function CardGrid({ state, dispatch, isInteractive = true }: Props) {
   const { phase, cards, currentPlayer, flippedIds, mageRevealIds } = state;
   const cp = currentPlayer;
   const oppIdx = cp === 0 ? 1 : 0;
@@ -32,6 +34,7 @@ export default function CardGrid({ state, dispatch }: Props) {
   }
 
   function isSelectable(cardId: number): boolean {
+    if (!isInteractive) return false;
     const card = cards.find(c => c.id === cardId)!;
     if (card.taken) return false;
     if (phase === 'playing') return !card.revealed;
@@ -40,13 +43,13 @@ export default function CardGrid({ state, dispatch }: Props) {
   }
 
   function isScoutTarget(cardId: number): boolean {
-    if (phase !== 'scout_target') return false;
+    if (!isInteractive || phase !== 'scout_target') return false;
     const card = cards.find(c => c.id === cardId)!;
     return !card.taken && !card.revealed;
   }
 
   function isStealTarget(cardId: number): boolean {
-    if (phase !== 'steal_target') return false;
+    if (!isInteractive || phase !== 'steal_target') return false;
     const card = cards.find(c => c.id === cardId)!;
     return card.taken && card.takenBy === oppIdx;
   }

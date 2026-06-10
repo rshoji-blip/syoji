@@ -6,6 +6,7 @@ import { SKILL_DEFS } from '@/lib/memory-kingdom-game/constants';
 
 interface Props {
   dispatch: (a: GameAction) => void;
+  onBack?: () => void;
 }
 
 interface PlayerSetup {
@@ -17,7 +18,7 @@ const PLAYER_COLORS = ['#f97316', '#3b82f6'] as const;
 const PLAYER_LABELS = ['プレイヤー1', 'プレイヤー2'] as const;
 const PLAYER_ICONS = ['⚔️', '🔮'] as const;
 
-export default function SetupScreen({ dispatch }: Props) {
+export default function SetupScreen({ dispatch, onBack }: Props) {
   const [step, setStep] = useState<0 | 1 | 2>(0); // 0=intro 1=P1 setup 2=P2 setup
   const [p1, setP1] = useState<PlayerSetup>({ name: 'プレイヤー1', skills: [] });
   const [p2, setP2] = useState<PlayerSetup>({ name: 'プレイヤー2', skills: [] });
@@ -90,6 +91,14 @@ export default function SetupScreen({ dispatch }: Props) {
           <p>🏰 勝利資源で王国を発展させよう</p>
         </div>
 
+        {onBack && (
+          <button
+            onClick={onBack}
+            className="mb-2 text-gray-500 text-sm underline"
+          >
+            ← モード選択に戻る
+          </button>
+        )}
         <button
           onClick={handleNext}
           className="mx-6 w-[calc(100%-48px)] py-4 rounded-2xl font-black text-xl text-white active:scale-95 transition-transform"

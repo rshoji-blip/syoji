@@ -11,11 +11,31 @@ import KingdomDisplay from '../game/KingdomDisplay';
 interface Props {
   state: GameState;
   dispatch: (a: GameAction) => void;
+  /**
+   * オンラインモード用。
+   * - myPlayerIdx: 自分の playerIdx（自分を常に下に表示する）
+   * - isMyTurn: 自分のターンかどうか（false のとき操作を無効化）
+   * - opponentName: 接続中の相手名
+   */
+  myPlayerIdx?: import('@/lib/memory-kingdom-game/types').PlayerIdx;
+  isMyTurn?: boolean;
+  opponentName?: string;
 }
 
-export default function GameScreen({ state, dispatch }: Props) {
+export default function GameScreen({ state, dispatch, myPlayerIdx, isMyTurn, opponentName }: Props) {
   const { phase, players, currentPlayer, pendingBonus, consecutiveMatches, log } = state;
   const cp = currentPlayer;
+
+  // オンライン時: 自分は常に下、相手は常に上
+  // ローカル時 : P0 が常に下
+  const bottomIdx = myPlayerIdx ?? 0;
+  const topIdx    = bottomIdx === 0 ? 1 : 0;
+
+  // オンラインモードかどうか
+  const isOnline = myPlayerIdx !== undefined;
+
+  // カード操作が有効か（ローカルは常にtrue、オンラインは自分のターンのみ）
+  const interactive = isOnline ? (isMyTurn ?? false) : true;
 
   function handleSkill(skillId: SkillId) {
     dispatch({ type: 'USE_SKILL', skillId });
@@ -23,6 +43,9 @@ export default function GameScreen({ state, dispatch }: Props) {
 
   // ── フェーズ別ヒントメッセージ ────────────────────────────────────────────
   function getHint(): { text: string; color: string } {
+    if (isOnline && !isMyTurn) {
+      return { text: `${players[cp].name} のターン中...`, color: '#64748b' };
+    }
     switch (phase) {
       case 'playing':
         return {
@@ -95,11 +118,17 @@ export default function GameScreen({ state, dispatch }: Props) {
       className="w-full h-full flex flex-col overflow-hidden relative"
       style={{ background: 'linear-gradient(180deg, #0b0f1a 0%, #131929 60%, #0d1117 100%)' }}
     >
-      {/* P2（上） */}
-      <PlayerPanel player={players[1]} isActive={cp === 1} side="top" />
+      {/* 上のプレイヤー（オンライン：相手 / ローカル：P2） */}
+      <PlayerPanel player={players[topIdx]} isActive={cp === topIdx} side="top" />
 
-      {/* ターンヒント */}
+      {/* ターンヒント + 通信インジケーター */}
       <div className="px-3 py-1 flex items-center gap-2">
+        {isOnline && (
+          <div
+            className="w-2 h-2 rounded-full flex-shrink-0"
+            style={{ background: '#22c55e', boxShadow: '0 0 6px #22c55e' }}
+          />
+        )}
         <div
           className="flex-1 py-1.5 px-3 rounded-xl text-center text-xs font-bold"
           style={{ background: 'rgba(255,255,255,0.04)', color: hint.color }}
@@ -122,35 +151,37 @@ export default function GameScreen({ state, dispatch }: Props) {
       {/* カードグリッド */}
       <div className="flex-1 flex items-center">
         <div className="w-full">
-          <CardGrid state={state} dispatch={dispatch} />
+          <CardGrid state={state} dispatch={dispatch} isInteractive={interactive} />
         </div>
       </div>
 
-      {/* P1のスキルバー（アクティブ時のみ） */}
+      {/* 下のプレイヤーのスキルバー */}
       <div
         className="transition-all"
-        style={{ opacity: cp === 0 ? 1 : 0.4 }}
+        style={{ opacity: interactive || cp === bottomIdx ? 1 : 0.4 }}
       >
         <div className="px-3 py-1">
           <p className="text-gray-500 text-[10px] text-center">
-            {cp === 0 ? '↑ スキル（P1）' : 'P2のターン中'}
+            {isOnline
+              ? (isMyTurn ? '↑ あなたのスキル' : '相手のターン中...')
+              : (cp === bottomIdx ? `↑ スキル（P${bottomIdx + 1}）` : `P${topIdx + 1}のターン中`)}
           </p>
         </div>
         <SkillBar
-          player={players[0]}
-          phase={cp === 0 ? phase : 'game_over'}
+          player={players[bottomIdx]}
+          phase={interactive ? phase : 'game_over'}
           onUseSkill={handleSkill}
         />
       </div>
 
-      {/* P1（下） */}
-      <PlayerPanel player={players[0]} isActive={cp === 0} side="bottom" />
+      {/* 下のプレイヤー（オンライン：自分 / ローカル：P1） */}
+      <PlayerPanel player={players[bottomIdx]} isActive={cp === bottomIdx} side="bottom" />
 
-      {/* P2スキルバー（P2ターン時に下に表示） */}
-      {cp === 1 && (
+      {/* ローカルモードのみ：上のプレイヤーがアクティブなら下にもスキルバー表示 */}
+      {!isOnline && cp === topIdx && (
         <div className="px-3 pb-1">
-          <p className="text-gray-500 text-[10px] text-center mb-1">↑ スキル（P2）</p>
-          <SkillBar player={players[1]} phase={phase} onUseSkill={handleSkill} />
+          <p className="text-gray-500 text-[10px] text-center mb-1">↑ スキル（P{topIdx + 1}）</p>
+          <SkillBar player={players[topIdx]} phase={phase} onUseSkill={handleSkill} />
         </div>
       )}
 
