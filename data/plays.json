@@ -1,0 +1,307 @@
+[
+  {
+    "id": "play_001",
+    "name": "いないいないばあ",
+    "age_min_months": 3,
+    "age_max_months": 18,
+    "weather_tags": ["全天候"],
+    "location_tags": ["室内"],
+    "style": "まったり",
+    "materials": ["なし"],
+    "steps": [
+      "赤ちゃんの正面に座る",
+      "両手で顔を覆い「いないいない…」とゆっくり言う",
+      "手をパッと開いて「ばあ！」と笑顔で見せる",
+      "繰り返しながらテンポを変えてみる"
+    ],
+    "reference_url": "https://www.youtube.com/results?search_query=いないいないばあ+赤ちゃん",
+    "effects": ["社会性の発達", "視覚追跡の発達"]
+  },
+  {
+    "id": "play_002",
+    "name": "ガラガラ・音あそび",
+    "age_min_months": 3,
+    "age_max_months": 12,
+    "weather_tags": ["全天候"],
+    "location_tags": ["室内"],
+    "style": "まったり",
+    "materials": ["ガラガラ", "音の鳴るおもちゃ"],
+    "steps": [
+      "赤ちゃんの視界でガラガラをゆっくり振る",
+      "左右・上下に動かして目で追わせる",
+      "赤ちゃんの手に持たせて自分で振らせてみる"
+    ],
+    "reference_url": "https://www.youtube.com/results?search_query=赤ちゃん+ガラガラ+音遊び",
+    "effects": ["聴覚発達", "手の協調運動"]
+  },
+  {
+    "id": "play_003",
+    "name": "うつぶせ遊び",
+    "age_min_months": 3,
+    "age_max_months": 9,
+    "weather_tags": ["全天候"],
+    "location_tags": ["室内"],
+    "style": "アクティブ",
+    "materials": ["プレイマット", "お気に入りのおもちゃ"],
+    "steps": [
+      "やわらかいマットに赤ちゃんをうつぶせにする",
+      "正面においもちゃを置いて興味を引く",
+      "1〜3分から始め、慣れたら時間を延ばす",
+      "嫌がったらすぐ仰向けに戻す"
+    ],
+    "reference_url": "https://www.youtube.com/results?search_query=赤ちゃん+うつぶせ+練習",
+    "effects": ["首・背中の筋力発達", "ずりばいの準備"]
+  },
+  {
+    "id": "play_004",
+    "name": "シール貼り",
+    "age_min_months": 18,
+    "age_max_months": 48,
+    "weather_tags": ["全天候"],
+    "location_tags": ["室内"],
+    "style": "まったり",
+    "materials": ["シール", "画用紙や台紙"],
+    "steps": [
+      "画用紙に大きな絵や枠を描く",
+      "シールを渡して好きなところに貼らせる",
+      "貼り終わったら「上手にできたね！」と褒める"
+    ],
+    "reference_url": "https://www.youtube.com/results?search_query=幼児+シール貼り+遊び",
+    "effects": ["指先の発達", "集中力"]
+  },
+  {
+    "id": "play_005",
+    "name": "新聞紙あそび",
+    "age_min_months": 18,
+    "age_max_months": 60,
+    "weather_tags": ["雨", "全天候"],
+    "location_tags": ["室内"],
+    "style": "アクティブ",
+    "materials": ["新聞紙（何枚でもOK）"],
+    "steps": [
+      "新聞紙を広げて「ビリビリしていいよ」と伝える",
+      "一緒にちぎって紙吹雪を作る",
+      "丸めてボールにして投げっこする",
+      "最後は一緒に片付けを楽しむ"
+    ],
+    "reference_url": "https://www.youtube.com/results?search_query=新聞紙+遊び+幼児",
+    "effects": ["手先の発達", "ストレス発散", "片付け習慣"]
+  },
+  {
+    "id": "play_006",
+    "name": "お家アスレチック",
+    "age_min_months": 18,
+    "age_max_months": 60,
+    "weather_tags": ["雨", "全天候"],
+    "location_tags": ["室内"],
+    "style": "大冒険",
+    "materials": ["クッション", "毛布", "椅子"],
+    "steps": [
+      "クッションを床に並べてジャンプ台を作る",
+      "毛布を椅子にかけてトンネルを作る",
+      "「よーいどん！」でコースを走り抜ける",
+      "親も一緒に挑戦して盛り上がる"
+    ],
+    "reference_url": "https://www.youtube.com/results?search_query=室内+アスレチック+幼児",
+    "effects": ["全身運動", "バランス感覚", "チャレンジ精神"]
+  },
+  {
+    "id": "play_007",
+    "name": "ごっこ遊び（おままごと）",
+    "age_min_months": 18,
+    "age_max_months": 72,
+    "weather_tags": ["全天候"],
+    "location_tags": ["室内"],
+    "style": "まったり",
+    "materials": ["おままごとセット", "なければ積み木や空容器"],
+    "steps": [
+      "「何を作ろうか？」と一緒に考える",
+      "子供が料理係、親がお客さん役になる",
+      "「いらっしゃいませ」「ください」などのやり取りを楽しむ",
+      "完成したらオーバーに「美味しい！」と喜ぶ"
+    ],
+    "reference_url": "https://www.youtube.com/results?search_query=おままごと+幼児+遊び方",
+    "effects": ["言語発達", "想像力", "社会性"]
+  },
+  {
+    "id": "play_008",
+    "name": "虫探し・自然探検",
+    "age_min_months": 24,
+    "age_max_months": 84,
+    "weather_tags": ["晴れ"],
+    "location_tags": ["室外"],
+    "style": "大冒険",
+    "materials": ["虫メガネ（あれば）", "小さな入れ物"],
+    "steps": [
+      "公園や庭に出て「虫を探そう！」と宣言",
+      "石の下や草むらをそっとめくってみる",
+      "見つけたら名前を教えてあげる",
+      "触れる虫は優しく触らせる",
+      "「逃がしてあげようね」と命の大切さも伝える"
+    ],
+    "reference_url": "https://www.youtube.com/results?search_query=虫探し+幼児+遊び",
+    "effects": ["自然への興味", "観察力", "命の教育"]
+  },
+  {
+    "id": "play_009",
+    "name": "砂場遊び",
+    "age_min_months": 12,
+    "age_max_months": 72,
+    "weather_tags": ["晴れ"],
+    "location_tags": ["室外"],
+    "style": "アクティブ",
+    "materials": ["砂場道具（スコップ・型など）"],
+    "steps": [
+      "砂場に行きスコップを渡す",
+      "「お山を作ろう！」など目標を決める",
+      "水を少し加えてお城や型抜きに挑戦",
+      "親も一緒に掘ったり積んだりする"
+    ],
+    "reference_url": "https://www.youtube.com/results?search_query=砂場遊び+幼児",
+    "effects": ["創造力", "手先の発達", "社会性"]
+  },
+  {
+    "id": "play_010",
+    "name": "紙コップロケット工作",
+    "age_min_months": 36,
+    "age_max_months": 84,
+    "weather_tags": ["全天候"],
+    "location_tags": ["室内"],
+    "style": "まったり",
+    "materials": ["紙コップ2個", "クレヨン", "輪ゴム"],
+    "steps": [
+      "1つ目の紙コップに絵を描いてロケットを作る",
+      "2つ目のコップに輪ゴムを2本十字にかける",
+      "ロケットコップを上からかぶせる",
+      "グッと押して手を離すと飛ぶ！"
+    ],
+    "reference_url": "https://www.youtube.com/results?search_query=紙コップロケット+工作+幼児",
+    "effects": ["創造力", "科学への興味", "集中力"]
+  },
+  {
+    "id": "play_011",
+    "name": "数字・文字あそび（お買い物ゲーム）",
+    "age_min_months": 36,
+    "age_max_months": 84,
+    "weather_tags": ["全天候"],
+    "location_tags": ["室内"],
+    "style": "まったり",
+    "materials": ["おもちゃや積み木", "紙に書いた値札"],
+    "steps": [
+      "おもちゃに1〜5の値札をつけてお店を作る",
+      "子供がお客さんで「〇番のください」と注文",
+      "「〇円です」と渡してお金のやり取りを真似る",
+      "慣れたら数字の読み書きに挑戦"
+    ],
+    "reference_url": "https://www.youtube.com/results?search_query=数字遊び+幼児+ゲーム",
+    "effects": ["数の概念", "言語発達", "社会性"]
+  },
+  {
+    "id": "play_012",
+    "name": "公園かけっこ・鬼ごっこ",
+    "age_min_months": 24,
+    "age_max_months": 84,
+    "weather_tags": ["晴れ"],
+    "location_tags": ["室外"],
+    "style": "大冒険",
+    "materials": ["動きやすい服装"],
+    "steps": [
+      "広い公園に行く",
+      "最初はゆっくり走って子供に追いかけさせる",
+      "少し本気で逃げて達成感を作る",
+      "タッチしたら役割を交代する"
+    ],
+    "reference_url": "https://www.youtube.com/results?search_query=鬼ごっこ+幼児+遊び方",
+    "effects": ["全身運動", "ルール理解", "社会性"]
+  },
+  {
+    "id": "play_013",
+    "name": "バルーンあそび",
+    "age_min_months": 12,
+    "age_max_months": 84,
+    "weather_tags": ["全天候"],
+    "location_tags": ["室内"],
+    "style": "アクティブ",
+    "materials": ["風船（膨らませたもの）"],
+    "steps": [
+      "膨らませた風船を渡す",
+      "「落とさないようにしよう！」と声をかける",
+      "手・頭・足など体の色々な部位で打ち合う",
+      "2人で何回続くか数えて記録に挑戦"
+    ],
+    "reference_url": "https://www.youtube.com/results?search_query=風船遊び+幼児+室内",
+    "effects": ["全身運動", "反応速度", "親子のコミュニケーション"]
+  },
+  {
+    "id": "play_014",
+    "name": "手形・足形アート",
+    "age_min_months": 6,
+    "age_max_months": 84,
+    "weather_tags": ["全天候"],
+    "location_tags": ["室内"],
+    "style": "まったり",
+    "materials": ["絵の具（水性）", "画用紙", "ウェットティッシュ"],
+    "steps": [
+      "画用紙を用意して子供の手に絵の具を塗る",
+      "画用紙にペタン！と押す",
+      "足形も挑戦してみる",
+      "乾いたら名前と日付を書いて思い出に"
+    ],
+    "reference_url": "https://www.youtube.com/results?search_query=手形足形アート+幼児",
+    "effects": ["感覚発達", "創造力", "成長記録"]
+  },
+  {
+    "id": "play_015",
+    "name": "水遊び・じゃぶじゃぶ",
+    "age_min_months": 6,
+    "age_max_months": 72,
+    "weather_tags": ["晴れ"],
+    "location_tags": ["室外"],
+    "style": "アクティブ",
+    "materials": ["タライや洗面器", "カップや容器", "着替え"],
+    "steps": [
+      "タライに水を張ってお庭やベランダへ",
+      "カップで水を移したり、じょうろで遊ぶ",
+      "水鉄砲があれば一緒に水かけっこ",
+      "終わったらすぐ着替えさせる"
+    ],
+    "reference_url": "https://www.youtube.com/results?search_query=水遊び+幼児+夏",
+    "effects": ["感覚発達", "体温調節", "解放感"]
+  },
+  {
+    "id": "play_016",
+    "name": "絵本の読み聞かせ",
+    "age_min_months": 0,
+    "age_max_months": 84,
+    "weather_tags": ["全天候"],
+    "location_tags": ["室内"],
+    "style": "まったり",
+    "materials": ["お気に入りの絵本"],
+    "steps": [
+      "ゆったりした姿勢で隣に座る",
+      "大きくゆっくり声に出して読む",
+      "「これなあに？」と一緒に絵を指さす",
+      "子供が好きなページは何度でも繰り返す"
+    ],
+    "reference_url": "https://www.youtube.com/results?search_query=絵本+読み聞かせ+幼児",
+    "effects": ["言語発達", "想像力", "親子の絆"]
+  },
+  {
+    "id": "play_017",
+    "name": "お散歩・自然観察",
+    "age_min_months": 6,
+    "age_max_months": 84,
+    "weather_tags": ["晴れ"],
+    "location_tags": ["室外"],
+    "style": "まったり",
+    "materials": ["歩きやすい靴", "小さなバッグ（落ち葉入れ用）"],
+    "steps": [
+      "近所をゆっくり歩く",
+      "「お花見つけた！」「この葉っぱ面白いね」と話しかける",
+      "気に入ったものを拾って袋に入れる",
+      "帰ったら拾ったものを並べて観察する"
+    ],
+    "reference_url": "https://www.youtube.com/results?search_query=お散歩+自然観察+幼児",
+    "effects": ["好奇心", "語彙力", "五感の発達"]
+  }
+]
