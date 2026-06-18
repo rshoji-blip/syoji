@@ -4,7 +4,7 @@ import webbrowser
 from .user    import load_users, register_child, calc_age_months
 from .weather import fetch_weather
 from .play    import suggest_plays
-from .log     import save_log
+from .log     import save_log, print_log_summary
 from .ui      import banner, print_play_card, print_play_detail
 
 STYLES = ["まったり", "アクティブ", "大冒険"]
@@ -23,6 +23,7 @@ def _input(msg: str) -> str:
         sys.exit(0)
 
 
+# ── ユーザー選択 ────────────────────────────────
 def choose_child() -> dict:
     users = load_users()
     if not users:
@@ -52,6 +53,7 @@ def choose_child() -> dict:
         print("正しい番号を入力してください。")
 
 
+# ── スタイル選択 ────────────────────────────────
 def choose_style() -> str:
     print("\n今日の気分はどれ？")
     for i, s in enumerate(STYLES, 1):
@@ -63,6 +65,7 @@ def choose_style() -> str:
         print("1〜3で入力してください。")
 
 
+# ── 遊び詳細・アクション ─────────────────────────
 def show_play_actions(play: dict, child_name: str):
     print_play_detail(play)
     print("[1] 動画を見る  [2] これやったよ！  [3] お気に入り登録  [0] 戻る")
@@ -78,6 +81,51 @@ def show_play_actions(play: dict, child_name: str):
         print(f"「{play['name']}」をお気に入りに登録しました！")
 
 
+# ── メインメニュー ──────────────────────────────
+def main_menu(child: dict):
+    name = child["name"]
+    while True:
+        print(f"\n─── メニュー（{name}ちゃん） ───")
+        print("  [1] 今日の遊びを提案してもらう")
+        print("  [2] 成長ログを見る")
+        print("  [0] 終了")
+        sel = _input("選択: ")
+        if sel == "1":
+            return "play"
+        if sel == "2":
+            return "log"
+        if sel == "0":
+            print("\nまたね！今日も楽しい時間を過ごしてね♪")
+            sys.exit(0)
+        print("0〜2で入力してください。")
+
+
+# ── 遊び提案フロー ──────────────────────────────
+def play_flow(child: dict, weather: dict):
+    age_months = calc_age_months(child["birthdate"])
+    style = choose_style()
+    plays = suggest_plays(age_months, weather["tag"], style)
+
+    if not plays:
+        print("\n条件に合う遊びが見つかりませんでした。条件を変えて試してみてください。")
+        return
+
+    print(f"\n─── 今日のおすすめ遊び（{style}） ───")
+    for i, p in enumerate(plays, 1):
+        print_play_card(p, i)
+
+    print("\n─────────────────────────────────────")
+    while True:
+        sel = _input("詳細を見る番号（0で戻る）: ")
+        if sel == "0":
+            break
+        if sel.isdigit() and 1 <= int(sel) <= len(plays):
+            show_play_actions(plays[int(sel) - 1], child["name"])
+        else:
+            print("正しい番号を入力してください。")
+
+
+# ── メイン ──────────────────────────────────────
 def main():
     banner()
 
@@ -94,27 +142,12 @@ def main():
     age_str    = f"{years}歳{m}ヶ月" if years else f"{age_months}ヶ月"
     print(f"\nこんにちは！{child['name']}ちゃん（{age_str}）")
 
-    style = choose_style()
-    plays = suggest_plays(age_months, weather["tag"], style)
-
-    if not plays:
-        print("\n条件に合う遊びが見つかりませんでした。条件を変えて試してみてください。")
-        return
-
-    print(f"\n─── 今日のおすすめ遊び（{style}） ───")
-    for i, p in enumerate(plays, 1):
-        print_play_card(p, i)
-
-    print("\n─────────────────────────────────────")
     while True:
-        sel = _input("詳細を見る番号（0で終了）: ")
-        if sel == "0":
-            print("\nまたね！今日も楽しい時間を過ごしてね♪")
-            break
-        if sel.isdigit() and 1 <= int(sel) <= len(plays):
-            show_play_actions(plays[int(sel) - 1], child["name"])
-        else:
-            print("正しい番号を入力してください。")
+        action = main_menu(child)
+        if action == "play":
+            play_flow(child, weather)
+        elif action == "log":
+            print_log_summary(child["name"])
 
 
 if __name__ == "__main__":
