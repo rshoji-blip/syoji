@@ -7,3 +7,4 @@ out/
 *.log
 syoji/__pycache__/
 .claude/
+__pycache__/
