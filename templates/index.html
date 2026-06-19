@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="weather-box">
+  {% if weather %}
+    🌤️ {{ weather.label }}
+    {% if weather.temp is not none and weather.temp is not undefined %}
+      &nbsp;{{ weather.temp }}℃
+    {% endif %}
+  {% else %}
+    🌤️ 天気情報を取得中...
+  {% endif %}
+</div>
+
+<h2 style="margin: 16px 0 8px; font-size: 18px;">👶 だれとあそぶ？</h2>
+
+{% if users %}
+  {% for user in users %}
+  <form action="/select_child" method="post">
+    <input type="hidden" name="child_idx" value="{{ loop.index0 }}">
+    <button type="submit" class="btn btn-primary card" style="display:block; text-align:left;">
+      <span style="font-size: 22px;">{{ user.name }}</span>
+      <span style="display:block; font-size: 14px; color: #ffe0b2; margin-top: 4px;">{{ user.age_str }}</span>
+    </button>
+  </form>
+  {% endfor %}
+{% else %}
+  <div class="card" style="text-align:center; color:#999;">
+    まだお子さんが登録されていません
+  </div>
+{% endif %}
+
+<a href="/register" class="btn btn-secondary" style="margin-top: 16px;">＋ 新しいお子さんを登録</a>
+
+{% if users %}
+<a href="/logs" class="btn btn-secondary">📖 きろくを見る</a>
+{% endif %}
+{% endblock %}

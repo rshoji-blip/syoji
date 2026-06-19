@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2 style="font-size: 22px; margin-bottom: 12px;">{{ play.name }}</h2>
+
+  <div style="margin-bottom: 12px;">
+    {% if play.style %}<span class="tag">{{ play.style }}</span>{% endif %}
+    {% if play.location %}<span class="tag">{{ play.location }}</span>{% endif %}
+    {% if play.age_min is defined and play.age_max is defined %}
+    <span class="tag">{{ play.age_min }}〜{{ play.age_max }}ヶ月</span>
+    {% endif %}
+  </div>
+
+  {% if play.materials %}
+  <div style="margin-bottom: 16px;">
+    <strong>🧰 用意するもの</strong>
+    <ul style="margin-top: 8px; padding-left: 20px;">
+      {% for m in play.materials %}
+      <li style="margin: 4px 0;">{{ m }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if play.steps %}
+  <div style="margin-bottom: 16px;">
+    <strong>📋 あそびかた</strong>
+    {% for step in play.steps %}
+    <div class="step">
+      <span class="step-num">{{ loop.index }}</span>{{ step }}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if play.tips %}
+  <div style="background:#fff9e6; border-radius:8px; padding:10px; margin-bottom:12px;">
+    <strong>💡 ポイント</strong>
+    <div style="margin-top:6px; font-size:14px;">{{ play.tips }}</div>
+  </div>
+  {% endif %}
+</div>
+
+<div id="success-done" class="success-msg">✅ きろくしたよ！すごい！</div>
+<div id="success-fav" class="success-msg">⭐ お気に入りに追加したよ！</div>
+
+{% if play.reference_url %}
+<a href="{{ play.reference_url }}" target="_blank" class="btn btn-video">🎬 動画を見る</a>
+{% endif %}
+
+<button onclick="logPlay(false)" class="btn btn-success">✅ これやったよ！</button>
+<button onclick="logPlay(true)" class="btn btn-star">⭐ お気に入り</button>
+<a href="/suggest" class="btn btn-secondary">← もどる</a>
+
+<script>
+function logPlay(favorite) {
+  fetch('/log', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      play_id: '{{ play.id }}',
+      play_name: '{{ play.name }}',
+      favorite: favorite
+    })
+  }).then(r => r.json()).then(data => {
+    if (data.ok) {
+      var el = favorite ? document.getElementById('success-fav') : document.getElementById('success-done');
+      el.style.display = 'block';
+      setTimeout(() => { el.style.display = 'none'; }, 3000);
+    }
+  });
+}
+</script>
+{% endblock %}

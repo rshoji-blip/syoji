@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 style="margin: 16px 0; font-size: 20px;">👶 お子さんを登録</h2>
+<div class="card">
+  <form action="/register" method="post">
+    <div style="margin-bottom: 16px;">
+      <label style="display:block; font-weight:bold; margin-bottom: 6px;">お名前</label>
+      <input type="text" name="name" placeholder="はなこ" required
+        style="width:100%; padding:12px; border:2px solid #ff8c42; border-radius:8px; font-size:18px;">
+    </div>
+    <div style="margin-bottom: 16px;">
+      <label style="display:block; font-weight:bold; margin-bottom: 6px;">生年月日</label>
+      <input type="date" name="birthdate" required
+        style="width:100%; padding:12px; border:2px solid #ff8c42; border-radius:8px; font-size:18px;">
+    </div>
+    <button type="submit" class="btn btn-primary">登録する ✓</button>
+  </form>
+</div>
+<a href="/" class="btn btn-secondary">← もどる</a>
+{% endblock %}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>そよじ - 親子あそびのひらめき</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, "Hiragino Sans", sans-serif; background: #fff9f0; color: #333; }
+.container { max-width: 480px; margin: 0 auto; padding: 16px; }
+.header { background: #ff8c42; color: white; padding: 16px; text-align: center; font-size: 20px; font-weight: bold; }
+.header a { color: white; text-decoration: none; }
+.card { background: white; border-radius: 12px; padding: 16px; margin: 12px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.btn { display: block; width: 100%; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin: 8px 0; text-align: center; text-decoration: none; }
+.btn-primary { background: #ff8c42; color: white; }
+.btn-secondary { background: #f0f0f0; color: #333; }
+.btn-success { background: #4caf50; color: white; }
+.btn-star { background: #ffd700; color: #333; }
+.btn-video { background: #e53935; color: white; }
+.tag { display: inline-block; background: #ffe0b2; color: #e65100; padding: 4px 10px; border-radius: 20px; font-size: 12px; margin: 2px; }
+.weather-box { background: #e3f2fd; border-radius: 10px; padding: 12px; text-align: center; margin: 8px 0; font-size: 18px; }
+.step { padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+.step-num { display: inline-block; background: #ff8c42; color: white; width: 24px; height: 24px; border-radius: 50%; text-align: center; line-height: 24px; font-size: 12px; margin-right: 8px; }
+.success-msg { background: #e8f5e9; color: #2e7d32; padding: 10px; border-radius: 8px; text-align: center; margin: 8px 0; display: none; }
+.nav-bar { background: #fff; border-top: 1px solid #f0e0d0; padding: 8px 16px; text-align: center; margin-top: 16px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <a href="/">🌟 そよじ</a>
+</div>
+<div class="container">
+  {% block content %}{% endblock %}
+</div>
+</body>
+</html>

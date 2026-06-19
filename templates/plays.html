@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="text-align:center; margin: 12px 0;">
+  <span style="font-size:16px; color:#888;">{{ child_name }} の おすすめあそび</span>
+</div>
+
+{% for play in plays %}
+<div class="card">
+  <h3 style="font-size: 20px; margin-bottom: 8px;">{{ play.name }}</h3>
+  <div style="margin-bottom: 8px;">
+    {% if play.style %}<span class="tag">{{ play.style }}</span>{% endif %}
+    {% if play.location %}<span class="tag">{{ play.location }}</span>{% endif %}
+  </div>
+  {% if play.materials %}
+  <div style="font-size:13px; color:#666; margin-bottom: 10px;">
+    🧰 {{ play.materials | join(", ") }}
+  </div>
+  {% endif %}
+  <a href="/play/{{ play.id }}" class="btn btn-primary">くわしく見る →</a>
+</div>
+{% endfor %}
+
+<a href="/suggest" class="btn btn-secondary">← あそびかたを選び直す</a>
+{% endblock %}
