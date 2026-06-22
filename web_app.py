@@ -401,6 +401,10 @@ def pwa_sw():
     return send_from_directory(str(STATIC_ROOT), "sw.js",
                                mimetype="application/javascript")
 
+@app.route("/static/images/<path:filename>")
+def serve_image(filename):
+    return send_from_directory(str(STATIC_ROOT / "images"), filename)
+
 # ── Push notification endpoints ───────────────────────────────────────────
 @app.route("/api/milestones")
 def api_milestones():

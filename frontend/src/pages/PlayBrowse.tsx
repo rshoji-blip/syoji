@@ -25,6 +25,16 @@ const CAT_COLORS: Record<string, { bg: string; border: string; text: string }> =
   挑戦: { bg: '#FFF8E1', border: '#FFD54F', text: '#FF6F00' },
 };
 
+const CAT_IMG: Record<string, string> = {
+  探索: '/static/images/icons/探索.png',
+  創造: '/static/images/icons/創造.png',
+  会話: '/static/images/icons/会話.png',
+  運動: '/static/images/icons/運動.png',
+  感覚: '/static/images/icons/感覚.png',
+  協力: '/static/images/icons/協力.png',
+  挑戦: '/static/images/icons/挑戦.png',
+};
+
 function ageStr(min: number, max: number) {
   const fmt = (m: number) => m >= 12 ? `${Math.floor(m/12)}歳${m%12 ? m%12+'ヶ月' : ''}` : `${m}ヶ月`;
   return `${fmt(min)}〜${fmt(max)}`;
@@ -76,7 +86,12 @@ export default function PlayBrowse({ initialCategory, onBack, onPlayDetail }: Pr
                 marginBottom: 10, cursor: 'pointer', textAlign: 'left',
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <div style={{ fontSize: 28 }}>{cat.icon}</div>
+                  {CAT_IMG[cat.name] ? (
+                    <img src={CAT_IMG[cat.name]} alt={cat.name}
+                      style={{ width: 64, height: 64, objectFit: 'contain', flexShrink: 0 }} />
+                  ) : (
+                    <div style={{ fontSize: 28 }}>{cat.icon}</div>
+                  )}
                   <div>
                     <div style={{ fontSize: 16, fontWeight: 900, color: color.text }}>{cat.name}</div>
                     <div style={{ fontSize: 12, color: 'var(--text-light)', fontWeight: 600, marginTop: 2 }}>
