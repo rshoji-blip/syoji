@@ -6,7 +6,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).parent))
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, send_from_directory
-from syoji.user import load_users, register_child, calc_age_months
+from syoji.user import load_users, register_child, calc_age_months, update_child, delete_child
 from syoji.weather import fetch_weather
 from syoji.play import suggest_plays, load_plays
 from syoji.log import save_log, get_logs_for_child, get_favorites_for_child, get_play_ranking
@@ -196,6 +196,39 @@ def api_register_child():
     session["child_name"] = child["name"]
     session["child_birthdate"] = child["birthdate"]
     return jsonify({"ok": True})
+
+@app.route("/api/children")
+def api_children():
+    users = load_users()
+    child_name, _ = _ensure_child()
+    return jsonify({"children": users, "active": child_name})
+
+@app.route("/api/update_child", methods=["POST"])
+def api_update_child():
+    data = request.get_json()
+    old_name = data["old_name"]
+    new_name = data["new_name"]
+    new_birthdate = data["new_birthdate"]
+    ok = update_child(old_name, new_name, new_birthdate)
+    if ok and session.get("child_name") == old_name:
+        session["child_name"] = new_name
+        session["child_birthdate"] = new_birthdate
+    return jsonify({"ok": ok})
+
+@app.route("/api/delete_child", methods=["POST"])
+def api_delete_child():
+    data = request.get_json()
+    name = data["name"]
+    ok = delete_child(name)
+    if ok and session.get("child_name") == name:
+        users = load_users()
+        if users:
+            session["child_name"] = users[0]["name"]
+            session["child_birthdate"] = users[0]["birthdate"]
+        else:
+            session.pop("child_name", None)
+            session.pop("child_birthdate", None)
+    return jsonify({"ok": ok})
 
 @app.route("/api/record_data")
 def api_record_data():
