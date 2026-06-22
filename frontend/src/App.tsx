@@ -25,7 +25,7 @@ export default function App() {
 
   if (loading) return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', gap: 8, background: 'var(--bg)' }}>
-      <img src="/static/images/icons/mascot.png" alt="mascot"
+      <img src="/static/images/icons/cat_mascot.png" alt="mascot"
         style={{ width: 120, height: 120, objectFit: 'contain', animation: 'bounce 1s ease infinite' }} />
       <div style={{ fontSize: 22, fontWeight: 900, background: 'linear-gradient(135deg, var(--primary), #C39BD3)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>あそぼ</div>
       <div style={{ fontSize: 13, color: 'var(--text-light)', fontWeight: 700 }}>よみこみ中…</div>

@@ -26,13 +26,13 @@ const CAT_COLORS: Record<string, { bg: string; border: string; text: string }> =
 };
 
 const CAT_IMG: Record<string, string> = {
-  探索: '/static/images/icons/探索.png',
-  創造: '/static/images/icons/創造.png',
-  会話: '/static/images/icons/会話.png',
-  運動: '/static/images/icons/運動.png',
-  感覚: '/static/images/icons/感覚.png',
-  協力: '/static/images/icons/協力.png',
-  挑戦: '/static/images/icons/挑戦.png',
+  探索: '/static/images/icons/cat_explore.png',
+  創造: '/static/images/icons/cat_create.png',
+  会話: '/static/images/icons/cat_talk.png',
+  運動: '/static/images/icons/cat_sport.png',
+  感覚: '/static/images/icons/cat_sense.png',
+  協力: '/static/images/icons/cat_coop.png',
+  挑戦: '/static/images/icons/cat_challenge.png',
 };
 
 function ageStr(min: number, max: number) {
