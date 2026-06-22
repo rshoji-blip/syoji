@@ -188,7 +188,9 @@ def api_register_child():
     data = request.get_json()
     name = data["name"]
     birthdate = data["birthdate"]
-    register_child(name, birthdate)
+    result = register_child(name, birthdate)
+    if result is None:
+        return jsonify({"ok": False, "error": "duplicate"})
     users = load_users()
     child = next(u for u in users if u["name"] == name)
     session["child_name"] = child["name"]

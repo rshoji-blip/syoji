@@ -24,6 +24,9 @@ def calc_age_months(birthdate_str):
 
 def register_child(name, birthdate_str):
     users = load_users()
+    # 同じ名前・生年月日の重複を防ぐ
+    if any(u["name"] == name and u["birthdate"] == birthdate_str for u in users):
+        return None  # 既存
     child = {"name": name, "birthdate": birthdate_str}
     users.append(child)
     save_users(users)

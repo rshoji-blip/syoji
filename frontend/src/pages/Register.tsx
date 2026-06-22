@@ -7,12 +7,19 @@ export default function Register({ onDone }: Props) {
   const [name, setName] = useState('');
   const [birthdate, setBirthdate] = useState('');
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !birthdate) return;
     setSaving(true);
-    await apiPost('/register_child', { name, birthdate });
+    setError('');
+    const res = await apiPost<{ ok: boolean; error?: string }>('/register_child', { name, birthdate });
+    if (!res.ok && res.error === 'duplicate') {
+      setError(`「${name}」ちゃんはすでに登録されています`);
+      setSaving(false);
+      return;
+    }
     onDone();
   };
 
@@ -85,6 +92,13 @@ export default function Register({ onDone }: Props) {
                   background: 'var(--bg)',
                 }} />
             </div>
+            {error && (
+              <div style={{
+                background: '#FEE9E5', border: '2px solid var(--primary)',
+                borderRadius: 10, padding: '10px 14px', marginBottom: 14,
+                fontSize: 13, fontWeight: 700, color: 'var(--primary)',
+              }}>⚠️ {error}</div>
+            )}
             <button type="submit" disabled={saving} style={{
               width: '100%', padding: 16, borderRadius: 'var(--radius-sm)',
               background: 'linear-gradient(135deg, var(--primary), #F4A0B5)',
