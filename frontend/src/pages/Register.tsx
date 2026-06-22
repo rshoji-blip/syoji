@@ -20,7 +20,7 @@ export default function Register({ onDone }: Props) {
     <div style={{ minHeight: '100vh', background: 'var(--bg)', display: 'flex', flexDirection: 'column' }}>
       {/* ヘッダー：父親への共感から始める */}
       <div style={{ background: 'linear-gradient(135deg, #7DCFB6, #85C1E9)', padding: '36px 24px 44px', textAlign: 'center' }}>
-        <div style={{ fontSize: 52, marginBottom: 14 }}>👨‍👧</div>
+        <div style={{ fontSize: 52, marginBottom: 14 }}>🌱</div>
         <div style={{ fontSize: 22, fontWeight: 900, color: 'white', lineHeight: 1.4 }}>
           「今日、何して遊ぼう…」<br />と迷ったことはありませんか？
         </div>
@@ -35,7 +35,7 @@ export default function Register({ onDone }: Props) {
       <div style={{ padding: '20px 20px 0' }}>
         {[
           { icon: '🎯', title: '今に合った遊びを提案', desc: '月齢・成長バランスから自動でピックアップ' },
-          { icon: '📊', title: '足りていない経験がわかる', desc: '何が不足しているかレーダーチャートで一目瞭然' },
+          { icon: '📊', title: '伸ばせる経験がひと目でわかる', desc: 'どんな力を育てられるかレーダーチャートで確認' },
           { icon: '✏️', title: '週2回の記録でOK', desc: '土日だけでOK。負担ゼロで続けられます' },
         ].map(item => (
           <div key={item.title} style={{
