@@ -1,74 +1,103 @@
 {% extends "base.html" %}
+{% set active_nav = "record" %}
+
+{% block topbar_right %}
+<a href="javascript:history.back()" style="color:var(--text-mid); text-decoration:none; font-size:22px;">‹</a>
+{% endblock %}
+
 {% block content %}
-<div class="card">
-  <h2 style="font-size: 22px; margin-bottom: 12px;">{{ play.name }}</h2>
+<style>
+.play-hero {
+  background:linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+  border-radius:var(--radius); padding:24px; margin:12px 0;
+  text-align:center;
+}
+.play-hero-icon { font-size:56px; margin-bottom:8px; }
+.play-hero-name { font-size:22px; font-weight:800; color:var(--text); }
+.play-cats { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-top:10px; }
+.play-cat-badge {
+  background:var(--surface); padding:4px 10px; border-radius:20px;
+  font-size:12px; font-weight:700; color:var(--primary);
+}
+.step-row { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid var(--border); align-items:flex-start; }
+.step-num-circle {
+  width:26px; height:26px; border-radius:50%; flex-shrink:0;
+  background:var(--primary); color:white;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:800; margin-top:1px;
+}
+.material-item { padding:8px 0; border-bottom:1px solid var(--border); font-size:14px; }
+.success-toast {
+  position:fixed; bottom:100px; left:50%; transform:translateX(-50%) translateY(20px);
+  background:var(--accent); color:white; padding:12px 24px;
+  border-radius:24px; font-size:14px; font-weight:700;
+  opacity:0; transition:all 0.3s; pointer-events:none; white-space:nowrap;
+  box-shadow:var(--shadow-md); z-index:999;
+}
+.success-toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
 
-  <div style="margin-bottom: 12px;">
-    {% if play.style %}<span class="tag">{{ play.style }}</span>{% endif %}
-    {% if play.location %}<span class="tag">{{ play.location }}</span>{% endif %}
-    {% if play.age_min is defined and play.age_max is defined %}
-    <span class="tag">{{ play.age_min }}〜{{ play.age_max }}ヶ月</span>
-    {% endif %}
-  </div>
-
-  {% if play.materials %}
-  <div style="margin-bottom: 16px;">
-    <strong>🧰 用意するもの</strong>
-    <ul style="margin-top: 8px; padding-left: 20px;">
-      {% for m in play.materials %}
-      <li style="margin: 4px 0;">{{ m }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
-
-  {% if play.steps %}
-  <div style="margin-bottom: 16px;">
-    <strong>📋 あそびかた</strong>
-    {% for step in play.steps %}
-    <div class="step">
-      <span class="step-num">{{ loop.index }}</span>{{ step }}
-    </div>
+<div class="play-hero fade-up">
+  <div class="play-hero-icon">🎮</div>
+  <div class="play-hero-name">{{ play.name }}</div>
+  <div class="play-cats">
+    {% for cat in play.dev_categories %}
+    <div class="play-cat-badge">{{ cat }}</div>
     {% endfor %}
+    <div class="play-cat-badge" style="background:var(--secondary-light); color:var(--secondary);">{{ play.style }}</div>
   </div>
-  {% endif %}
+</div>
 
-  {% if play.tips %}
-  <div style="background:#fff9e6; border-radius:8px; padding:10px; margin-bottom:12px;">
-    <strong>💡 ポイント</strong>
-    <div style="margin-top:6px; font-size:14px;">{{ play.tips }}</div>
+{% if play.materials and play.materials[0] != "なし" %}
+<div class="card fade-up-2">
+  <div style="font-size:14px; font-weight:800; margin-bottom:8px;">🧰 用意するもの</div>
+  {% for m in play.materials %}
+  <div class="material-item">・ {{ m }}</div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="card fade-up-2">
+  <div style="font-size:14px; font-weight:800; margin-bottom:8px;">📋 やり方</div>
+  {% for step in play.steps %}
+  <div class="step-row">
+    <div class="step-num-circle">{{ loop.index }}</div>
+    <div style="font-size:14px; line-height:1.6; flex:1;">{{ step }}</div>
   </div>
+  {% endfor %}
+</div>
+
+{% if play.effects %}
+<div class="card fade-up-3">
+  <div style="font-size:14px; font-weight:800; margin-bottom:8px;">🌱 発達への効果</div>
+  {% for effect in play.effects %}
+  <div style="display:flex; align-items:center; gap:8px; padding:6px 0; border-bottom:1px solid var(--border);">
+    <span style="color:var(--accent);">✓</span>
+    <span style="font-size:14px;">{{ effect }}</span>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div style="padding:8px 0 16px;" class="fade-up-3">
+  <button class="btn btn-accent" onclick="logPlay(false)">✅ これやったよ！</button>
+  <button class="btn" style="background:var(--secondary-light); color:var(--secondary);" onclick="logPlay(true)">⭐ お気に入りに追加</button>
+  {% if play.reference_url %}
+  <a href="{{ play.reference_url }}" target="_blank" class="btn btn-secondary">🎬 動画で見る</a>
   {% endif %}
 </div>
 
-<div id="success-done" class="success-msg">✅ きろくしたよ！すごい！</div>
-<div id="success-fav" class="success-msg">⭐ お気に入りに追加したよ！</div>
-
-{% if play.reference_url %}
-<a href="{{ play.reference_url }}" target="_blank" class="btn btn-video">🎬 動画を見る</a>
-{% endif %}
-
-<button onclick="logPlay(false)" class="btn btn-success">✅ これやったよ！</button>
-<button onclick="logPlay(true)" class="btn btn-star">⭐ お気に入り</button>
-<a href="/suggest" class="btn btn-secondary">← もどる</a>
+<div class="success-toast" id="toast">✨ 記録しました！</div>
 
 <script>
-function logPlay(favorite) {
-  fetch('/log', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      play_id: '{{ play.id }}',
-      play_name: '{{ play.name }}',
-      favorite: favorite
-    })
-  }).then(r => r.json()).then(data => {
-    if (data.ok) {
-      var el = favorite ? document.getElementById('success-fav') : document.getElementById('success-done');
-      el.style.display = 'block';
-      setTimeout(() => { el.style.display = 'none'; }, 3000);
-    }
+async function logPlay(fav) {
+  const res = await fetch('/log', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({play_id:'{{ play.id }}', play_name:'{{ play.name }}', favorite:fav})
   });
+  const toast = document.getElementById('toast');
+  toast.textContent = fav ? '⭐ お気に入りに追加しました！' : '✅ 記録しました！';
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
 }
 </script>
-{% endblock %}

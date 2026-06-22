@@ -2,35 +2,163 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>そよじ - 親子あそびのひらめき</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>そよじ - 発達経験コーチ</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, "Hiragino Sans", sans-serif; background: #fff9f0; color: #333; }
-.container { max-width: 480px; margin: 0 auto; padding: 16px; }
-.header { background: #ff8c42; color: white; padding: 16px; text-align: center; font-size: 20px; font-weight: bold; }
-.header a { color: white; text-decoration: none; }
-.card { background: white; border-radius: 12px; padding: 16px; margin: 12px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-.btn { display: block; width: 100%; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin: 8px 0; text-align: center; text-decoration: none; }
-.btn-primary { background: #ff8c42; color: white; }
-.btn-secondary { background: #f0f0f0; color: #333; }
-.btn-success { background: #4caf50; color: white; }
-.btn-star { background: #ffd700; color: #333; }
-.btn-video { background: #e53935; color: white; }
-.tag { display: inline-block; background: #ffe0b2; color: #e65100; padding: 4px 10px; border-radius: 20px; font-size: 12px; margin: 2px; }
-.weather-box { background: #e3f2fd; border-radius: 10px; padding: 12px; text-align: center; margin: 8px 0; font-size: 18px; }
-.step { padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
-.step-num { display: inline-block; background: #ff8c42; color: white; width: 24px; height: 24px; border-radius: 50%; text-align: center; line-height: 24px; font-size: 12px; margin-right: 8px; }
-.success-msg { background: #e8f5e9; color: #2e7d32; padding: 10px; border-radius: 8px; text-align: center; margin: 8px 0; display: none; }
-.nav-bar { background: #fff; border-top: 1px solid #f0e0d0; padding: 8px 16px; text-align: center; margin-top: 16px; }
+:root {
+  --primary: #5B8EF0;
+  --primary-light: #EBF0FE;
+  --secondary: #F4A261;
+  --secondary-light: #FEF3E2;
+  --accent: #6FCF97;
+  --accent-light: #E8F8EF;
+  --purple: #BB6BD9;
+  --purple-light: #F5EAFA;
+  --bg: #F8F6F3;
+  --surface: #FFFFFF;
+  --text: #2C2C2C;
+  --text-mid: #6B7280;
+  --text-light: #9CA3AF;
+  --border: #F0EDE8;
+  --radius: 20px;
+  --radius-sm: 12px;
+  --shadow: 0 2px 16px rgba(0,0,0,0.07);
+  --shadow-md: 0 4px 24px rgba(0,0,0,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: -apple-system, "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+.page { max-width: 480px; margin: 0 auto; padding: 0 16px 16px; }
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 12px 0;
+  box-shadow: var(--shadow);
+}
+.card-sm {
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+}
+.btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; padding: 15px;
+  border: none; border-radius: var(--radius-sm);
+  font-size: 16px; font-weight: 700; cursor: pointer;
+  margin: 8px 0; text-decoration: none;
+  transition: transform 0.1s, opacity 0.1s;
+  gap: 8px;
+}
+.btn:active { transform: scale(0.97); opacity: 0.9; }
+.btn-primary { background: var(--primary); color: white; }
+.btn-secondary { background: var(--bg); color: var(--text-mid); border: 1.5px solid var(--border); }
+.btn-accent { background: var(--accent); color: white; }
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: var(--primary-light); color: var(--primary);
+  padding: 4px 10px; border-radius: 20px;
+  font-size: 12px; font-weight: 600;
+}
+.section-title {
+  font-size: 13px; font-weight: 700;
+  color: var(--text-light); letter-spacing: 0.05em;
+  text-transform: uppercase; margin: 20px 0 8px;
+}
+
+/* Top header */
+.top-bar {
+  background: var(--surface);
+  padding: 16px 20px 12px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  border-bottom: 1px solid var(--border);
+}
+.top-bar-title {
+  font-size: 18px; font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--purple));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.top-bar-sub { font-size: 12px; color: var(--text-light); margin-top: 1px; }
+
+/* Bottom nav */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  padding: 8px 0 env(safe-area-inset-bottom, 8px);
+  z-index: 200;
+  max-width: 480px; margin: 0 auto;
+}
+.bottom-nav { left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; }
+.nav-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  gap: 3px; text-decoration: none; padding: 6px 0;
+  transition: opacity 0.15s;
+}
+.nav-icon { font-size: 22px; line-height: 1; }
+.nav-label { font-size: 10px; font-weight: 600; color: var(--text-light); }
+.nav-item.active .nav-label { color: var(--primary); }
+.nav-item.active .nav-icon { filter: drop-shadow(0 0 4px rgba(91,142,240,0.5)); }
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  70% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+.fade-up { animation: fadeUp 0.4s ease both; }
+.fade-up-2 { animation: fadeUp 0.4s ease 0.1s both; }
+.fade-up-3 { animation: fadeUp 0.4s ease 0.2s both; }
 </style>
 </head>
 <body>
-<div class="header">
-  <a href="/">🌟 そよじ</a>
+{% block topbar %}
+<div class="top-bar">
+  <div>
+    <div class="top-bar-title">🌱 そよじ</div>
+    <div class="top-bar-sub">発達経験コーチ</div>
+  </div>
+  {% block topbar_right %}{% endblock %}
 </div>
-<div class="container">
+{% endblock %}
+
+<div class="page">
   {% block content %}{% endblock %}
 </div>
+
+<nav class="bottom-nav">
+  <a href="/" class="nav-item {% if active_nav == 'home' %}active{% endif %}">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">ホーム</span>
+  </a>
+  <a href="/record" class="nav-item {% if active_nav == 'record' %}active{% endif %}">
+    <span class="nav-icon">✏️</span>
+    <span class="nav-label">記録</span>
+  </a>
+  <a href="/growth" class="nav-item {% if active_nav == 'growth' %}active{% endif %}">
+    <span class="nav-icon">📊</span>
+    <span class="nav-label">成長</span>
+  </a>
+  <a href="/coach" class="nav-item {% if active_nav == 'coach' %}active{% endif %}">
+    <span class="nav-icon">💭</span>
+    <span class="nav-label">相談</span>
+  </a>
+</nav>
 </body>
 </html>

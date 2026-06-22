@@ -1,20 +1,37 @@
 {% extends "base.html" %}
+{% set active_nav = "" %}
+
 {% block content %}
-<h2 style="margin: 16px 0; font-size: 20px;">👶 お子さんを登録</h2>
-<div class="card">
+<style>
+.register-hero { text-align:center; padding:32px 0 16px; }
+.register-icon { font-size:56px; margin-bottom:12px; }
+.form-label { display:block; font-size:14px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.form-input {
+  width:100%; padding:14px 16px; font-size:16px;
+  border:2px solid var(--border); border-radius:var(--radius-sm);
+  background:var(--surface); color:var(--text); outline:none;
+  transition:border-color 0.15s;
+}
+.form-input:focus { border-color:var(--primary); }
+.form-group { margin-bottom:16px; }
+</style>
+
+<div class="register-hero fade-up">
+  <div class="register-icon">👶</div>
+  <div style="font-size:22px; font-weight:800; margin-bottom:8px;">お子さんを登録</div>
+  <div style="font-size:14px; color:var(--text-mid);">一緒に成長を記録しましょう</div>
+</div>
+
+<div class="card fade-up-2">
   <form action="/register" method="post">
-    <div style="margin-bottom: 16px;">
-      <label style="display:block; font-weight:bold; margin-bottom: 6px;">お名前</label>
-      <input type="text" name="name" placeholder="はなこ" required
-        style="width:100%; padding:12px; border:2px solid #ff8c42; border-radius:8px; font-size:18px;">
+    <div class="form-group">
+      <label class="form-label">お名前</label>
+      <input class="form-input" type="text" name="name" placeholder="はなこ" required>
     </div>
-    <div style="margin-bottom: 16px;">
-      <label style="display:block; font-weight:bold; margin-bottom: 6px;">生年月日</label>
-      <input type="date" name="birthdate" required
-        style="width:100%; padding:12px; border:2px solid #ff8c42; border-radius:8px; font-size:18px;">
+    <div class="form-group">
+      <label class="form-label">生年月日</label>
+      <input class="form-input" type="date" name="birthdate" required>
     </div>
-    <button type="submit" class="btn btn-primary">登録する ✓</button>
+    <button type="submit" class="btn btn-primary" style="margin-top:8px;">🌱 登録して始める</button>
   </form>
 </div>
-<a href="/" class="btn btn-secondary">← もどる</a>
-{% endblock %}

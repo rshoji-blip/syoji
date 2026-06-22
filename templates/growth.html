@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% set active_nav = "growth" %}
+
+{% block topbar_right %}
+<div style="text-align:right;">
+  <div style="font-size:13px; font-weight:700;">{{ child_name }}</div>
+  <div style="font-size:11px; color:var(--text-light);">{{ age_str }}</div>
+</div>
+{% endblock %}
+
+{% block content %}
+<style>
+.month-title { font-size:22px; font-weight:800; padding:20px 0 4px; }
+.month-sub { font-size:14px; color:var(--text-mid); margin-bottom:4px; }
+
+/* Weekly calendar dots */
+.week-row { display:flex; gap:6px; }
+.week-day {
+  flex:1; text-align:center; padding:8px 4px;
+  border-radius:10px; background:var(--surface);
+  box-shadow:var(--shadow);
+}
+.week-day.today { background:var(--primary); }
+.week-day-label { font-size:11px; font-weight:700; color:var(--text-light); }
+.week-day.today .week-day-label { color:rgba(255,255,255,0.8); }
+.week-day-dot { width:10px; height:10px; border-radius:50%; margin:5px auto 4px; }
+.week-day-count { font-size:11px; font-weight:700; color:var(--text-mid); }
+.week-day.today .week-day-count { color:white; }
+
+/* Category bars */
+.cat-bar-row { margin-bottom:12px; }
+.cat-bar-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; }
+.cat-bar-label { font-size:14px; font-weight:700; }
+.cat-bar-count { font-size:13px; color:var(--text-light); }
+.cat-bar-bg { height:10px; background:var(--bg); border-radius:5px; overflow:hidden; }
+.cat-bar-fill { height:100%; border-radius:5px; transition:width 1s ease; }
+
+/* Top highlight card */
+.highlight-card {
+  border-radius:var(--radius); padding:20px;
+  background:linear-gradient(135deg, var(--primary), #7B9FF5);
+  color:white; margin:12px 0; box-shadow:var(--shadow-md);
+}
+.highlight-icon { font-size:40px; margin-bottom:8px; }
+.highlight-title { font-size:18px; font-weight:800; margin-bottom:4px; }
+.highlight-sub { font-size:13px; opacity:0.85; line-height:1.5; }
+
+/* Ranking */
+.rank-row {
+  display:flex; align-items:center; gap:12px;
+  padding:12px 0; border-bottom:1px solid var(--border);
+}
+.rank-num {
+  width:28px; height:28px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:800; flex-shrink:0;
+}
+.rank-1 { background:#FFD700; color:#7A6000; }
+.rank-2 { background:#C0C0C0; color:#555; }
+.rank-3 { background:#CD7F32; color:white; }
+.rank-other { background:var(--bg); color:var(--text-light); }
+</style>
+
+<div class="fade-up">
+  <div class="month-sub">{{ month_label }}の記録</div>
+  <div class="month-title">{{ child_name }}ちゃんの成長 🌱</div>
+</div>
+
+<!-- Weekly calendar -->
+<div class="card fade-up-2">
+  <div style="font-size:14px; font-weight:800; margin-bottom:12px;">📅 今週の記録</div>
+  <div class="week-row">
+    {% for day in weekly %}
+    <div class="week-day {% if day.is_today %}today{% endif %}">
+      <div class="week-day-label">{{ day.weekday }}</div>
+      <div class="week-day-dot" style="background:{% if day.count > 0 %}{% if day.is_today %}white{% else %}var(--primary){% endif %}{% else %}var(--border){% endif %};"></div>
+      <div class="week-day-count">{% if day.count > 0 %}{{ day.count }}{% else %}-{% endif %}</div>
+    </div>
+    {% endfor %}
+  </div>
+  <div style="font-size:12px; color:var(--text-light); text-align:center; margin-top:10px;">
+    今週は合計 <strong style="color:var(--primary);">{{ weekly | sum(attribute='count') }}回</strong> の遊びを記録しました
+  </div>
+</div>
+
+<!-- Top category highlight -->
+{% if top_cats and top_cats[0][1] > 0 %}
+{% set top_cat = top_cats[0][0] %}
+{% set top_count = top_cats[0][1] %}
+<div class="highlight-card fade-up-2">
+  <div class="highlight-icon">{{ category_icons[top_cat] }}</div>
+  <div class="highlight-title">今月いちばん多かった経験</div>
+  <div style="font-size:28px; font-weight:800; margin:4px 0;">{{ top_cat }} {{ top_count }}回！</div>
+  <div class="highlight-sub">
+    {{ child_name }}ちゃんは{{ top_cat }}の経験がとても豊富です。<br>
+    子どもの好奇心をしっかり伸ばせていますよ 😊
+  </div>
+</div>
+{% else %}
+<div class="card fade-up-2" style="text-align:center; padding:24px;">
+  <div style="font-size:32px; margin-bottom:8px;">🌱</div>
+  <div style="font-size:15px; font-weight:700; color:var(--text);">今月の記録を始めよう</div>
+  <div style="font-size:13px; color:var(--text-light); margin:8px 0 16px;">遊びを記録すると成長グラフが表示されます</div>
+  <a href="/record" class="btn btn-primary" style="margin:0;">✏️ 記録する</a>
+</div>
+{% endif %}
+
+<!-- Category breakdown -->
+{% if total_month > 0 %}
+<div class="card fade-up-3">
+  <div style="font-size:14px; font-weight:800; margin-bottom:16px;">📊 カテゴリ別の経験</div>
+  {% for cat in all_categories %}
+  {% set count = monthly[cat] %}
+  {% set max_count = top_cats[0][1] if top_cats and top_cats[0][1] > 0 else 1 %}
+  {% set pct = (count / max_count * 100) | int %}
+  {% set bar_colors = {"探索":"#5B8EF0","創造":"#F4A261","会話":"#6FCF97","運動":"#BB6BD9","感覚":"#F2C94C","協力":"#56CCF2","挑戦":"#EB5757"} %}
+  <div class="cat-bar-row">
+    <div class="cat-bar-header">
+      <span class="cat-bar-label">{{ category_icons[cat] }} {{ cat }}</span>
+      <span class="cat-bar-count">{{ count }}回</span>
+    </div>
+    <div class="cat-bar-bg">
+      <div class="cat-bar-fill" style="width:{{ pct }}%; background:{{ bar_colors[cat] }};"></div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- Play ranking -->
+{% if ranking %}
+<div class="card fade-up-3">
+  <div style="font-size:14px; font-weight:800; margin-bottom:4px;">🏆 よくやった遊び TOP5</div>
+  {% for item in ranking %}
+  <div class="rank-row">
+    <div class="rank-num rank-{% if loop.index <= 3 %}{{ loop.index }}{% else %}other{% endif %}">
+      {{ loop.index }}
+    </div>
+    <div style="flex:1; font-size:14px; font-weight:600;">{{ item.play_name }}</div>
+    <div style="font-size:13px; color:var(--text-light);">{{ item.count }}回</div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}

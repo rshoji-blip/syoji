@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% set active_nav = "record" %}
+
+{% block topbar_right %}
+<div style="font-size:13px; color:var(--text-light);">{{ child_name }}ちゃん</div>
+{% endblock %}
+
+{% block content %}
+<style>
+.step-indicator {
+  display: flex; align-items: center; gap: 6px;
+  padding: 16px 0 8px;
+}
+.step-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+}
+.step-dot.active { background: var(--primary); color: white; }
+.step-dot.done { background: var(--accent); color: white; }
+.step-dot.todo { background: var(--bg); color: var(--text-light); border: 2px solid var(--border); }
+.step-line { flex: 1; height: 2px; border-radius: 1px; }
+.step-line.done { background: var(--accent); }
+.step-line.todo { background: var(--border); }
+
+.cat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 4px; }
+.cat-card {
+  background: var(--surface); border-radius: var(--radius-sm);
+  padding: 18px 14px; text-align: center; cursor: pointer;
+  box-shadow: var(--shadow); border: 2.5px solid transparent;
+  transition: all 0.15s; user-select: none;
+}
+.cat-card:active { transform: scale(0.96); }
+.cat-card.selected { border-color: var(--primary); background: var(--primary-light); }
+.cat-card-icon { font-size: 28px; margin-bottom: 6px; }
+.cat-card-name { font-size: 14px; font-weight: 700; color: var(--text); }
+.cat-card-desc { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+
+.play-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.play-select-card {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--surface); border-radius: var(--radius-sm);
+  padding: 14px 16px; box-shadow: var(--shadow);
+  cursor: pointer; border: 2.5px solid transparent;
+  transition: all 0.15s;
+}
+.play-select-card:active { transform: scale(0.98); }
+.play-select-card.selected { border-color: var(--primary); background: var(--primary-light); }
+.play-select-icon { font-size: 24px; width: 40px; text-align: center; }
+.play-select-name { font-size: 15px; font-weight: 700; }
+.play-select-cats { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+
+/* Celebration */
+.celebrate-wrap { text-align: center; padding: 24px 0; }
+.celebrate-icon { font-size: 72px; animation: pop 0.5s ease both; margin-bottom: 12px; }
+.celebrate-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+.celebrate-sub { font-size: 15px; color: var(--text-mid); line-height: 1.6; }
+.cats-earned {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  justify-content: center; margin: 16px 0;
+}
+.cat-badge {
+  display: flex; align-items: center; gap: 4px;
+  background: var(--primary-light); color: var(--primary);
+  padding: 6px 12px; border-radius: 20px;
+  font-size: 13px; font-weight: 700;
+  animation: pop 0.4s ease both;
+}
+</style>
+
+<!-- Step indicator -->
+<div class="step-indicator fade-up" id="stepIndicator">
+  <div class="step-dot active" id="step1dot">1</div>
+  <div class="step-line todo" id="line1"></div>
+  <div class="step-dot todo" id="step2dot">2</div>
+  <div class="step-line todo" id="line2"></div>
+  <div class="step-dot todo" id="step3dot">✓</div>
+</div>
+
+<!-- Step 1: Category -->
+<div id="step1" class="fade-up-2">
+  <div style="font-size:18px; font-weight:800; margin-bottom:4px;">どんな経験をしましたか？</div>
+  <div style="font-size:13px; color:var(--text-light); margin-bottom:12px;">カテゴリを選んでください（タップ1）</div>
+  <div class="cat-grid">
+    {% set cat_descs = {
+      "探索": "新しいものを発見",
+      "創造": "作る・描く・表現",
+      "会話": "話す・聞く・読む",
+      "運動": "走る・跳ぶ・動く",
+      "感覚": "触る・聞く・感じる",
+      "協力": "一緒に・順番に",
+      "挑戦": "難しいことに挑む",
+    } %}
+    {% for cat in all_categories %}
+    {% if cat in plays_by_cat %}
+    <div class="cat-card" onclick="selectCategory('{{ cat }}')" id="cat_{{ cat }}">
+      <div class="cat-card-icon">{{ category_icons[cat] }}</div>
+      <div class="cat-card-name">{{ cat }}</div>
+      <div class="cat-card-desc">{{ cat_descs.get(cat, '') }}</div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Step 2: Play selection (hidden) -->
+<div id="step2" style="display:none;">
+  <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+    <button onclick="goBack()" style="background:var(--bg); border:none; border-radius:50%; width:32px; height:32px; cursor:pointer; font-size:16px;">‹</button>
+    <div>
+      <div style="font-size:18px; font-weight:800;" id="step2title">どの遊びをしましたか？</div>
+      <div style="font-size:13px; color:var(--text-light);">遊びを選んでください（タップ2）</div>
+    </div>
+  </div>
+  <div class="play-list" id="playList"></div>
+</div>
+
+<!-- Step 3: Celebrate (hidden) -->
+<div id="step3" style="display:none;">
+  <div class="celebrate-wrap">
+    <div class="celebrate-icon">🎉</div>
+    <div class="celebrate-title">記録完了！</div>
+    <div class="celebrate-sub" id="celebrateSub"></div>
+    <div class="cats-earned" id="catsEarned"></div>
+  </div>
+  <a href="/" class="btn btn-primary">🏠 ホームに戻る</a>
+  <button onclick="resetRecord()" class="btn btn-secondary">もう1つ記録する</button>
+</div>
+
+<script>
+const PLAYS_BY_CAT = {{ plays_by_cat | tojson }};
+const CAT_ICONS = {{ category_icons | tojson }};
+let selectedCat = null;
+let selectedPlay = null;
+
+function selectCategory(cat) {
+  document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('cat_' + cat).classList.add('selected');
+  selectedCat = cat;
+  setTimeout(() => showStep2(cat), 220);
+}
+
+function showStep2(cat) {
+  document.getElementById('step1').style.display = 'none';
+  document.getElementById('step2').style.display = 'block';
+  document.getElementById('step2title').textContent = CAT_ICONS[cat] + cat + 'の遊び';
+  updateStepIndicator(2);
+  const plays = PLAYS_BY_CAT[cat] || [];
+  const list = document.getElementById('playList');
+  list.innerHTML = plays.map(p => `
+    <div class="play-select-card" onclick="selectPlay('${p.id}', '${p.name}', ${JSON.stringify(p.dev_categories)})" id="play_${p.id}">
+      <div class="play-select-icon">🎮</div>
+      <div>
+        <div class="play-select-name">${p.name}</div>
+        <div class="play-select-cats">${p.dev_categories.map(c => CAT_ICONS[c] + c).join(' · ')}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectPlay(id, name, cats) {
+  document.querySelectorAll('.play-select-card').forEach(c => c.classList.remove('selected'));
+  const el = document.getElementById('play_' + id);
+  if (el) el.classList.add('selected');
+  selectedPlay = {id, name, cats};
+  setTimeout(() => doRecord(), 220);
+}
+
+async function doRecord() {
+  updateStepIndicator(3);
+  const res = await fetch('/record/log', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({play_id: selectedPlay.id, play_name: selectedPlay.name})
+  });
+  document.getElementById('step2').style.display = 'none';
+  document.getElementById('step3').style.display = 'block';
+  document.getElementById('celebrateSub').textContent =
+    `「${selectedPlay.name}」を記録しました！\nすてきな時間でしたね 🌸`;
+  const earned = document.getElementById('catsEarned');
+  earned.innerHTML = selectedPlay.cats.map((c, i) =>
+    `<div class="cat-badge" style="animation-delay:${i*0.1}s">${CAT_ICONS[c]}${c}</div>`
+  ).join('');
+}
+
+function goBack() {
+  document.getElementById('step2').style.display = 'none';
+  document.getElementById('step1').style.display = 'block';
+  updateStepIndicator(1);
+  document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('selected'));
+}
+
+function resetRecord() {
+  document.getElementById('step3').style.display = 'none';
+  document.getElementById('step1').style.display = 'block';
+  updateStepIndicator(1);
+  selectedCat = null; selectedPlay = null;
+  document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('selected'));
+}
+
+function updateStepIndicator(step) {
+  const dots = ['step1dot','step2dot','step3dot'];
+  const lines = ['line1','line2'];
+  dots.forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.className = 'step-dot';
+    if (i+1 < step) el.classList.add('done');
+    else if (i+1 === step) el.classList.add('active');
+    else el.classList.add('todo');
+  });
+  lines.forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.className = 'step-line';
+    el.classList.add(i+1 < step ? 'done' : 'todo');
+  });
+}
+</script>

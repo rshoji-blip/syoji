@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% set active_nav = "home" %}
+
+{% block topbar_right %}
+<div style="text-align:right;">
+  <div style="font-size:13px; font-weight:700; color:var(--text);">{{ child_name }}</div>
+  <div style="font-size:11px; color:var(--text-light);">{{ age_str }}</div>
+</div>
+{% endblock %}
+
+{% block content %}
+<style>
+.greeting { padding: 20px 0 4px; }
+.greeting-name { font-size: 24px; font-weight: 800; color: var(--text); }
+.greeting-sub { font-size: 14px; color: var(--text-mid); margin-top: 4px; }
+.play-card {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--surface); border-radius: var(--radius-sm);
+  padding: 14px 16px; margin: 8px 0;
+  box-shadow: var(--shadow); text-decoration: none; color: inherit;
+  transition: transform 0.15s;
+}
+.play-card:active { transform: scale(0.98); }
+.play-card-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0;
+}
+.weather-pill {
+  display: inline-flex; align-items: center;
+  background: var(--secondary-light); color: var(--secondary);
+  padding: 6px 12px; border-radius: 20px;
+  font-size: 13px; font-weight: 700;
+}
+.child-switch { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0; }
+.child-btn {
+  flex-shrink: 0; padding: 6px 14px; border-radius: 20px;
+  border: 2px solid var(--primary); font-size: 13px; font-weight: 700;
+  cursor: pointer; background: var(--primary); color: white;
+}
+.child-btn.inactive { background: var(--surface); color: var(--primary); }
+.section-title-home {
+  font-size: 13px; font-weight: 700; color: var(--text-light);
+  letter-spacing: 0.05em; margin: 20px 0 8px;
+}
+</style>
+
+<div class="greeting fade-up">
+  <div style="font-size:14px; color:var(--text-mid);">こんにちは！</div>
+  <div class="greeting-name">{{ child_name }}ちゃんの今日</div>
+</div>
+
+{% if users|length > 1 %}
+<div class="child-switch fade-up">
+  {% for u in users %}
+  <form action="/switch_child" method="post" style="display:inline;">
+    <input type="hidden" name="child_idx" value="{{ loop.index0 }}">
+    <button class="child-btn {% if u.name != child_name %}inactive{% endif %}" type="submit">
+      {{ u.name }} {{ u.age_str }}
+    </button>
+  </form>
+  {% endfor %}
+  <a href="/register" style="flex-shrink:0; padding:6px 14px; border-radius:20px; border:2px dashed var(--border); font-size:13px; font-weight:700; color:var(--text-light); text-decoration:none; display:inline-flex; align-items:center;">＋</a>
+</div>
+{% endif %}
+
+<!-- Today experience card -->
+<div class="card fade-up-2">
+  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+    <div>
+      <div style="font-size:15px; font-weight:800; color:var(--text);">今日の発達経験</div>
+      <div style="font-size:12px; color:var(--text-light); margin-top:2px;">
+        {% if total_today > 0 %}{{ total_today }}回の経験を記録済み ✨{% else %}まだ記録がありません{% endif %}
+      </div>
+    </div>
+    <div class="weather-pill">{{ weather.label }}</div>
+  </div>
+
+  <!-- Radar chart (JS-driven) -->
+  <div style="display:flex; justify-content:center;">
+    <canvas id="radarChart" width="260" height="240" style="max-width:100%;"></canvas>
+  </div>
+
+  <a href="/record" class="btn btn-primary" style="margin-top:16px;">✏️ 今日の遊びを記録する</a>
+</div>
+
+<!-- Recommended plays -->
+<div class="fade-up-3">
+  <div class="section-title-home">💡 今日のおすすめ遊び</div>
+  {% set bg_colors = ["#EBF0FE","#FEF3E2","#E8F8EF"] %}
+  {% set play_icons = ["🎯","🌈","⭐"] %}
+  {% for play in plays %}
+  <a href="/play/{{ play.id }}" class="play-card">
+    <div class="play-card-icon" style="background:{{ bg_colors[loop.index0] }};">{{ play_icons[loop.index0] }}</div>
+    <div style="flex:1; min-width:0;">
+      <div style="font-size:15px; font-weight:700;">{{ play.name }}</div>
+      <div style="font-size:12px; color:var(--text-light); margin-top:2px;">
+        {% for cat in play.dev_categories[:2] %}{{ category_icons[cat] }}{{ cat }} {% endfor %}
+      </div>
+    </div>
+    <div style="color:var(--text-light); font-size:20px;">›</div>
+  </a>
+  {% endfor %}
+</div>
+
+<script>
+const CATS = {{ all_categories | tojson }};
+const ICONS_TEXT = {{ all_categories | tojson }};
+const COUNTS = {{ category_counts | tojson }};
+const CAT_ICONS = {{ category_icons | tojson }};
+
+const canvas = document.getElementById('radarChart');
+const ctx = canvas.getContext('2d');
+const dpr = window.devicePixelRatio || 1;
+canvas.width = 260 * dpr; canvas.height = 240 * dpr;
+canvas.style.width = '260px'; canvas.style.height = '240px';
+ctx.scale(dpr, dpr);
+
+const cx = 130, cy = 118, maxR = 80, n = CATS.length;
+
+function getXY(i, r) {
+  const angle = (i * 2 * Math.PI / n) - Math.PI / 2;
+  return [cx + r * Math.cos(angle), cy + r * Math.sin(angle)];
+}
+
+// Draw bg rings
+[0.33, 0.67, 1.0].forEach(frac => {
+  ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const [x, y] = getXY(i, maxR * frac);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.strokeStyle = '#F0EDE8'; ctx.lineWidth = 1.5; ctx.stroke();
+});
+
+// Draw axes
+for (let i = 0; i < n; i++) {
+  const [x, y] = getXY(i, maxR);
+  ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(x, y);
+  ctx.strokeStyle = '#F0EDE8'; ctx.lineWidth = 1.5; ctx.stroke();
+}
+
+// Data polygon
+const maxVal = Math.max(...Object.values(COUNTS), 1);
+ctx.beginPath();
+CATS.forEach((cat, i) => {
+  const val = COUNTS[cat] || 0;
+  const r = (val / maxVal) * maxR;
+  const [x, y] = getXY(i, r);
+  i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+});
+ctx.closePath();
+ctx.fillStyle = 'rgba(91,142,240,0.18)'; ctx.fill();
+ctx.strokeStyle = '#5B8EF0'; ctx.lineWidth = 2.5; ctx.stroke();
+
+// Data dots
+CATS.forEach((cat, i) => {
+  const val = COUNTS[cat] || 0;
+  if (val > 0) {
+    const r = (val / maxVal) * maxR;
+    const [x, y] = getXY(i, r);
+    ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI*2);
+    ctx.fillStyle = '#5B8EF0'; ctx.fill();
+    ctx.fillStyle = 'white'; ctx.beginPath(); ctx.arc(x, y, 2.5, 0, Math.PI*2); ctx.fill();
+  }
+});
+
+// Labels
+CATS.forEach((cat, i) => {
+  const lr = maxR + 28;
+  const [x, y] = getXY(i, lr);
+  const hasExp = (COUNTS[cat] || 0) > 0;
+  ctx.fillStyle = hasExp ? '#5B8EF0' : '#9CA3AF';
+  ctx.font = `bold 11px -apple-system, sans-serif`;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(CAT_ICONS[cat] + cat, x, y);
+});
+</script>
