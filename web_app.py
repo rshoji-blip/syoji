@@ -167,6 +167,7 @@ def api_home():
             "materials": detail.get("materials", []),
             "effects": detail.get("effects", ""),
             "steps_count": len(detail.get("steps", [])),
+            "location_tags": detail.get("location_tags", []),
         })
 
     # 今日が土日かどうか

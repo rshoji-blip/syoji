@@ -9,6 +9,7 @@ interface Play {
   materials: string[];
   effects: string;
   steps_count: number;
+  location_tags: string[];
 }
 
 interface HomeData {
@@ -147,6 +148,15 @@ export default function Home({ onNavigate, onPlayDetail, onBrowse }: Props) {
                   </div>
                 )}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                  {/* 場所タグ */}
+                  {play.location_tags?.map(tag => {
+                    const tagEmoji: Record<string, string> = { '室内': '🏠', '屋外': '🌳', '室外': '🌳' };
+                    return (
+                      <div key={tag} style={{ fontSize: 11, color: '#666', fontWeight: 700, background: '#F0F0F0', padding: '2px 6px', borderRadius: 6 }}>
+                        {tagEmoji[tag] || '📍'}{tag}
+                      </div>
+                    );
+                  })}
                   {/* 用意するもの */}
                   {materials.length > 0 && (
                     <div style={{ fontSize: 11, color: 'var(--text-light)', fontWeight: 600 }}>
@@ -177,29 +187,13 @@ export default function Home({ onNavigate, onPlayDetail, onBrowse }: Props) {
           );
         })}
 
-        {/* カテゴリから探す */}
-        <div style={{ margin: '24px 0 8px', fontSize: 15, fontWeight: 900, color: 'var(--text)' }}>
-          🎮 カテゴリから遊びを探す
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 20 }}>
-          {Object.entries(CAT_COLORS).map(([cat, color]) => (
-            <button key={cat} onClick={() => onBrowse(cat)} style={{
-              display: 'flex', alignItems: 'center', gap: 10,
-              background: color.bg, border: `2px solid ${color.border}60`,
-              borderRadius: 14, padding: '12px 12px',
-              cursor: 'pointer', textAlign: 'left',
-            }}>
-              <img src={color.img} alt={cat}
-                style={{ width: 44, height: 44, objectFit: 'contain', flexShrink: 0 }} />
-              <div>
-                <div style={{ fontSize: 13, fontWeight: 900, color: '#333' }}>{cat}</div>
-                <div style={{ fontSize: 10, color: '#888', fontWeight: 600, marginTop: 1 }}>
-                  {CATEGORY_ICONS[cat]}あそび
-                </div>
-              </div>
-            </button>
-          ))}
-        </div>
+        {/* もっと探すボタン */}
+        <button onClick={() => onBrowse()} style={{
+          width: '100%', padding: 14, borderRadius: 14, marginTop: 8, marginBottom: 16,
+          background: 'white', color: 'var(--primary)',
+          border: '2px solid var(--primary)', fontSize: 14, fontWeight: 900,
+          cursor: 'pointer',
+        }}>🔍 さがすタブでもっと見つける →</button>
 
         {/* きろくボタン */}
         <button onClick={() => onNavigate('record')} style={{

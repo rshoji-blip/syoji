@@ -124,8 +124,15 @@ export default function PlayDetail({ playId, childName, onBack }: Props) {
             width: '100%', padding: 16, borderRadius: 'var(--radius-sm)',
             background: 'white', color: 'var(--text-mid)',
             border: '2.5px solid var(--border)', fontSize: 16, fontWeight: 900, textDecoration: 'none',
+            marginBottom: 10,
           }}>🎬 どうがでみる</a>
         )}
+        <a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(play.name + ' 子供 遊び')}`} target="_blank" rel="noreferrer" style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+          width: '100%', padding: 16, borderRadius: 'var(--radius-sm)',
+          background: '#FFF0F0', color: '#CC0000',
+          border: '2.5px solid #FFAAAA', fontSize: 16, fontWeight: 900, textDecoration: 'none',
+        }}>▶️ YouTubeで検索する</a>
       </div>
 
       {/* Toast */}
