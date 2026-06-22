@@ -903,5 +903,3156 @@
       "挑戦",
       "探索"
     ]
+  },
+  {
+    "id": "play_028",
+    "name": "布・素材の感触あそび",
+    "age_min_months": 0,
+    "age_max_months": 9,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "タオル",
+      "シルク布",
+      "コットン布"
+    ],
+    "steps": [
+      "さまざまな素材の布を用意する",
+      "赤ちゃんの手足に優しく当てる",
+      "「ふわふわ」「すべすべ」と声に出しながら触れさせる"
+    ],
+    "effects": [
+      "触覚刺激",
+      "感受性の発達"
+    ],
+    "dev_categories": [
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_029",
+    "name": "おなかマッサージ",
+    "age_min_months": 0,
+    "age_max_months": 9,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "なし"
+    ],
+    "steps": [
+      "赤ちゃんをあお向けに寝かせる",
+      "お腹を時計回りにゆっくり円を描く",
+      "「ぐるぐる〜」と歌いながら行う"
+    ],
+    "effects": [
+      "リラックス",
+      "親子の絆"
+    ],
+    "dev_categories": [
+      "感覚",
+      "会話"
+    ]
+  },
+  {
+    "id": "play_030",
+    "name": "ビニール袋でカサカサあそび",
+    "age_min_months": 2,
+    "age_max_months": 9,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "ビニール袋"
+    ],
+    "steps": [
+      "ビニール袋をゆっくりカサカサ鳴らす",
+      "赤ちゃんの耳元で音を出す",
+      "手で触らせてみる（安全に注意）"
+    ],
+    "effects": [
+      "聴覚・触覚刺激"
+    ],
+    "dev_categories": [
+      "感覚",
+      "探索"
+    ]
+  },
+  {
+    "id": "play_031",
+    "name": "足踏み体操",
+    "age_min_months": 0,
+    "age_max_months": 6,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "なし"
+    ],
+    "steps": [
+      "赤ちゃんの足首を優しく持つ",
+      "交互にゆっくり曲げ伸ばしする",
+      "「いち、に、いち、に」とリズムに乗る"
+    ],
+    "effects": [
+      "筋力発達",
+      "感覚統合"
+    ],
+    "dev_categories": [
+      "運動",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_032",
+    "name": "飛行機抱っこ",
+    "age_min_months": 3,
+    "age_max_months": 12,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内",
+      "屋外"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "なし"
+    ],
+    "steps": [
+      "赤ちゃんをうつぶせにして水平に持つ",
+      "「ブーン」と声を出しながらゆっくり動かす",
+      "表情を見ながら楽しそうなら続ける"
+    ],
+    "effects": [
+      "バランス感覚",
+      "空間認識"
+    ],
+    "dev_categories": [
+      "運動",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_033",
+    "name": "タオルぶらんこ",
+    "age_min_months": 4,
+    "age_max_months": 12,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "大判タオル"
+    ],
+    "steps": [
+      "床にタオルを広げて赤ちゃんを乗せる",
+      "両端を持ってゆっくり揺らす",
+      "「ゆらゆら〜」と声をかける"
+    ],
+    "effects": [
+      "前庭感覚",
+      "バランス感覚"
+    ],
+    "dev_categories": [
+      "運動",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_034",
+    "name": "鏡であそぼう",
+    "age_min_months": 2,
+    "age_max_months": 12,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "鏡"
+    ],
+    "steps": [
+      "割れない鏡を用意する",
+      "赤ちゃんを鏡の前に連れていく",
+      "映る自分の顔に触れさせる"
+    ],
+    "effects": [
+      "自己認識の芽生え",
+      "視覚発達"
+    ],
+    "dev_categories": [
+      "探索",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_035",
+    "name": "色んな容器のフタ開け",
+    "age_min_months": 8,
+    "age_max_months": 18,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "タッパー",
+      "容器各種"
+    ],
+    "steps": [
+      "フタが開けやすい容器を複数用意する",
+      "赤ちゃんに渡して自由に触らせる",
+      "開けたら「開いた！」と一緒に喜ぶ"
+    ],
+    "effects": [
+      "手先の発達",
+      "因果関係理解"
+    ],
+    "dev_categories": [
+      "探索",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_036",
+    "name": "光と影あそび",
+    "age_min_months": 2,
+    "age_max_months": 12,
+    "weather_tags": [
+      "晴れ",
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "懐中電灯"
+    ],
+    "steps": [
+      "部屋を少し暗くする",
+      "懐中電灯で光を当てる",
+      "手で影を作って動かす"
+    ],
+    "effects": [
+      "視覚追跡",
+      "好奇心"
+    ],
+    "dev_categories": [
+      "探索",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_037",
+    "name": "歌いながらスキンシップ",
+    "age_min_months": 0,
+    "age_max_months": 12,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "なし"
+    ],
+    "steps": [
+      "童謡を歌いながら赤ちゃんの体に触れる",
+      "「むすんでひらいて」など手を使う歌",
+      "赤ちゃんの反応を見ながら楽しむ"
+    ],
+    "effects": [
+      "語彙発達",
+      "愛着形成"
+    ],
+    "dev_categories": [
+      "会話",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_038",
+    "name": "模倣あそび（口の動き）",
+    "age_min_months": 2,
+    "age_max_months": 12,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "なし"
+    ],
+    "steps": [
+      "赤ちゃんと目を合わせる",
+      "舌を出したり口をパクパクする",
+      "赤ちゃんが真似したら大げさに喜ぶ"
+    ],
+    "effects": [
+      "コミュニケーション力",
+      "表情認識"
+    ],
+    "dev_categories": [
+      "会話",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_039",
+    "name": "擬音語いっぱいの散歩",
+    "age_min_months": 4,
+    "age_max_months": 18,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "なし"
+    ],
+    "steps": [
+      "抱っこやベビーカーで外に出る",
+      "見えるものに擬音をつける",
+      "「わんわん」「ブーブー」と声に出す"
+    ],
+    "effects": [
+      "語彙発達",
+      "感覚刺激"
+    ],
+    "dev_categories": [
+      "会話",
+      "探索"
+    ]
+  },
+  {
+    "id": "play_040",
+    "name": "一緒に絵本をめくろう",
+    "age_min_months": 6,
+    "age_max_months": 18,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "厚紙絵本"
+    ],
+    "steps": [
+      "膝の上に乗せて絵本を開く",
+      "赤ちゃんの手を添えてページをめくる",
+      "絵を指差しながら名前を言う"
+    ],
+    "effects": [
+      "語彙発達",
+      "共同注意"
+    ],
+    "dev_categories": [
+      "会話",
+      "協力"
+    ]
+  },
+  {
+    "id": "play_041",
+    "name": "ボールのやりとり",
+    "age_min_months": 8,
+    "age_max_months": 18,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内",
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "柔らかいボール"
+    ],
+    "steps": [
+      "床に向かい合って座る",
+      "ゆっくりボールを転がして渡す",
+      "「どうぞ」「ありがとう」と声をかける"
+    ],
+    "effects": [
+      "協調性",
+      "順番理解"
+    ],
+    "dev_categories": [
+      "協力",
+      "運動"
+    ]
+  },
+  {
+    "id": "play_042",
+    "name": "つかまり立ち練習",
+    "age_min_months": 7,
+    "age_max_months": 12,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "ローテーブル",
+      "ソファ"
+    ],
+    "steps": [
+      "安定した家具の前に連れていく",
+      "手を添えて立つ姿勢を助ける",
+      "少し離れたところにおもちゃを置く"
+    ],
+    "effects": [
+      "脚力発達",
+      "チャレンジ精神"
+    ],
+    "dev_categories": [
+      "運動",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_043",
+    "name": "スプーン持ち練習",
+    "age_min_months": 9,
+    "age_max_months": 18,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "スプーン",
+      "おもちゃ"
+    ],
+    "steps": [
+      "赤ちゃんサイズのスプーンを渡す",
+      "容器にブロックを入れてすくう練習",
+      "できたら大げさに褒める"
+    ],
+    "effects": [
+      "手先の発達",
+      "達成感"
+    ],
+    "dev_categories": [
+      "挑戦",
+      "探索"
+    ]
+  },
+  {
+    "id": "play_044",
+    "name": "砂・土の感触あそび",
+    "age_min_months": 12,
+    "age_max_months": 36,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "砂場"
+    ],
+    "steps": [
+      "素足か薄い靴下で砂の上に立つ",
+      "砂を手でにぎったり流したりする",
+      "水を加えてどろんこにして感触を比べる"
+    ],
+    "effects": [
+      "感覚統合",
+      "探索欲"
+    ],
+    "dev_categories": [
+      "感覚",
+      "探索"
+    ]
+  },
+  {
+    "id": "play_045",
+    "name": "氷あそび",
+    "age_min_months": 12,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "氷",
+      "タオル",
+      "容器"
+    ],
+    "steps": [
+      "製氷皿で氷を作る",
+      "バットに氷を入れて触らせる",
+      "「つめた〜い！」と言いながら溶けるまで観察"
+    ],
+    "effects": [
+      "感覚刺激",
+      "科学的思考の芽生え"
+    ],
+    "dev_categories": [
+      "感覚",
+      "探索"
+    ]
+  },
+  {
+    "id": "play_046",
+    "name": "泡あそび",
+    "age_min_months": 12,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "洗面器",
+      "石鹸",
+      "泡立てネット"
+    ],
+    "steps": [
+      "洗面器に水と石鹸を入れる",
+      "泡立ててふわふわの泡を作る",
+      "手でつぶしたり顔につけたり"
+    ],
+    "effects": [
+      "感覚探索",
+      "リラックス"
+    ],
+    "dev_categories": [
+      "感覚",
+      "探索"
+    ]
+  },
+  {
+    "id": "play_047",
+    "name": "落ち葉・木の実コレクション",
+    "age_min_months": 18,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "袋",
+      "かご"
+    ],
+    "steps": [
+      "公園や散歩道で落ち葉や木の実を探す",
+      "「これ何の木かな？」と話しながら集める",
+      "家に帰って並べて比べる"
+    ],
+    "effects": [
+      "感覚探索",
+      "語彙発達"
+    ],
+    "dev_categories": [
+      "感覚",
+      "探索",
+      "会話"
+    ]
+  },
+  {
+    "id": "play_048",
+    "name": "家の中探検",
+    "age_min_months": 12,
+    "age_max_months": 30,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "なし"
+    ],
+    "steps": [
+      "「○○はどこ？」と問いかける",
+      "一緒に家の中を歩き回る",
+      "見つけたら「あった！」と喜ぶ"
+    ],
+    "effects": [
+      "探索心",
+      "語彙発達"
+    ],
+    "dev_categories": [
+      "探索",
+      "会話"
+    ]
+  },
+  {
+    "id": "play_049",
+    "name": "引き出しの中身調べ",
+    "age_min_months": 12,
+    "age_max_months": 24,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "子ども専用引き出し"
+    ],
+    "steps": [
+      "安全なものだけ入れた引き出しを用意",
+      "自由に出し入れさせる",
+      "「これは何？」と声をかける"
+    ],
+    "effects": [
+      "探索欲",
+      "手先の発達"
+    ],
+    "dev_categories": [
+      "探索",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_050",
+    "name": "水たまりジャンプ",
+    "age_min_months": 18,
+    "age_max_months": 48,
+    "weather_tags": [
+      "雨"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "長靴",
+      "レインコート"
+    ],
+    "steps": [
+      "雨上がりに長靴を履いて外へ",
+      "水たまりを見つけてジャンプ",
+      "「ザバーン！」と声を出しながら"
+    ],
+    "effects": [
+      "探索心",
+      "運動発達"
+    ],
+    "dev_categories": [
+      "探索",
+      "運動"
+    ]
+  },
+  {
+    "id": "play_051",
+    "name": "虫眼鏡で観察",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "虫眼鏡"
+    ],
+    "steps": [
+      "庭や公園で葉っぱや虫を探す",
+      "虫眼鏡で大きく見る",
+      "「大きく見えたね！」と一緒に驚く"
+    ],
+    "effects": [
+      "科学的好奇心",
+      "集中力"
+    ],
+    "dev_categories": [
+      "探索",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_052",
+    "name": "クレヨンお絵描き",
+    "age_min_months": 18,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "太めのクレヨン",
+      "大きな紙"
+    ],
+    "steps": [
+      "大きな紙を床に広げる",
+      "太いクレヨンを渡して自由に描かせる",
+      "「何描いたの？」と聞いて話を聞く"
+    ],
+    "effects": [
+      "創造力",
+      "表現力"
+    ],
+    "dev_categories": [
+      "創造",
+      "会話"
+    ]
+  },
+  {
+    "id": "play_053",
+    "name": "スタンプあそび",
+    "age_min_months": 18,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "野菜",
+      "絵の具",
+      "紙"
+    ],
+    "steps": [
+      "レンコンやピーマンなど野菜を切る",
+      "絵の具を皿に広げる",
+      "野菜を押してスタンプする"
+    ],
+    "effects": [
+      "創造力",
+      "感覚探索"
+    ],
+    "dev_categories": [
+      "創造",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_054",
+    "name": "ちぎり絵",
+    "age_min_months": 18,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "折り紙",
+      "のり",
+      "台紙"
+    ],
+    "steps": [
+      "折り紙を自由にちぎる",
+      "台紙に自分でのりを塗る",
+      "ちぎった紙を貼る"
+    ],
+    "effects": [
+      "手先の発達",
+      "創造力"
+    ],
+    "dev_categories": [
+      "創造",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_055",
+    "name": "ダンボール工作",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "ダンボール",
+      "テープ",
+      "クレヨン"
+    ],
+    "steps": [
+      "ダンボールを好きな形に切る",
+      "クレヨンで色を塗る",
+      "組み合わせてロボットや車に"
+    ],
+    "effects": [
+      "創造力",
+      "空間認識"
+    ],
+    "dev_categories": [
+      "創造",
+      "探索"
+    ]
+  },
+  {
+    "id": "play_056",
+    "name": "毛糸・リボン巻きつけあそび",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "毛糸",
+      "リボン",
+      "空き箱"
+    ],
+    "steps": [
+      "空き箱や棒に毛糸を渡す",
+      "自由に巻きつけていく",
+      "カラフルにできたら一緒に飾る"
+    ],
+    "effects": [
+      "手先の発達",
+      "集中力"
+    ],
+    "dev_categories": [
+      "創造",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_057",
+    "name": "動物なりきりゲーム",
+    "age_min_months": 18,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内",
+      "屋外"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "なし"
+    ],
+    "steps": [
+      "「うさぎさんみたいにピョンピョン！」と言う",
+      "一緒に動物の動きを真似する",
+      "「次は何になる？」と子どもに選ばせる"
+    ],
+    "effects": [
+      "語彙発達",
+      "想像力"
+    ],
+    "dev_categories": [
+      "会話",
+      "運動"
+    ]
+  },
+  {
+    "id": "play_058",
+    "name": "電話ごっこ",
+    "age_min_months": 18,
+    "age_max_months": 36,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "おもちゃの電話",
+      "空き容器"
+    ],
+    "steps": [
+      "おもちゃの電話を2つ用意する",
+      "「もしもし？」と話しかける",
+      "会話のやりとりを楽しむ"
+    ],
+    "effects": [
+      "言語発達",
+      "社会性"
+    ],
+    "dev_categories": [
+      "会話",
+      "協力"
+    ]
+  },
+  {
+    "id": "play_059",
+    "name": "なんでもクイズ",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内",
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "なし"
+    ],
+    "steps": [
+      "「ふわふわで耳が長い動物は？」と出す",
+      "子どもが答えるのを待つ",
+      "「正解！」と思いきり喜ぶ"
+    ],
+    "effects": [
+      "語彙発達",
+      "思考力"
+    ],
+    "dev_categories": [
+      "会話",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_060",
+    "name": "写真アルバムを見る",
+    "age_min_months": 12,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "写真アルバム"
+    ],
+    "steps": [
+      "子どもの写真を一緒に見る",
+      "「これ誰？」「ここ覚えてる？」と話す",
+      "子どもの反応を楽しむ"
+    ],
+    "effects": [
+      "自己認識",
+      "語彙発達"
+    ],
+    "dev_categories": [
+      "会話",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_061",
+    "name": "マット運動",
+    "age_min_months": 18,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "ヨガマット",
+      "布団"
+    ],
+    "steps": [
+      "マットや布団を敷く",
+      "でんぐり返しの練習",
+      "前転できたら一緒に喜ぶ"
+    ],
+    "effects": [
+      "体幹強化",
+      "バランス感覚"
+    ],
+    "dev_categories": [
+      "運動",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_062",
+    "name": "ジャンプ台あそび",
+    "age_min_months": 18,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "クッション",
+      "布団"
+    ],
+    "steps": [
+      "クッションを重ねて台を作る",
+      "乗ってジャンプ！",
+      "「もう一回！」を何度でも"
+    ],
+    "effects": [
+      "跳躍力",
+      "瞬発力"
+    ],
+    "dev_categories": [
+      "運動",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_063",
+    "name": "ボール蹴りサッカー",
+    "age_min_months": 18,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ",
+      "全天候"
+    ],
+    "location_tags": [
+      "屋外",
+      "室内"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "ボール"
+    ],
+    "steps": [
+      "ゴールになるものを置く",
+      "ボールを転がして蹴る練習",
+      "「ゴール！」と大喜びする"
+    ],
+    "effects": [
+      "脚力",
+      "協調性"
+    ],
+    "dev_categories": [
+      "運動",
+      "協力"
+    ]
+  },
+  {
+    "id": "play_064",
+    "name": "縄跳びくぐり",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ",
+      "全天候"
+    ],
+    "location_tags": [
+      "屋外",
+      "室内"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "縄跳び"
+    ],
+    "steps": [
+      "縄をゆっくり回す",
+      "子どもがくぐるところから始める",
+      "慣れたら低く揺らして跳ばせる"
+    ],
+    "effects": [
+      "リズム感",
+      "全身運動"
+    ],
+    "dev_categories": [
+      "運動",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_065",
+    "name": "ビニールプール",
+    "age_min_months": 12,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "ビニールプール",
+      "水鉄砲"
+    ],
+    "steps": [
+      "庭にビニールプールを設置する",
+      "水を入れて入る",
+      "水鉄砲やカップで遊ぶ"
+    ],
+    "effects": [
+      "感覚刺激",
+      "全身運動"
+    ],
+    "dev_categories": [
+      "運動",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_066",
+    "name": "一緒にお料理（野菜洗い）",
+    "age_min_months": 18,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "野菜",
+      "洗い桶"
+    ],
+    "steps": [
+      "野菜を水で洗ってもらう",
+      "「ありがとう、助かったよ！」と伝える",
+      "料理が完成したら一緒に食べる"
+    ],
+    "effects": [
+      "達成感",
+      "社会性"
+    ],
+    "dev_categories": [
+      "協力",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_067",
+    "name": "お片付けゲーム",
+    "age_min_months": 18,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "おもちゃ",
+      "箱"
+    ],
+    "steps": [
+      "「よーいドン！」で競争形式にする",
+      "決まった箱に分けて入れる",
+      "全部入ったら一緒に喜ぶ"
+    ],
+    "effects": [
+      "協調性",
+      "達成感"
+    ],
+    "dev_categories": [
+      "協力",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_068",
+    "name": "洗濯ものたたみ手伝い",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "洗濯物"
+    ],
+    "steps": [
+      "タオルなど簡単なものを一緒にたたむ",
+      "「二つ折りにして」と教える",
+      "「上手！ありがとう」と褒める"
+    ],
+    "effects": [
+      "生活力",
+      "達成感"
+    ],
+    "dev_categories": [
+      "協力",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_069",
+    "name": "一緒にシャボン玉",
+    "age_min_months": 18,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "シャボン玉液",
+      "吹き具"
+    ],
+    "steps": [
+      "親が吹いて見せる",
+      "追いかけてつぶす",
+      "子ども自身でも吹いてみる"
+    ],
+    "effects": [
+      "協調性",
+      "感覚探索"
+    ],
+    "dev_categories": [
+      "協力",
+      "感覚",
+      "運動"
+    ]
+  },
+  {
+    "id": "play_070",
+    "name": "型はめパズル",
+    "age_min_months": 12,
+    "age_max_months": 30,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "型はめパズル"
+    ],
+    "steps": [
+      "形を見せて「どこに入る？」と聞く",
+      "自分で入れさせる",
+      "できたら一緒に喜ぶ"
+    ],
+    "effects": [
+      "形の認識",
+      "集中力"
+    ],
+    "dev_categories": [
+      "挑戦",
+      "探索"
+    ]
+  },
+  {
+    "id": "play_071",
+    "name": "豆つまみ練習",
+    "age_min_months": 18,
+    "age_max_months": 36,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "豆（大粒）",
+      "皿",
+      "トング"
+    ],
+    "steps": [
+      "大きな豆を皿から皿へ移す",
+      "最初はスプーン、慣れたらトング",
+      "うまくできたら「すごい！」と褒める"
+    ],
+    "effects": [
+      "手先の発達",
+      "集中力"
+    ],
+    "dev_categories": [
+      "挑戦",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_072",
+    "name": "輪投げ",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内",
+      "屋外"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "輪っか（牛乳パック工作）",
+      "棒"
+    ],
+    "steps": [
+      "棒を立てて目標を作る",
+      "少し近い距離から投げる",
+      "入ったら大喜び、外れても笑って続ける"
+    ],
+    "effects": [
+      "集中力",
+      "達成感"
+    ],
+    "dev_categories": [
+      "挑戦",
+      "運動"
+    ]
+  },
+  {
+    "id": "play_073",
+    "name": "ひも通し",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "穴あきビーズ（大）",
+      "ひも"
+    ],
+    "steps": [
+      "太めのひもをビーズの穴に通す",
+      "色を選びながら通す",
+      "「ネックレスできた！」と喜ぶ"
+    ],
+    "effects": [
+      "手先の発達",
+      "集中力"
+    ],
+    "dev_categories": [
+      "挑戦",
+      "創造"
+    ]
+  },
+  {
+    "id": "play_074",
+    "name": "雨音を聴く",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "雨"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "なし"
+    ],
+    "steps": [
+      "窓の近くで雨音を一緒に聴く",
+      "「どんな音がする？」と聞く",
+      "窓に落ちる雨粒を観察する"
+    ],
+    "effects": [
+      "感受性",
+      "集中力"
+    ],
+    "dev_categories": [
+      "感覚",
+      "探索"
+    ]
+  },
+  {
+    "id": "play_075",
+    "name": "ブラインドタッチ当てゲーム",
+    "age_min_months": 30,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "巾着袋",
+      "おもちゃ各種"
+    ],
+    "steps": [
+      "袋の中に触れたことのあるものを入れる",
+      "目をつぶって手で触って当てる",
+      "当たったら「正解！」と盛り上がる"
+    ],
+    "effects": [
+      "触覚の発達",
+      "語彙発達"
+    ],
+    "dev_categories": [
+      "感覚",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_076",
+    "name": "音探し散歩",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "なし"
+    ],
+    "steps": [
+      "「しーっ、何か聞こえる？」と耳を澄ます",
+      "鳥の声、風の音などを探す",
+      "「あれは○○の音だよ」と教える"
+    ],
+    "effects": [
+      "聴覚感受性",
+      "語彙発達"
+    ],
+    "dev_categories": [
+      "感覚",
+      "探索"
+    ]
+  },
+  {
+    "id": "play_077",
+    "name": "磁石あそび",
+    "age_min_months": 30,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "磁石（安全なもの）"
+    ],
+    "steps": [
+      "磁石を冷蔵庫や金属に近づける",
+      "くっついたり離れたりを観察",
+      "「なぜくっつくの？」と話す"
+    ],
+    "effects": [
+      "科学的好奇心",
+      "探索心"
+    ],
+    "dev_categories": [
+      "探索",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_078",
+    "name": "植物を育てよう",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内",
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "種",
+      "土",
+      "植木鉢"
+    ],
+    "steps": [
+      "一緒に種を植える",
+      "毎日水やりの担当にする",
+      "芽が出たら一緒に喜ぶ"
+    ],
+    "effects": [
+      "責任感",
+      "観察力"
+    ],
+    "dev_categories": [
+      "探索",
+      "協力"
+    ]
+  },
+  {
+    "id": "play_079",
+    "name": "影絵あそび",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "懐中電灯"
+    ],
+    "steps": [
+      "壁に光を当てて暗くする",
+      "手で動物の影を作る",
+      "「何に見える？」と当てっこする"
+    ],
+    "effects": [
+      "想像力",
+      "創造力"
+    ],
+    "dev_categories": [
+      "探索",
+      "創造"
+    ]
+  },
+  {
+    "id": "play_080",
+    "name": "紙粘土工作",
+    "age_min_months": 30,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "紙粘土"
+    ],
+    "steps": [
+      "紙粘土を渡して自由に触らせる",
+      "「何作る？」と聞く",
+      "乾いたら飾る"
+    ],
+    "effects": [
+      "創造力",
+      "手先の発達"
+    ],
+    "dev_categories": [
+      "創造",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_081",
+    "name": "リズム楽器演奏会",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "太鼓",
+      "タンバリン",
+      "マラカス"
+    ],
+    "steps": [
+      "好きな楽器を選ばせる",
+      "音楽に合わせて叩く",
+      "発表会形式で見せてもらう"
+    ],
+    "effects": [
+      "リズム感",
+      "表現力"
+    ],
+    "dev_categories": [
+      "創造",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_082",
+    "name": "紙飛行機を作って飛ばそう",
+    "age_min_months": 30,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ",
+      "全天候"
+    ],
+    "location_tags": [
+      "屋外",
+      "室内"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "折り紙",
+      "コピー用紙"
+    ],
+    "steps": [
+      "一緒に紙飛行機を折る",
+      "「せーの」で飛ばす",
+      "どっちが遠くまで飛んだか比べる"
+    ],
+    "effects": [
+      "創造力",
+      "数量感覚の芽生え"
+    ],
+    "dev_categories": [
+      "創造",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_083",
+    "name": "お話作りごっこ",
+    "age_min_months": 30,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "ぬいぐるみ",
+      "人形"
+    ],
+    "steps": [
+      "ぬいぐるみを使って場面を設定する",
+      "「次どうなると思う？」と続きを聞く",
+      "子どもの話を膨らませる"
+    ],
+    "effects": [
+      "語彙発達",
+      "創造力"
+    ],
+    "dev_categories": [
+      "創造",
+      "会話"
+    ]
+  },
+  {
+    "id": "play_084",
+    "name": "今日の出来事インタビュー",
+    "age_min_months": 30,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "マイク（おもちゃ）"
+    ],
+    "steps": [
+      "おもちゃのマイクを持つ",
+      "「今日一番楽しかったことは？」と聞く",
+      "どんな答えでも「すごいね！」と返す"
+    ],
+    "effects": [
+      "語彙発達",
+      "自己表現"
+    ],
+    "dev_categories": [
+      "会話",
+      "探索"
+    ]
+  },
+  {
+    "id": "play_085",
+    "name": "絵本の続きを考えよう",
+    "age_min_months": 30,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "絵本"
+    ],
+    "steps": [
+      "絵本を読む途中で止める",
+      "「次どうなると思う？」と聞く",
+      "子どものアイデアを肯定してから読み進める"
+    ],
+    "effects": [
+      "想像力",
+      "語彙発達"
+    ],
+    "dev_categories": [
+      "会話",
+      "創造"
+    ]
+  },
+  {
+    "id": "play_086",
+    "name": "感情の言語化ゲーム",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "表情カード（手書きでもOK）"
+    ],
+    "steps": [
+      "うれしい・悲しい・怒り顔のカードを見せる",
+      "「この顔はどんな気持ち？」と聞く",
+      "「こんなとき悲しいよね」と共感する"
+    ],
+    "effects": [
+      "感情認識",
+      "共感力"
+    ],
+    "dev_categories": [
+      "会話",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_087",
+    "name": "サーキット遊び",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "クッション",
+      "フープ",
+      "テープ"
+    ],
+    "steps": [
+      "クッションを並べて飛び越えるコースを作る",
+      "「よーいドン！」でスタート",
+      "タイムを計って何度も挑戦"
+    ],
+    "effects": [
+      "全身運動",
+      "挑戦心"
+    ],
+    "dev_categories": [
+      "運動",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_088",
+    "name": "バランスストーン歩き",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "石（公園の飛び石）"
+    ],
+    "steps": [
+      "公園の飛び石を探す",
+      "落ちないように一歩一歩渡る",
+      "端まで渡りきったら成功！"
+    ],
+    "effects": [
+      "バランス感覚",
+      "集中力"
+    ],
+    "dev_categories": [
+      "運動",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_089",
+    "name": "的当てボーリング",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内",
+      "屋外"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "ペットボトル",
+      "ボール"
+    ],
+    "steps": [
+      "ペットボトルをピンに見立てて並べる",
+      "ボールを転がして倒す",
+      "倒れた数を一緒に数える"
+    ],
+    "effects": [
+      "数の認識",
+      "達成感"
+    ],
+    "dev_categories": [
+      "運動",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_090",
+    "name": "一緒に料理（混ぜる担当）",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "ボウル",
+      "材料"
+    ],
+    "steps": [
+      "ホットケーキなど簡単な料理を選ぶ",
+      "混ぜる係を任せる",
+      "「美味しい！」と一緒に食べる"
+    ],
+    "effects": [
+      "達成感",
+      "協調性"
+    ],
+    "dev_categories": [
+      "協力",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_091",
+    "name": "じゃんけんゲーム",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内",
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "なし"
+    ],
+    "steps": [
+      "じゃんけんのルールを教える",
+      "負けても笑って続ける",
+      "「3回勝ったほうが優勝！」とゲーム形式に"
+    ],
+    "effects": [
+      "ルール理解",
+      "感情調整"
+    ],
+    "dev_categories": [
+      "協力",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_092",
+    "name": "迷路チャレンジ",
+    "age_min_months": 30,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "迷路の本（子ども向け）",
+      "鉛筆"
+    ],
+    "steps": [
+      "簡単な迷路から始める",
+      "「どっちに行く？」と一緒に考える",
+      "ゴールできたら大喜びする"
+    ],
+    "effects": [
+      "空間認識",
+      "集中力"
+    ],
+    "dev_categories": [
+      "挑戦",
+      "探索"
+    ]
+  },
+  {
+    "id": "play_093",
+    "name": "三輪車・ペダルなし自転車",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "三輪車",
+      "ストライダー"
+    ],
+    "steps": [
+      "公園で三輪車に乗る練習",
+      "最初は後ろを支えて歩く",
+      "少し離れて自分で漕いでみる"
+    ],
+    "effects": [
+      "バランス感覚",
+      "達成感"
+    ],
+    "dev_categories": [
+      "挑戦",
+      "運動"
+    ]
+  },
+  {
+    "id": "play_094",
+    "name": "数字カルタ",
+    "age_min_months": 30,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "1〜10の数字カード"
+    ],
+    "steps": [
+      "カードを並べる",
+      "「3はどれ？」と聞く",
+      "正解したら「すごい！」と褒める"
+    ],
+    "effects": [
+      "数の認識",
+      "記憶力"
+    ],
+    "dev_categories": [
+      "挑戦",
+      "会話"
+    ]
+  },
+  {
+    "id": "play_095",
+    "name": "お天気観察日記",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内",
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "ノート",
+      "クレヨン"
+    ],
+    "steps": [
+      "毎朝空を見て天気を確認する",
+      "絵で天気を描いてもらう",
+      "「昨日と違う？」と比べる"
+    ],
+    "effects": [
+      "観察力",
+      "継続習慣"
+    ],
+    "dev_categories": [
+      "探索",
+      "創造"
+    ]
+  },
+  {
+    "id": "play_096",
+    "name": "科学実験（重曹と酢）",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "重曹",
+      "酢",
+      "容器"
+    ],
+    "steps": [
+      "容器に重曹を入れる",
+      "酢を少しずつ注ぐ",
+      "泡が出る様子を観察する"
+    ],
+    "effects": [
+      "科学的思考",
+      "好奇心"
+    ],
+    "dev_categories": [
+      "探索",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_097",
+    "name": "地図づくり",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "紙",
+      "クレヨン"
+    ],
+    "steps": [
+      "「家の地図を描こう」と提案する",
+      "リビング・キッチンなど部屋を描く",
+      "公園への道も一緒に書く"
+    ],
+    "effects": [
+      "空間認識",
+      "創造力"
+    ],
+    "dev_categories": [
+      "探索",
+      "創造"
+    ]
+  },
+  {
+    "id": "play_098",
+    "name": "昆虫・生き物観察",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "虫眼鏡",
+      "虫かご"
+    ],
+    "steps": [
+      "公園で虫や生き物を探す",
+      "捕まえて観察する",
+      "名前を調べて話す"
+    ],
+    "effects": [
+      "科学的好奇心",
+      "命への敬意"
+    ],
+    "dev_categories": [
+      "探索",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_099",
+    "name": "オリジナル絵本作り",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "画用紙",
+      "クレヨン",
+      "ホチキス"
+    ],
+    "steps": [
+      "「お話考えよう」と促す",
+      "絵を描いてもらいながらセリフを書く",
+      "できた絵本を読み聞かせてもらう"
+    ],
+    "effects": [
+      "創造力",
+      "語彙発達"
+    ],
+    "dev_categories": [
+      "創造",
+      "会話"
+    ]
+  },
+  {
+    "id": "play_100",
+    "name": "廃材アート",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "牛乳パック",
+      "ペットボトル",
+      "テープ",
+      "絵の具"
+    ],
+    "steps": [
+      "廃材を集める",
+      "「何作る？」と聞いてアイデアを引き出す",
+      "自由に組み合わせて作る"
+    ],
+    "effects": [
+      "創造力",
+      "環境への意識"
+    ],
+    "dev_categories": [
+      "創造",
+      "探索"
+    ]
+  },
+  {
+    "id": "play_101",
+    "name": "コスチュームあそび",
+    "age_min_months": 30,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "衣装（古い服・布）",
+      "帽子"
+    ],
+    "steps": [
+      "衣装箱を用意する",
+      "好きな服を着てキャラクターになりきる",
+      "「どんなキャラクター？」と聞く"
+    ],
+    "effects": [
+      "自己表現",
+      "想像力"
+    ],
+    "dev_categories": [
+      "創造",
+      "会話"
+    ]
+  },
+  {
+    "id": "play_102",
+    "name": "なぞなぞタイム",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内",
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "なし"
+    ],
+    "steps": [
+      "シンプルななぞなぞを出す",
+      "「わかった！」と答えるまで待つ",
+      "答えたら一緒に大笑いする"
+    ],
+    "effects": [
+      "思考力",
+      "語彙発達"
+    ],
+    "dev_categories": [
+      "会話",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_103",
+    "name": "ニュースごっこ",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "マイク（おもちゃ）"
+    ],
+    "steps": [
+      "「今日の出来事を報告してください」と頼む",
+      "アナウンサー風に話す練習",
+      "「次のニュースは？」と続きを促す"
+    ],
+    "effects": [
+      "語彙発達",
+      "自己表現"
+    ],
+    "dev_categories": [
+      "会話",
+      "創造"
+    ]
+  },
+  {
+    "id": "play_104",
+    "name": "感謝の手紙を書こう",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "紙",
+      "クレヨン"
+    ],
+    "steps": [
+      "「おじいちゃんに手紙を書こう」と提案",
+      "絵を描いてもらう",
+      "「何て書く？」と言葉を引き出す"
+    ],
+    "effects": [
+      "語彙発達",
+      "社会性"
+    ],
+    "dev_categories": [
+      "会話",
+      "創造"
+    ]
+  },
+  {
+    "id": "play_105",
+    "name": "ドッジボール（簡単版）",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "柔らかいボール"
+    ],
+    "steps": [
+      "距離を近くして転がして当てる",
+      "当たっても痛くない柔らかいボールで",
+      "「逃げろ〜！」と盛り上がる"
+    ],
+    "effects": [
+      "全身運動",
+      "反射神経"
+    ],
+    "dev_categories": [
+      "運動",
+      "協力"
+    ]
+  },
+  {
+    "id": "play_106",
+    "name": "なわとび挑戦",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "縄跳び"
+    ],
+    "steps": [
+      "まずグルグル回す感覚を掴む",
+      "「ジャンプしてみて」と促す",
+      "1回でも跳べたら大成功！"
+    ],
+    "effects": [
+      "リズム感",
+      "持久力"
+    ],
+    "dev_categories": [
+      "運動",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_107",
+    "name": "ブランコ競争",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "公園のブランコ"
+    ],
+    "steps": [
+      "隣に座って一緒に漕ぐ",
+      "「どっちが高く行けるかな？」と競う",
+      "自分で漕ぐ練習をする"
+    ],
+    "effects": [
+      "体幹強化",
+      "達成感"
+    ],
+    "dev_categories": [
+      "運動",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_108",
+    "name": "キャンプごっこ",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内",
+      "屋外"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "テント（布で代用可）",
+      "懐中電灯"
+    ],
+    "steps": [
+      "リビングにテントを張る",
+      "懐中電灯で星空を演出",
+      "「今夜は外で寝よう」とごっこ遊び"
+    ],
+    "effects": [
+      "協調性",
+      "想像力"
+    ],
+    "dev_categories": [
+      "協力",
+      "創造"
+    ]
+  },
+  {
+    "id": "play_109",
+    "name": "お店屋さんごっこ",
+    "age_min_months": 30,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "おもちゃのお金",
+      "商品（おもちゃ）"
+    ],
+    "steps": [
+      "お店屋さんと客の役を決める",
+      "「いらっしゃいませ〜」と始める",
+      "役を交代して楽しむ"
+    ],
+    "effects": [
+      "社会性",
+      "言語発達"
+    ],
+    "dev_categories": [
+      "協力",
+      "会話"
+    ]
+  },
+  {
+    "id": "play_110",
+    "name": "チーム工作（大きなもの）",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "雨",
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "大型ダンボール",
+      "テープ",
+      "絵の具"
+    ],
+    "steps": [
+      "「大きなお城を作ろう！」と提案する",
+      "役割分担して作業する",
+      "完成したら一緒に記念撮影"
+    ],
+    "effects": [
+      "協調性",
+      "達成感"
+    ],
+    "dev_categories": [
+      "協力",
+      "創造"
+    ]
+  },
+  {
+    "id": "play_111",
+    "name": "積み木タワー高さ記録",
+    "age_min_months": 30,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "積み木",
+      "定規"
+    ],
+    "steps": [
+      "できるだけ高く積む",
+      "崩れたら「惜しかった！」と盛り上がる",
+      "記録を更新できたら一緒に喜ぶ"
+    ],
+    "effects": [
+      "集中力",
+      "達成感"
+    ],
+    "dev_categories": [
+      "挑戦",
+      "創造"
+    ]
+  },
+  {
+    "id": "play_112",
+    "name": "はさみ練習",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "子ども用はさみ",
+      "紙"
+    ],
+    "steps": [
+      "一回切りから始める",
+      "直線→ジグザグの順で挑戦",
+      "切れた形で何か作る"
+    ],
+    "effects": [
+      "手先の発達",
+      "集中力"
+    ],
+    "dev_categories": [
+      "挑戦",
+      "創造"
+    ]
+  },
+  {
+    "id": "play_113",
+    "name": "ひらがな練習ゲーム",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "ひらがなカード",
+      "えんぴつ"
+    ],
+    "steps": [
+      "自分の名前のひらがなから始める",
+      "なぞり書きを楽しむ",
+      "書けたら「名前が書けた！」と喜ぶ"
+    ],
+    "effects": [
+      "文字への興味",
+      "集中力"
+    ],
+    "dev_categories": [
+      "挑戦",
+      "会話"
+    ]
+  },
+  {
+    "id": "play_114",
+    "name": "高さ・長さ比べ",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内",
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "なし"
+    ],
+    "steps": [
+      "「この棒とあの棒どっちが長い？」",
+      "「どっちが大きい？」と問いかける",
+      "比べることを楽しむ"
+    ],
+    "effects": [
+      "数量感覚",
+      "比較思考"
+    ],
+    "dev_categories": [
+      "挑戦",
+      "探索"
+    ]
+  },
+  {
+    "id": "play_115",
+    "name": "室内テント基地",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "雨",
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "毛布",
+      "椅子",
+      "洗濯ばさみ"
+    ],
+    "steps": [
+      "椅子に毛布をかけて秘密基地を作る",
+      "懐中電灯を中に入れる",
+      "絵本を読んだり話したりする"
+    ],
+    "effects": [
+      "創造力",
+      "安心感"
+    ],
+    "dev_categories": [
+      "創造",
+      "協力"
+    ]
+  },
+  {
+    "id": "play_116",
+    "name": "窓に水彩絵の具",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "雨"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "水彩絵の具",
+      "筆"
+    ],
+    "steps": [
+      "水彩絵の具をかなり薄く溶く",
+      "窓ガラスに直接描く",
+      "後でぬれ雑巾で拭き取る"
+    ],
+    "effects": [
+      "創造力",
+      "感覚探索"
+    ],
+    "dev_categories": [
+      "創造",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_117",
+    "name": "ペットボトル楽器作り",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "雨",
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "ペットボトル",
+      "小豆",
+      "ビーズ"
+    ],
+    "steps": [
+      "中に小豆やビーズを入れる",
+      "振って音を確認する",
+      "音楽に合わせて演奏する"
+    ],
+    "effects": [
+      "創造力",
+      "感覚探索"
+    ],
+    "dev_categories": [
+      "創造",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_118",
+    "name": "室内宝探し",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "雨",
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "おもちゃ",
+      "ヒントメモ"
+    ],
+    "steps": [
+      "子どもがいない間におもちゃを隠す",
+      "ヒントを出しながら探させる",
+      "見つかったら大盛り上がりで喜ぶ"
+    ],
+    "effects": [
+      "探索心",
+      "達成感"
+    ],
+    "dev_categories": [
+      "探索",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_119",
+    "name": "紙相撲",
+    "age_min_months": 30,
+    "age_max_months": 48,
+    "weather_tags": [
+      "雨",
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "厚紙",
+      "箱（土俵）"
+    ],
+    "steps": [
+      "厚紙で力士を作る",
+      "箱の上に乗せて指で弾く",
+      "落ちたほうが負け！"
+    ],
+    "effects": [
+      "達成感",
+      "創造力"
+    ],
+    "dev_categories": [
+      "挑戦",
+      "創造"
+    ]
+  },
+  {
+    "id": "play_120",
+    "name": "どろんこあそび",
+    "age_min_months": 18,
+    "age_max_months": 48,
+    "weather_tags": [
+      "雨"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "レインコート",
+      "長靴"
+    ],
+    "steps": [
+      "雨の日に外に出る",
+      "泥をこねこね触る",
+      "「ドロドロ〜」と感触を楽しむ"
+    ],
+    "effects": [
+      "感覚刺激",
+      "開放感"
+    ],
+    "dev_categories": [
+      "感覚",
+      "探索"
+    ]
+  },
+  {
+    "id": "play_121",
+    "name": "シャボン玉アート",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "シャボン玉液",
+      "絵の具",
+      "紙"
+    ],
+    "steps": [
+      "シャボン玉液に絵の具を混ぜる",
+      "紙に向かって吹く",
+      "パチンと割れた模様を鑑賞する"
+    ],
+    "effects": [
+      "創造力",
+      "感覚探索"
+    ],
+    "dev_categories": [
+      "創造",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_122",
+    "name": "自然素材スタンプ",
+    "age_min_months": 18,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "葉っぱ",
+      "絵の具",
+      "紙"
+    ],
+    "steps": [
+      "公園で葉っぱや木の実を集める",
+      "絵の具をつけて紙に押す",
+      "自然のもようを楽しむ"
+    ],
+    "effects": [
+      "創造力",
+      "感覚探索"
+    ],
+    "dev_categories": [
+      "創造",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_123",
+    "name": "かけっこ競争",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "アクティブ",
+    "materials": [
+      "なし"
+    ],
+    "steps": [
+      "スタートとゴールを決める",
+      "「よーいドン！」",
+      "わざと負けてあげたり、本気で競ったり"
+    ],
+    "effects": [
+      "全身運動",
+      "達成感"
+    ],
+    "dev_categories": [
+      "運動",
+      "挑戦"
+    ]
+  },
+  {
+    "id": "play_124",
+    "name": "石ころアート",
+    "age_min_months": 24,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "石",
+      "絵の具（水性）"
+    ],
+    "steps": [
+      "公園で平たい石を集める",
+      "絵の具で顔や模様を描く",
+      "乾いたら並べて鑑賞する"
+    ],
+    "effects": [
+      "創造力",
+      "感覚探索"
+    ],
+    "dev_categories": [
+      "創造",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_125",
+    "name": "日向ぼっこ絵描き",
+    "age_min_months": 18,
+    "age_max_months": 48,
+    "weather_tags": [
+      "晴れ"
+    ],
+    "location_tags": [
+      "屋外"
+    ],
+    "style": "まったり",
+    "materials": [
+      "スケッチブック",
+      "クレヨン"
+    ],
+    "steps": [
+      "公園に座って周りを見る",
+      "「好きなもの描いてみて」と促す",
+      "「これ何？教えて」と話を聞く"
+    ],
+    "effects": [
+      "観察力",
+      "創造力"
+    ],
+    "dev_categories": [
+      "創造",
+      "探索"
+    ]
+  },
+  {
+    "id": "play_126",
+    "name": "カラフルスカーフ",
+    "age_min_months": 2,
+    "age_max_months": 9,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "薄いカラースカーフ"
+    ],
+    "steps": [
+      "カラースカーフをゆっくり振る",
+      "赤ちゃんの視線を追って動かす",
+      "優しく顔にかけて「ばあ」"
+    ],
+    "effects": [
+      "視覚発達",
+      "感覚刺激"
+    ],
+    "dev_categories": [
+      "感覚",
+      "探索"
+    ]
+  },
+  {
+    "id": "play_127",
+    "name": "おしゃべりまね返し",
+    "age_min_months": 1,
+    "age_max_months": 12,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "なし"
+    ],
+    "steps": [
+      "赤ちゃんが声を出したら真似して返す",
+      "「あ〜」→「あ〜」と繰り返す",
+      "会話のキャッチボールを楽しむ"
+    ],
+    "effects": [
+      "言語発達",
+      "社会性"
+    ],
+    "dev_categories": [
+      "会話",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_128",
+    "name": "腹ばい・タミータイム",
+    "age_min_months": 1,
+    "age_max_months": 6,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "マット",
+      "おもちゃ"
+    ],
+    "steps": [
+      "赤ちゃんをうつ伏せにする",
+      "目の前においもちゃを置く",
+      "3〜5分を目安に行う"
+    ],
+    "effects": [
+      "頸部・体幹の発達"
+    ],
+    "dev_categories": [
+      "運動",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_129",
+    "name": "足のびあそび",
+    "age_min_months": 0,
+    "age_max_months": 6,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "なし"
+    ],
+    "steps": [
+      "赤ちゃんの足首を持つ",
+      "「ちょっきん」と言いながら曲げ伸ばし",
+      "「パー」と大きく開いてくすぐる"
+    ],
+    "effects": [
+      "身体認識",
+      "親子の絆"
+    ],
+    "dev_categories": [
+      "運動",
+      "感覚"
+    ]
+  },
+  {
+    "id": "play_130",
+    "name": "絵本作家ごっこ",
+    "age_min_months": 36,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "画用紙",
+      "クレヨン"
+    ],
+    "steps": [
+      "「どんな主人公にする？」と聞く",
+      "絵を描いてストーリーを作る",
+      "家族に読み聞かせる発表会にする"
+    ],
+    "effects": [
+      "創造力",
+      "自己表現"
+    ],
+    "dev_categories": [
+      "創造",
+      "会話",
+      "協力"
+    ]
+  },
+  {
+    "id": "play_131",
+    "name": "家族写真で記憶ゲーム",
+    "age_min_months": 30,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "家族写真プリント"
+    ],
+    "steps": [
+      "写真をカードにして2枚ずつ用意",
+      "伏せて並べてめくって一致させる",
+      "「ここ行ったね！」と思い出を話す"
+    ],
+    "effects": [
+      "記憶力",
+      "家族への愛着"
+    ],
+    "dev_categories": [
+      "挑戦",
+      "会話",
+      "協力"
+    ]
+  },
+  {
+    "id": "play_132",
+    "name": "料理研究家ごっこ",
+    "age_min_months": 30,
+    "age_max_months": 48,
+    "weather_tags": [
+      "全天候"
+    ],
+    "location_tags": [
+      "室内"
+    ],
+    "style": "まったり",
+    "materials": [
+      "食材（本物）",
+      "エプロン"
+    ],
+    "steps": [
+      "「今日の研究テーマは？」と聞く",
+      "一緒に簡単な料理を作る",
+      "「今日の料理はどう？」と評価してもらう"
+    ],
+    "effects": [
+      "創造力",
+      "自己効力感"
+    ],
+    "dev_categories": [
+      "協力",
+      "創造",
+      "感覚"
+    ]
   }
 ]

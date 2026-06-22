@@ -7,6 +7,7 @@ import Growth from './pages/Growth';
 import Coach from './pages/Coach';
 import PlayDetail from './pages/PlayDetail';
 import Register from './pages/Register';
+import Children from './pages/Children';
 import { useGet } from './hooks/useApi';
 
 type Page = 'home' | 'record' | 'growth' | 'coach';
@@ -16,6 +17,7 @@ interface AppState { has_users: boolean; child_name?: string; }
 export default function App() {
   const [page, setPage] = useState<Page>('home');
   const [playDetailId, setPlayDetailId] = useState<string | null>(null);
+  const [showChildren, setShowChildren] = useState(false);
   const { data, loading, refetch } = useGet<AppState>('/app_state');
 
   if (loading) return (
@@ -28,9 +30,12 @@ export default function App() {
 
   if (!data?.has_users) return <Register onDone={() => refetch()} />;
 
-  const pageTitle: Record<Page, string> = {
-    home: 'ホーム', record: 'きろく', growth: 'せいちょう', coach: 'そうだん',
-  };
+  if (showChildren) return (
+    <Children
+      onBack={() => setShowChildren(false)}
+      onSwitch={() => { refetch(); setShowChildren(false); }}
+    />
+  );
 
   if (playDetailId) return (
     <>
@@ -63,13 +68,17 @@ export default function App() {
         <div style={{ fontSize: 18, fontWeight: 900, background: 'linear-gradient(135deg, var(--primary), #C39BD3)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
           🌱 そよじ
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{
+        <button
+          onClick={() => setShowChildren(true)}
+          style={{
             background: 'var(--primary-light)', color: 'var(--primary)',
             padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 800,
-            border: '1.5px solid var(--primary)',
-          }}>{data.child_name}ちゃん</div>
-        </div>
+            border: '1.5px solid var(--primary)', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', gap: 4,
+          }}
+        >
+          {data.child_name}ちゃん ▾
+        </button>
       </div>
 
       {/* Pages */}

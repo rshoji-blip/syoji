@@ -24,11 +24,28 @@ def calc_age_months(birthdate_str):
 
 def register_child(name, birthdate_str):
     users = load_users()
+    # 同じ名前・生年月日の重複を防ぐ
+    if any(u["name"] == name and u["birthdate"] == birthdate_str for u in users):
+        return None  # 既存
     child = {"name": name, "birthdate": birthdate_str}
     users.append(child)
     save_users(users)
     return child
 
-def select_child(users):
-    # returns (name, age_months) tuple
-    pass
+def update_child(old_name, new_name, new_birthdate):
+    users = load_users()
+    for u in users:
+        if u["name"] == old_name:
+            u["name"] = new_name
+            u["birthdate"] = new_birthdate
+            save_users(users)
+            return True
+    return False
+
+def delete_child(name):
+    users = load_users()
+    new_users = [u for u in users if u["name"] != name]
+    if len(new_users) == len(users):
+        return False
+    save_users(new_users)
+    return True
