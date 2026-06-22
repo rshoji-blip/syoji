@@ -10,11 +10,11 @@ interface CoachData {
 interface Message { role: 'coach' | 'user'; text: string; }
 
 const QUICK_QUESTIONS = [
-  { label: '📈 せいちょうのこと', text: '成長について教えて' },
-  { label: '🎮 おすすめあそび', text: 'おすすめの遊びは？' },
-  { label: '😟 ふあんがある', text: '育児が不安です' },
-  { label: '💬 ことばの発達', text: '言葉の発達が心配' },
-  { label: '😪 つかれています', text: '最近疲れています' },
+  { label: '🎯 何して遊ぶ？', text: '今日何して遊べばいいですか？' },
+  { label: '🌧️ 雨の日の遊び', text: '雨の日にできる室内遊びを教えて' },
+  { label: '🌳 外遊びのアイデア', text: '外でできる遊びを教えて' },
+  { label: '📊 成長が心配', text: '子どもの成長で気になることがあります' },
+  { label: '⏱️ 短時間で遊べる', text: '10〜15分でできる遊びはありますか？' },
 ];
 
 export default function Coach() {

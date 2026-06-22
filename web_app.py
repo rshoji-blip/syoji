@@ -144,14 +144,31 @@ def api_home():
     total_today = sum(category_counts.values())
     for u in users:
         u["age_str"] = get_age_str(calc_age_months(u["birthdate"]))
+
+    # 今月の経験から「足りていないカテゴリ」を算出
+    monthly = get_monthly_highlights(child_name)
+    weak_cats = [cat for cat in ALL_CATEGORIES if monthly.get(cat, 0) == 0]
+    if not weak_cats:
+        weak_cats = sorted(ALL_CATEGORIES, key=lambda c: monthly.get(c, 0))[:2]
+
+    # 足りないカテゴリに合わせたおすすめ遊びを優先表示
+    weak_plays = suggest_plays(age_months, weather["tag"], "まったり", count=3,
+                               preferred_cats=weak_cats)
+
+    # 今日が土日かどうか
+    is_weekend = date.today().weekday() >= 5
+
     return jsonify({
         "child_name": child_name,
         "age_str": get_age_str(age_months),
         "weather": weather,
-        "plays": plays,
+        "plays": weak_plays,
         "category_counts": category_counts,
         "total_today": total_today,
         "users": users,
+        "weak_cats": weak_cats[:2],
+        "monthly": monthly,
+        "is_weekend": is_weekend,
     })
 
 @app.route("/api/switch_child", methods=["POST"])
@@ -261,12 +278,14 @@ def api_coach_message():
     age_str = get_age_str(age_months)
     child_short = child_name[:3]
     keyword_responses = {
-        "不安": f"育児に不安を感じることは、それだけ真剣に向き合っている証拠です😊\n{age_str}の時期は特に変化が大きいので、戸惑うのは自然なことですよ。毎日一緒にいてあげているだけで十分です。",
-        "成長": f"{child_short}ちゃんはちゃんと成長していますよ🌱\nこの1週間だけでも{sum(counts.values())}回の発達経験ができています。焦らず、今の{child_short}ちゃんを楽しんであげてください。",
-        "遅い": f"子どもの発達は一人ひとりペースが違います。比べなくて大丈夫ですよ✨\n{child_short}ちゃんはたくさんの経験を積み重ねています。",
-        "おすすめ": f"今の{child_short}ちゃん（{age_str}）には、体を動かす遊びや、手先を使う工作がおすすめです🎨\n特に最近{top_cats[0][0] if top_cats else '探索'}が得意そうなので、そこを伸ばしてみても楽しいかも！",
-        "疲れ": f"毎日の育児、本当にお疲れ様です🌸\n少し休んでも大丈夫ですよ。あなたが笑顔でいることが、{child_short}ちゃんにとっていちばんの栄養です。",
-        "言葉": f"{age_str}の言葉の発達はとても個人差があります。\n絵本の読み聞かせや、日常の「実況中継」（「今から靴を履くよ」など）が自然な言語刺激になりますよ😊",
+        "何して遊": f"今の{child_short}ちゃん（{age_str}）にぴったりの遊びを3つ提案しますね！\n\n① 段ボール積み木→崩す（探索・挑戦）\n② 親子でお絵かき（創造）\n③ 一緒にお買い物ごっこ（会話・協力）\n\nどれも家でできて、道具もほとんど不要です😊",
+        "室内": f"雨の日の室内遊び、{age_str}向けにおすすめです！\n\n① 新聞紙びりびり→ボール作り（感覚・創造）\n② 絵本の読み聞かせ（会話）\n③ ダンボールハウス作り（創造・探索）\n\n後片付けも一緒にやると「協力」の経験にもなりますよ✨",
+        "外": f"外遊びは子どもの発達に最高です！{age_str}の{child_short}ちゃんには：\n\n① 公園で砂遊び（感覚・創造）\n② 虫や花を観察しながらお散歩（探索）\n③ ボール蹴り（運動・協力）\n\n「何を見つけた？」と声かけするだけで探索力がぐんと伸びます🌿",
+        "心配": f"{child_short}ちゃんの成長、気になるところがあるんですね。\n具体的にどんなことが気になりますか？言葉の発達・運動・社会性など、もう少し教えていただけると詳しくお答えできます😊",
+        "10分": f"短時間でできる遊び、{age_str}向けにご提案します！\n\n① 「なんだろな？」ゲーム（袋に物を入れて触って当てる）\n② 積み木タワー対決\n③ まねっこ体操\n\nどれも10〜15分で完結。就寝前の少しの時間でも十分です⭐",
+        "不安": f"お子さんのことを真剣に考えているから不安になるんですよね。それ自体がすでにすごいことです。\n{age_str}の時期はとても個人差が大きいので、他の子と比べなくて大丈夫です😊\n具体的に気になることがあればいつでも相談してください。",
+        "成長": f"{child_short}ちゃんはちゃんと成長していますよ🌱\nこの1週間だけでも{sum(counts.values())}回の経験ができています。休日に少し一緒に遊ぶだけで、それが立派な発達への投資になっています。",
+        "言葉": f"{age_str}の言葉の発達はとても個人差があります。\n一番効果的なのは「実況中継」です。「今、靴を履いてるね」「わあ、犬がいるよ」と日常のことを言葉にするだけでOK。難しい教育は不要です😊",
     }
     reply = None
     for kw, resp in keyword_responses.items():
