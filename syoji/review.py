@@ -1,5 +1,6 @@
 import json
 from datetime import date, timedelta
+from typing import Optional
 from pathlib import Path
 from .log import get_logs_for_child
 from .play import load_plays
@@ -110,7 +111,7 @@ def save_weekly_review(child_name: str, ref_date: date = None) -> dict:
     return review
 
 
-def get_latest_review(child_name: str) -> dict | None:
+def get_latest_review(child_name: str) -> Optional[dict]:
     reviews = [r for r in load_reviews() if r["child_name"] == child_name]
     if not reviews:
         return None
