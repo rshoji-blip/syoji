@@ -8,6 +8,7 @@ import Coach from './pages/Coach';
 import PlayDetail from './pages/PlayDetail';
 import Register from './pages/Register';
 import Children from './pages/Children';
+import PlayBrowse from './pages/PlayBrowse';
 import { useGet } from './hooks/useApi';
 
 type Page = 'home' | 'record' | 'growth' | 'coach';
@@ -18,12 +19,14 @@ export default function App() {
   const [page, setPage] = useState<Page>('home');
   const [playDetailId, setPlayDetailId] = useState<string | null>(null);
   const [showChildren, setShowChildren] = useState(false);
+  const [showBrowse, setShowBrowse] = useState(false);
+  const [browseCategory, setBrowseCategory] = useState<string | undefined>(undefined);
   const { data, loading, refetch } = useGet<AppState>('/app_state');
 
   if (loading) return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', gap: 16, background: 'var(--bg)' }}>
       <div style={{ fontSize: 56, animation: 'bounce 1s ease infinite' }}>🌱</div>
-      <div style={{ fontSize: 22, fontWeight: 900, background: 'linear-gradient(135deg, var(--primary), #C39BD3)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>そよじ</div>
+      <div style={{ fontSize: 22, fontWeight: 900, background: 'linear-gradient(135deg, var(--primary), #C39BD3)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>あそぼ</div>
       <div style={{ fontSize: 13, color: 'var(--text-light)', fontWeight: 700 }}>よみこみ中…</div>
     </div>
   );
@@ -37,6 +40,14 @@ export default function App() {
     />
   );
 
+  if (showBrowse) return (
+    <PlayBrowse
+      initialCategory={browseCategory}
+      onBack={() => { setShowBrowse(false); setBrowseCategory(undefined); }}
+      onPlayDetail={id => { setShowBrowse(false); setBrowseCategory(undefined); setPlayDetailId(id); }}
+    />
+  );
+
   if (playDetailId) return (
     <>
       <div style={{
@@ -45,7 +56,7 @@ export default function App() {
         borderBottom: '2px solid var(--border)', zIndex: 100,
         boxShadow: '0 2px 10px rgba(200,150,100,0.08)',
       }}>
-        <div style={{ fontSize: 18, fontWeight: 900, background: 'linear-gradient(135deg, var(--primary), #C39BD3)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>🌱 そよじ</div>
+        <div style={{ fontSize: 18, fontWeight: 900, background: 'linear-gradient(135deg, var(--primary), #C39BD3)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>🌱 あそぼ</div>
         <button onClick={() => setPlayDetailId(null)} style={{
           background: 'var(--bg)', border: '2px solid var(--border)', borderRadius: 20,
           padding: '6px 14px', fontSize: 13, fontWeight: 800, cursor: 'pointer', color: 'var(--text-mid)',
@@ -66,7 +77,7 @@ export default function App() {
         boxShadow: '0 2px 10px rgba(200,150,100,0.08)',
       }}>
         <div style={{ fontSize: 18, fontWeight: 900, background: 'linear-gradient(135deg, var(--primary), #C39BD3)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-          🌱 そよじ
+          🌱 あそぼ
         </div>
         <button
           onClick={() => setShowChildren(true)}
@@ -83,7 +94,7 @@ export default function App() {
 
       {/* Pages */}
       <div style={{ minHeight: 'calc(100vh - 130px)' }}>
-        {page === 'home' && <Home onNavigate={setPage} onPlayDetail={id => setPlayDetailId(id)} />}
+        {page === 'home' && <Home onNavigate={setPage} onPlayDetail={id => setPlayDetailId(id)} onBrowse={cat => { setBrowseCategory(cat); setShowBrowse(true); }} />}
         {page === 'record' && <Record />}
         {page === 'growth' && <Growth />}
         {page === 'coach' && <Coach />}

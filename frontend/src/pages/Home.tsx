@@ -32,6 +32,7 @@ interface WeeklyReview {
 interface Props {
   onNavigate: (page: 'home' | 'record' | 'growth' | 'coach') => void;
   onPlayDetail: (id: string) => void;
+  onBrowse: (category?: string) => void;
 }
 
 const CAT_COLORS: Record<string, { bg: string; border: string }> = {
@@ -67,7 +68,7 @@ function urlBase64ToUint8Array(base64String: string): Uint8Array {
   return Uint8Array.from([...rawData].map(c => c.charCodeAt(0)));
 }
 
-export default function Home({ onNavigate, onPlayDetail }: Props) {
+export default function Home({ onNavigate, onPlayDetail, onBrowse }: Props) {
   const { data, loading, refetch } = useGet<HomeData>('/home');
   const { data: reviewData } = useGet<WeeklyReview>('/weekly_review');
   const [pushState, setPushState] = useState<'idle' | 'requesting' | 'granted' | 'denied'>('idle');
@@ -229,18 +230,17 @@ export default function Home({ onNavigate, onPlayDetail }: Props) {
                 display: 'flex', alignItems: 'center', gap: 14,
                 background: 'white', borderRadius: 'var(--radius-sm)',
                 padding: '14px 16px', margin: '8px 0',
-                boxShadow: 'var(--shadow)', border: `2px solid ${PLAY_BORDER[i]}30`,
+                boxShadow: 'var(--shadow)', border: `2px solid ${PLAY_BORDER[i % PLAY_BORDER.length]}30`,
                 cursor: 'pointer', width: '100%', textAlign: 'left',
               }}>
                 <div style={{
                   width: 54, height: 54, borderRadius: 16, flexShrink: 0,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 26, background: PLAY_BG[i],
-                  border: `2.5px solid ${PLAY_BORDER[i]}50`,
-                }}>{PLAY_ICONS[i]}</div>
+                  fontSize: 26, background: PLAY_BG[i % PLAY_BG.length],
+                  border: `2.5px solid ${PLAY_BORDER[i % PLAY_BORDER.length]}50`,
+                }}>{PLAY_ICONS[i % PLAY_ICONS.length]}</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: 15, fontWeight: 900, color: 'var(--text)' }}>{play.name}</div>
-                  {/* なぜこの遊びか */}
                   {growCat && data.weak_cats.includes(growCat) && (
                     <div style={{
                       fontSize: 11, color: 'var(--primary)', fontWeight: 800, marginTop: 3,
@@ -264,6 +264,14 @@ export default function Home({ onNavigate, onPlayDetail }: Props) {
               </button>
             );
           })}
+
+          {/* カテゴリから探すボタン */}
+          <button onClick={() => onBrowse()} style={{
+            width: '100%', padding: '12px 16px', borderRadius: 'var(--radius-sm)',
+            background: 'white', border: '2.5px dashed var(--primary)',
+            color: 'var(--primary)', fontSize: 14, fontWeight: 900,
+            cursor: 'pointer', marginTop: 8,
+          }}>🎮 もっと遊びを探す →</button>
         </div>
 
         {/* 今月の経験バランス（ミニ） */}

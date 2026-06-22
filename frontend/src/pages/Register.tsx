@@ -32,7 +32,7 @@ export default function Register({ onDone }: Props) {
           「今日、何して遊ぼう…」<br />と迷ったことはありませんか？
         </div>
         <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.9)', marginTop: 12, fontWeight: 600, lineHeight: 1.7 }}>
-          そよじは、お子さんの成長に合わせて<br />
+          あそぼは、お子さんの成長に合わせて<br />
           「今日試してほしい遊び」を提案します。<br />
           検索いらず。3秒で見つかります。
         </div>

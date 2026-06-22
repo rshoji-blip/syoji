@@ -154,7 +154,7 @@ def api_home():
         weak_cats = sorted(ALL_CATEGORIES, key=lambda c: monthly.get(c, 0))[:2]
 
     # 足りないカテゴリに合わせたおすすめ遊びを優先表示
-    weak_plays = suggest_plays(age_months, weather["tag"], "まったり", count=3,
+    weak_plays = suggest_plays(age_months, weather["tag"], "まったり", count=5,
                                preferred_cats=weak_cats)
 
     # 今日が土日かどうか
@@ -196,6 +196,33 @@ def api_register_child():
     session["child_name"] = child["name"]
     session["child_birthdate"] = child["birthdate"]
     return jsonify({"ok": True})
+
+@app.route("/api/plays_by_category/<category>")
+def api_plays_by_category(category):
+    _, birthdate = _ensure_child()
+    if not birthdate:
+        return jsonify({"plays": []})
+    age_months = calc_age_months(birthdate)
+    plays = load_plays()
+    filtered = [p for p in plays
+                if category in p.get("dev_categories", [])
+                and p["age_min_months"] <= age_months <= p["age_max_months"]]
+    return jsonify({"plays": filtered, "category": category, "total": len(filtered)})
+
+@app.route("/api/categories_summary")
+def api_categories_summary():
+    _, birthdate = _ensure_child()
+    if not birthdate:
+        return jsonify({"categories": []})
+    age_months = calc_age_months(birthdate)
+    plays = load_plays()
+    result = []
+    for cat in ALL_CATEGORIES:
+        count = sum(1 for p in plays
+                    if cat in p.get("dev_categories", [])
+                    and p["age_min_months"] <= age_months <= p["age_max_months"])
+        result.append({"name": cat, "icon": CATEGORY_ICONS[cat], "count": count})
+    return jsonify({"categories": result})
 
 @app.route("/api/children")
 def api_children():
@@ -508,7 +535,7 @@ if __name__ == "__main__":
 
     _setup_scheduler()
 
-    print("🌟 そよじ を起動中...")
+    print("🌟 あそぼ を起動中...")
     if not STATIC_APP.exists():
         print("⚠️  React ビルドが見つかりません: cd frontend && npm run build")
     print(f"📱 このMacで開く  → http://localhost:5000")
