@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useGet, apiFormPost } from '../hooks/useApi';
+import { useGet, apiPost } from '../hooks/useApi';
 import RadarChart from '../components/RadarChart';
 import { CATEGORY_ICONS, ALL_CATEGORIES } from '../types';
 
@@ -18,133 +18,190 @@ interface Props {
   onPlayDetail: (id: string) => void;
 }
 
-const BG_COLORS = ['#EBF0FE', '#FEF3E2', '#E8F8EF'];
-const PLAY_ICONS = ['🎯', '🌈', '⭐'];
+const CAT_COLORS: Record<string, { bg: string; border: string }> = {
+  "探索": { bg: "#E8F4FD", border: "#85C1E9" },
+  "創造": { bg: "#FDE8EF", border: "#F4A0B5" },
+  "会話": { bg: "#E6F8F3", border: "#7DCFB6" },
+  "運動": { bg: "#F4EBF8", border: "#C39BD3" },
+  "感覚": { bg: "#FEFAE5", border: "#F9E784" },
+  "協力": { bg: "#FEE9E5", border: "#F4846F" },
+  "挑戦": { bg: "#EAFAF1", border: "#85D3A5" },
+};
+
+const PLAY_BG = ["#FEE9E5", "#E8F4FD", "#E6F8F3"];
+const PLAY_BORDER = ["#F4846F", "#85C1E9", "#7DCFB6"];
+const PLAY_ICONS = ["🎯", "🌈", "⭐"];
 
 export default function Home({ onNavigate, onPlayDetail }: Props) {
   const { data, loading, refetch } = useGet<HomeData>('/home');
+  const [switchingChild, setSwitchingChild] = useState(false);
 
   const switchChild = async (idx: number) => {
-    await apiFormPost('/switch_child', { child_idx: String(idx) });
-    refetch();
+    setSwitchingChild(true);
+    await apiPost('/switch_child', { child_idx: idx });
+    await refetch();
+    setSwitchingChild(false);
   };
 
   if (loading || !data) return (
-    <div style={{ padding: 32, textAlign: 'center', color: 'var(--text-light)' }}>
-      <div style={{ fontSize: 32, marginBottom: 12 }}>🌱</div>
-      <div>読み込み中…</div>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 300, gap: 12 }}>
+      <div style={{ fontSize: 40, animation: 'bounce 1s ease infinite' }}>🌱</div>
+      <div style={{ fontSize: 14, color: 'var(--text-light)', fontWeight: 700 }}>よみこみ中…</div>
     </div>
   );
 
+  const today = new Date();
+  const dateStr = `${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日 (${["日","月","火","水","木","金","土"][today.getDay()]})`;
+
   return (
-    <div style={{ padding: '0 16px 100px' }}>
-      {/* Greeting */}
-      <div style={{ padding: '20px 0 8px', animation: 'fadeUp 0.4s ease both' }}>
-        <div style={{ fontSize: 14, color: 'var(--text-mid)' }}>こんにちは！</div>
-        <div style={{ fontSize: 24, fontWeight: 800 }}>{data.child_name}ちゃんの今日</div>
+    <div style={{ paddingBottom: 100 }}>
+
+      {/* Date header - like the reference app */}
+      <div style={{
+        background: 'linear-gradient(135deg, #7DCFB6, #85C1E9)',
+        padding: '16px 20px',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      }}>
+        <div>
+          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.85)', fontWeight: 700 }}>{dateStr}</div>
+          <div style={{ fontSize: 22, fontWeight: 900, color: 'white', marginTop: 2 }}>
+            {data.child_name}ちゃんの今日 🌟
+          </div>
+          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.9)', marginTop: 2 }}>{data.age_str}</div>
+        </div>
+        <div style={{
+          background: 'rgba(255,255,255,0.25)', borderRadius: 16, padding: '8px 12px',
+          textAlign: 'center', fontSize: 13, fontWeight: 800, color: 'white',
+        }}>
+          {data.weather.label}
+        </div>
       </div>
 
-      {/* Child switcher */}
-      {data.users.length > 1 && (
-        <div style={{ display: 'flex', gap: 8, overflowX: 'auto', padding: '4px 0', marginBottom: 4 }}>
-          {data.users.map((u, i) => (
-            <button key={u.name} onClick={() => switchChild(i)} style={{
-              flexShrink: 0, padding: '6px 14px', borderRadius: 20,
-              border: '2px solid var(--primary)', fontSize: 13, fontWeight: 700, cursor: 'pointer',
-              background: u.name === data.child_name ? 'var(--primary)' : 'white',
-              color: u.name === data.child_name ? 'white' : 'var(--primary)',
-            }}>{u.name} {u.age_str}</button>
-          ))}
-        </div>
-      )}
+      <div style={{ padding: '0 16px' }}>
 
-      {/* Experience card */}
-      <div style={{
-        background: 'white', borderRadius: 'var(--radius)', padding: 20,
-        margin: '12px 0', boxShadow: 'var(--shadow)',
-        animation: 'fadeUp 0.4s ease 0.1s both',
-      }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14 }}>
-          <div>
-            <div style={{ fontSize: 15, fontWeight: 800 }}>今日の発達経験</div>
-            <div style={{ fontSize: 12, color: 'var(--text-light)', marginTop: 2 }}>
-              {data.total_today > 0 ? `${data.total_today}回の経験を記録済み ✨` : 'まだ記録がありません'}
-            </div>
+        {/* Child switcher pills */}
+        {data.users.length > 1 && (
+          <div style={{ display: 'flex', gap: 8, padding: '12px 0 4px', overflowX: 'auto' }}>
+            {data.users.map((u, i) => (
+              <button key={u.name} onClick={() => switchChild(i)} style={{
+                flexShrink: 0, padding: '7px 16px', borderRadius: 20,
+                border: `2.5px solid ${u.name === data.child_name ? 'var(--primary)' : 'var(--border)'}`,
+                fontSize: 13, fontWeight: 800, cursor: 'pointer',
+                background: u.name === data.child_name ? 'var(--primary)' : 'white',
+                color: u.name === data.child_name ? 'white' : 'var(--text-light)',
+                boxShadow: u.name === data.child_name ? '0 3px 10px rgba(244,132,111,0.35)' : 'none',
+              }}>{u.name} {u.age_str}</button>
+            ))}
+            <a href="/register" style={{ flexShrink: 0, padding: '7px 16px', borderRadius: 20, border: '2.5px dashed var(--border)', fontSize: 13, fontWeight: 800, color: 'var(--text-light)', textDecoration: 'none', display: 'flex', alignItems: 'center' }}>＋</a>
           </div>
+        )}
+
+        {/* Today experience - stamp style */}
+        <div style={{ background: 'white', borderRadius: 'var(--radius)', padding: 20, margin: '12px 0', boxShadow: 'var(--shadow)', border: '2px solid var(--border)', animation: 'fadeUp 0.4s ease both' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+            <div style={{ fontSize: 15, fontWeight: 900, color: 'var(--text)' }}>
+              🎪 今日のたいけん
+            </div>
+            {data.total_today > 0 && (
+              <div style={{
+                background: 'var(--yellow)', color: 'var(--text)', padding: '4px 12px',
+                borderRadius: 20, fontSize: 12, fontWeight: 900,
+                boxShadow: '0 2px 6px rgba(249,231,132,0.5)',
+              }}>✨ {data.total_today}かい！</div>
+            )}
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 8 }}>
+            <RadarChart counts={data.category_counts} />
+          </div>
+
+          {/* Stamp grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, marginTop: 4 }}>
+            {ALL_CATEGORIES.map(cat => {
+              const count = data.category_counts[cat] || 0;
+              const colors = CAT_COLORS[cat] || { bg: '#f5f5f5', border: '#ddd' };
+              return (
+                <div key={cat} style={{ textAlign: 'center' }}>
+                  <div style={{
+                    width: '100%', aspectRatio: '1', borderRadius: 16,
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 20,
+                    background: count > 0 ? colors.bg : '#F8F5F2',
+                    border: `2.5px solid ${count > 0 ? colors.border : '#E8E0D8'}`,
+                    boxShadow: count > 0 ? `0 2px 8px ${colors.border}40` : 'none',
+                    transform: count > 0 ? 'scale(1.04)' : 'scale(1)',
+                    transition: 'all 0.2s',
+                    position: 'relative', overflow: 'hidden',
+                  }}>
+                    {CATEGORY_ICONS[cat]}
+                    {count > 0 && (
+                      <div style={{
+                        position: 'absolute', top: 2, right: 4,
+                        fontSize: 10, fontWeight: 900, color: colors.border,
+                      }}>{count}</div>
+                    )}
+                    {count === 0 && (
+                      <div style={{ position: 'absolute', inset: 0, background: 'rgba(255,255,255,0.4)', borderRadius: 14 }} />
+                    )}
+                  </div>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: count > 0 ? 'var(--text)' : 'var(--text-light)', marginTop: 4 }}>{cat}</div>
+                </div>
+              );
+            })}
+          </div>
+
+          <button onClick={() => onNavigate('record')} style={{
+            width: '100%', padding: 15, borderRadius: 'var(--radius-sm)',
+            background: 'linear-gradient(135deg, var(--primary), #F4A0B5)',
+            color: 'white', border: 'none', fontSize: 16, fontWeight: 900,
+            cursor: 'pointer', marginTop: 16,
+            boxShadow: '0 4px 14px rgba(244,132,111,0.4)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+          }}>✏️ きろくする</button>
+        </div>
+
+        {/* Recommended plays - stamp cards */}
+        <div style={{ animation: 'fadeUp 0.4s ease 0.15s both' }}>
           <div style={{
-            background: 'var(--secondary-light)', color: 'var(--secondary)',
-            padding: '6px 12px', borderRadius: 20, fontSize: 13, fontWeight: 700,
-          }}>{data.weather.label}</div>
-        </div>
+            display: 'flex', alignItems: 'center', gap: 8,
+            fontSize: 14, fontWeight: 900, color: 'var(--text)', margin: '20px 0 10px',
+          }}>
+            <span style={{ fontSize: 18 }}>💡</span> 今日のおすすめあそび
+          </div>
 
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <RadarChart counts={data.category_counts} />
-        </div>
-
-        {/* Category dots */}
-        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', margin: '12px 0' }}>
-          {ALL_CATEGORIES.map(cat => {
-            const count = data.category_counts[cat] || 0;
-            return (
-              <div key={cat} style={{ flex: 1, minWidth: 36, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
-                <div style={{
-                  width: 36, height: 36, borderRadius: '50%',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
-                  background: count > 0 ? 'var(--primary)' : 'var(--bg)',
-                  border: count > 0 ? 'none' : '2px solid var(--border)',
-                  boxShadow: count > 0 ? '0 2px 8px rgba(91,142,240,0.4)' : 'none',
-                }}>{CATEGORY_ICONS[cat]}</div>
-                <div style={{ fontSize: 10, textAlign: 'center', fontWeight: 700, color: count > 0 ? 'var(--primary)' : 'var(--text-light)' }}>
-                  {cat}{count > 0 ? <><br />{count}回</> : ''}
+          {data.plays.map((play, i) => (
+            <button key={play.id} onClick={() => onPlayDetail(play.id)} style={{
+              display: 'flex', alignItems: 'center', gap: 14,
+              background: 'white', borderRadius: 'var(--radius-sm)',
+              padding: '14px 16px', margin: '8px 0',
+              boxShadow: 'var(--shadow)', border: `2px solid ${PLAY_BORDER[i]}30`,
+              cursor: 'pointer', width: '100%', textAlign: 'left',
+              transition: 'transform 0.15s',
+            }}>
+              <div style={{
+                width: 54, height: 54, borderRadius: 16, flexShrink: 0,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 26, background: PLAY_BG[i],
+                border: `2.5px solid ${PLAY_BORDER[i]}50`,
+              }}>{PLAY_ICONS[i]}</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 15, fontWeight: 900, color: 'var(--text)' }}>{play.name}</div>
+                <div style={{ display: 'flex', gap: 4, marginTop: 5, flexWrap: 'wrap' }}>
+                  {play.dev_categories.slice(0, 2).map(c => (
+                    <span key={c} style={{
+                      fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 10,
+                      background: (CAT_COLORS[c] || { bg: '#f5f5f5' }).bg,
+                      color: (CAT_COLORS[c] || { border: '#999' }).border,
+                      border: `1.5px solid ${(CAT_COLORS[c] || { border: '#ddd' }).border}40`,
+                    }}>{CATEGORY_ICONS[c]}{c}</span>
+                  ))}
                 </div>
               </div>
-            );
-          })}
+              <div style={{ color: 'var(--text-light)', fontSize: 22, fontWeight: 300 }}>›</div>
+            </button>
+          ))}
         </div>
-
-        <button onClick={() => onNavigate('record')} style={{
-          width: '100%', padding: 15, borderRadius: 'var(--radius-sm)',
-          background: 'var(--primary)', color: 'white', border: 'none',
-          fontSize: 16, fontWeight: 700, cursor: 'pointer', display: 'flex',
-          alignItems: 'center', justifyContent: 'center', gap: 8,
-        }}>✏️ 今日の遊びを記録する</button>
       </div>
-
-      {/* Suggested plays */}
-      <div style={{ animation: 'fadeUp 0.4s ease 0.2s both' }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-light)', letterSpacing: '0.05em', margin: '20px 0 8px' }}>
-          💡 今日のおすすめ遊び
-        </div>
-        {data.plays.map((play, i) => (
-          <button key={play.id} onClick={() => onPlayDetail(play.id)} style={{
-            display: 'flex', alignItems: 'center', gap: 12,
-            background: 'white', borderRadius: 'var(--radius-sm)',
-            padding: '14px 16px', margin: '8px 0',
-            boxShadow: 'var(--shadow)', border: 'none', cursor: 'pointer',
-            width: '100%', textAlign: 'left',
-          }}>
-            <div style={{
-              width: 48, height: 48, borderRadius: 14, flexShrink: 0,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 24, background: BG_COLORS[i],
-            }}>{PLAY_ICONS[i]}</div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 15, fontWeight: 700 }}>{play.name}</div>
-              <div style={{ fontSize: 12, color: 'var(--text-light)', marginTop: 2 }}>
-                {play.dev_categories.slice(0, 2).map(c => CATEGORY_ICONS[c] + c).join(' · ')}
-              </div>
-            </div>
-            <div style={{ color: 'var(--text-light)', fontSize: 20 }}>›</div>
-          </button>
-        ))}
-      </div>
-
-      <style>{`
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(12px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </div>
   );
 }

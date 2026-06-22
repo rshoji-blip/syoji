@@ -1,9 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { ALL_CATEGORIES, CATEGORY_ICONS, type Category } from '../types';
+import { ALL_CATEGORIES, CATEGORY_ICONS } from '../types';
 
-interface Props {
-  counts: Record<string, number>;
-}
+interface Props { counts: Record<string, number>; }
+
+const CAT_COLORS_FILL: Record<string, string> = {
+  "探索":"#85C1E9","創造":"#F4A0B5","会話":"#7DCFB6",
+  "運動":"#C39BD3","感覚":"#F9E784","協力":"#F4846F","挑戦":"#85D3A5",
+};
 
 export default function RadarChart({ counts }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -18,15 +21,18 @@ export default function RadarChart({ counts }: Props) {
     const ctx = canvas.getContext('2d')!;
     ctx.scale(dpr, dpr);
 
-    const cx = 130, cy = 118, maxR = 78, n = ALL_CATEGORIES.length;
-
+    const cx = 130, cy = 116, maxR = 76, n = ALL_CATEGORIES.length;
     function getXY(i: number, r: number): [number, number] {
       const angle = (i * 2 * Math.PI / n) - Math.PI / 2;
       return [cx + r * Math.cos(angle), cy + r * Math.sin(angle)];
     }
 
-    // bg rings
-    ctx.setLineDash([3, 4]);
+    // bg
+    ctx.fillStyle = '#FFFCF7';
+    ctx.beginPath(); ctx.arc(cx, cy, maxR + 10, 0, Math.PI * 2); ctx.fill();
+
+    // rings (dashed)
+    ctx.setLineDash([4, 5]);
     [0.33, 0.67, 1.0].forEach(frac => {
       ctx.beginPath();
       ALL_CATEGORIES.forEach((_, i) => {
@@ -34,7 +40,7 @@ export default function RadarChart({ counts }: Props) {
         i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       });
       ctx.closePath();
-      ctx.strokeStyle = '#E8E4DF'; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.strokeStyle = '#F0E6D8'; ctx.lineWidth = 1.5; ctx.stroke();
     });
     ctx.setLineDash([]);
 
@@ -42,51 +48,39 @@ export default function RadarChart({ counts }: Props) {
     ALL_CATEGORIES.forEach((_, i) => {
       const [ax, ay] = getXY(i, maxR);
       ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(ax, ay);
-      ctx.strokeStyle = '#E8E4DF'; ctx.lineWidth = 1; ctx.stroke();
+      ctx.strokeStyle = '#F0E6D8'; ctx.lineWidth = 1.5; ctx.stroke();
     });
 
     const maxVal = Math.max(...ALL_CATEGORIES.map(c => counts[c] || 0), 1);
 
-    // data polygon with gradient fill
-    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR);
-    grad.addColorStop(0, 'rgba(91,142,240,0.35)');
-    grad.addColorStop(1, 'rgba(91,142,240,0.08)');
-
+    // gradient fill
     ctx.beginPath();
     ALL_CATEGORIES.forEach((cat, i) => {
       const r = ((counts[cat] || 0) / maxVal) * maxR;
-      const [x, y] = getXY(i, Math.max(r, 3));
+      const [x, y] = getXY(i, Math.max(r, 4));
       i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
     });
     ctx.closePath();
-    ctx.fillStyle = grad; ctx.fill();
-    ctx.strokeStyle = '#5B8EF0'; ctx.lineWidth = 2.5; ctx.stroke();
+    ctx.fillStyle = 'rgba(244,132,111,0.15)'; ctx.fill();
+    ctx.strokeStyle = '#F4846F'; ctx.lineWidth = 2.5;
+    ctx.setLineDash([]); ctx.stroke();
 
-    // dots & labels
+    // stamp dots
     ALL_CATEGORIES.forEach((cat, i) => {
       const val = counts[cat] || 0;
-      const r = val > 0 ? (val / maxVal) * maxR : 0;
       if (val > 0) {
+        const r = (val / maxVal) * maxR;
         const [x, y] = getXY(i, r);
-        ctx.beginPath(); ctx.arc(x, y, 5.5, 0, Math.PI * 2);
-        ctx.fillStyle = '#5B8EF0'; ctx.fill();
-        ctx.beginPath(); ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = 'white'; ctx.fill();
+        ctx.beginPath(); ctx.arc(x, y, 7, 0, Math.PI * 2);
+        ctx.fillStyle = CAT_COLORS_FILL[cat] || '#F4846F'; ctx.fill();
+        ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
       }
 
-      // label
-      const [lx, ly] = getXY(i, maxR + 26);
-      ctx.fillStyle = val > 0 ? '#5B8EF0' : '#9CA3AF';
-      ctx.font = `bold 11px -apple-system, "Hiragino Sans", sans-serif`;
+      const [lx, ly] = getXY(i, maxR + 27);
+      ctx.font = `bold 11px -apple-system, "Hiragino Maru Gothic ProN", sans-serif`;
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = (counts[cat] || 0) > 0 ? '#4A3728' : '#B8A090';
       ctx.fillText(CATEGORY_ICONS[cat] + cat, lx, ly);
-
-      if (val > 0) {
-        const [vx, vy] = getXY(i, maxR + 38);
-        ctx.fillStyle = '#5B8EF0';
-        ctx.font = `bold 10px -apple-system, sans-serif`;
-        ctx.fillText(`${val}回`, vx, vy);
-      }
     });
   }, [counts]);
 

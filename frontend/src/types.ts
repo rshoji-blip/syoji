@@ -18,13 +18,6 @@ export interface Play {
   reference_url?: string;
 }
 
-export interface LogEntry {
-  play_id: string;
-  play_name: string;
-  date: string;
-  favorite?: boolean;
-}
-
 export const ALL_CATEGORIES = ["探索","創造","会話","運動","感覚","協力","挑戦"] as const;
 export type Category = typeof ALL_CATEGORIES[number];
 
@@ -33,6 +26,6 @@ export const CATEGORY_ICONS: Record<string, string> = {
 };
 
 export const CAT_COLORS: Record<string, string> = {
-  "探索":"#5B8EF0","創造":"#F4A261","会話":"#6FCF97",
-  "運動":"#BB6BD9","感覚":"#F2C94C","協力":"#56CCF2","挑戦":"#EB5757",
+  "探索":"#85C1E9","創造":"#F4A0B5","会話":"#7DCFB6",
+  "運動":"#C39BD3","感覚":"#F9E784","協力":"#F4846F","挑戦":"#52BE80",
 };

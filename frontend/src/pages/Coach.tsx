@@ -7,17 +7,14 @@ interface CoachData {
   initial_msg: string;
 }
 
-interface Message {
-  role: 'coach' | 'user';
-  text: string;
-}
+interface Message { role: 'coach' | 'user'; text: string; }
 
 const QUICK_QUESTIONS = [
-  { label: '📈 成長について', text: '成長について教えて' },
-  { label: '🎮 おすすめ遊び', text: 'おすすめの遊びは？' },
-  { label: '😟 不安がある', text: '育児が不安です' },
-  { label: '💬 言葉の発達', text: '言葉の発達が心配' },
-  { label: '😪 疲れています', text: '最近疲れています' },
+  { label: '📈 せいちょうのこと', text: '成長について教えて' },
+  { label: '🎮 おすすめあそび', text: 'おすすめの遊びは？' },
+  { label: '😟 ふあんがある', text: '育児が不安です' },
+  { label: '💬 ことばの発達', text: '言葉の発達が心配' },
+  { label: '😪 つかれています', text: '最近疲れています' },
 ];
 
 export default function Coach() {
@@ -38,68 +35,70 @@ export default function Coach() {
 
   const send = async (text: string) => {
     if (!text.trim() || sending) return;
-    setInput('');
-    setShowQuick(false);
+    setInput(''); setShowQuick(false);
     setMessages(m => [...m, { role: 'user', text }]);
     setSending(true);
-    await new Promise(r => setTimeout(r, 800 + Math.random() * 600));
+    await new Promise(r => setTimeout(r, 900 + Math.random() * 700));
     const res = await apiPost<{ ok: boolean; reply: string }>('/coach_message', { message: text });
     setSending(false);
     if (res.ok) setMessages(m => [...m, { role: 'coach', text: res.reply }]);
   };
 
   if (loading || !data) return (
-    <div style={{ padding: 32, textAlign: 'center', color: 'var(--text-light)' }}>
-      <div style={{ fontSize: 32, marginBottom: 12 }}>💭</div>
-      <div>読み込み中…</div>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 300, gap: 12 }}>
+      <div style={{ fontSize: 40, animation: 'bounce 1s ease infinite' }}>🌸</div>
+      <div style={{ fontSize: 14, color: 'var(--text-light)', fontWeight: 700 }}>よみこみ中…</div>
     </div>
   );
 
   return (
-    <div style={{ padding: '0 16px', display: 'flex', flexDirection: 'column', height: 'calc(100vh - 80px)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 80px)', paddingBottom: 0 }}>
       {/* Coach header */}
-      <div style={{ padding: '16px 0 8px', animation: 'fadeUp 0.4s ease both', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+      <div style={{ background: 'linear-gradient(135deg, #F4A0B5, #C39BD3)', padding: '18px 20px 24px', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
           <div style={{
-            width: 56, height: 56, borderRadius: '50%', flexShrink: 0,
-            background: 'linear-gradient(135deg, #5B8EF0, #BB6BD9)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 28, boxShadow: '0 4px 16px rgba(91,142,240,0.3)',
+            width: 60, height: 60, borderRadius: '50%', flexShrink: 0,
+            background: 'rgba(255,255,255,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 30, border: '3px solid rgba(255,255,255,0.6)',
+            boxShadow: '0 4px 16px rgba(195,155,211,0.4)',
           }}>🌸</div>
           <div>
-            <div style={{ fontSize: 16, fontWeight: 800 }}>AI保育コーチ</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
-              <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--accent)', animation: 'pulse 2s infinite' }} />
-              <div style={{ fontSize: 12, color: 'var(--text-light)' }}>{data.child_name}ちゃん（{data.age_str}）担当</div>
+            <div style={{ fontSize: 18, fontWeight: 900, color: 'white' }}>AI保育コーチ</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 3 }}>
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#A8E6C8', animation: 'pulse 2s infinite' }} />
+              <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.9)', fontWeight: 700 }}>
+                {data.child_name}ちゃん（{data.age_str}）たんとう
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Chat area */}
-      <div ref={chatRef} style={{ flex: 1, overflowY: 'auto', padding: '8px 0', display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {/* Chat */}
+      <div ref={chatRef} style={{ flex: 1, overflowY: 'auto', padding: '16px', display: 'flex', flexDirection: 'column', gap: 14 }}>
         {messages.map((msg, i) => (
-          <div key={i} style={{ display: 'flex', alignItems: 'flex-end', gap: 8, flexDirection: msg.role === 'user' ? 'row-reverse' : 'row' }}>
+          <div key={i} style={{ display: 'flex', alignItems: 'flex-end', gap: 8, flexDirection: msg.role === 'user' ? 'row-reverse' : 'row', animation: 'fadeUp 0.3s ease both' }}>
             {msg.role === 'coach' && (
-              <div style={{ width: 32, height: 32, borderRadius: '50%', flexShrink: 0, background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>🌸</div>
+              <div style={{ width: 34, height: 34, borderRadius: '50%', flexShrink: 0, background: 'linear-gradient(135deg, #F4A0B5, #C39BD3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, boxShadow: '0 2px 8px rgba(195,155,211,0.35)' }}>🌸</div>
             )}
             <div style={{
-              maxWidth: '80%', padding: '12px 14px', borderRadius: 16,
-              fontSize: 14, lineHeight: 1.7, whiteSpace: 'pre-wrap',
-              background: msg.role === 'coach' ? 'white' : 'var(--primary)',
+              maxWidth: '80%', padding: '12px 16px',
+              borderRadius: msg.role === 'coach' ? '18px 18px 18px 4px' : '18px 18px 4px 18px',
+              fontSize: 14, lineHeight: 1.8, whiteSpace: 'pre-wrap', fontWeight: 600,
+              background: msg.role === 'coach' ? 'white' : 'linear-gradient(135deg, #F4846F, #F4A0B5)',
               color: msg.role === 'coach' ? 'var(--text)' : 'white',
-              boxShadow: msg.role === 'coach' ? 'var(--shadow)' : 'none',
-              borderBottomLeftRadius: msg.role === 'coach' ? 4 : 16,
-              borderBottomRightRadius: msg.role === 'user' ? 4 : 16,
+              boxShadow: msg.role === 'coach' ? 'var(--shadow)' : '0 3px 12px rgba(244,132,111,0.35)',
+              border: msg.role === 'coach' ? '2px solid var(--border)' : 'none',
             }}>{msg.text}</div>
           </div>
         ))}
+
         {sending && (
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8 }}>
-            <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>🌸</div>
-            <div style={{ background: 'white', borderRadius: '16px 16px 16px 4px', padding: '14px 18px', boxShadow: 'var(--shadow)', display: 'flex', gap: 5 }}>
-              {[0, 0.2, 0.4].map((d, i) => (
-                <div key={i} style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--text-light)', animation: `pulse 1s ease ${d}s infinite` }} />
+            <div style={{ width: 34, height: 34, borderRadius: '50%', background: 'linear-gradient(135deg, #F4A0B5, #C39BD3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>🌸</div>
+            <div style={{ background: 'white', borderRadius: '18px 18px 18px 4px', padding: '14px 18px', boxShadow: 'var(--shadow)', border: '2px solid var(--border)', display: 'flex', gap: 6, alignItems: 'center' }}>
+              {[0, 0.25, 0.5].map((d, i) => (
+                <div key={i} style={{ width: 9, height: 9, borderRadius: '50%', background: '#F4A0B5', animation: `pulse 1.2s ease ${d}s infinite` }} />
               ))}
             </div>
           </div>
@@ -108,13 +107,14 @@ export default function Coach() {
 
       {/* Quick questions */}
       {showQuick && (
-        <div style={{ display: 'flex', gap: 6, overflowX: 'auto', padding: '8px 0', flexShrink: 0 }}>
+        <div style={{ flexShrink: 0, display: 'flex', gap: 7, overflowX: 'auto', padding: '8px 16px' }}>
           {QUICK_QUESTIONS.map(q => (
             <button key={q.text} onClick={() => send(q.text)} style={{
               flexShrink: 0, padding: '8px 14px',
-              background: 'white', border: '1.5px solid var(--border)',
-              borderRadius: 20, fontSize: 12, fontWeight: 600,
+              background: 'white', border: '2px solid var(--border)',
+              borderRadius: 20, fontSize: 12, fontWeight: 800,
               color: 'var(--text-mid)', cursor: 'pointer', whiteSpace: 'nowrap',
+              boxShadow: 'var(--shadow)',
             }}>{q.label}</button>
           ))}
         </div>
@@ -122,27 +122,28 @@ export default function Coach() {
 
       {/* Input */}
       <div style={{
-        display: 'flex', gap: 8, alignItems: 'center',
-        background: 'white', borderRadius: 24, padding: '8px 8px 8px 16px',
-        boxShadow: 'var(--shadow)', marginBottom: 16, flexShrink: 0,
+        flexShrink: 0, display: 'flex', gap: 10, alignItems: 'center',
+        background: 'white', borderTop: '2px solid var(--border)',
+        padding: '12px 16px 20px',
       }}>
         <input
           value={input} onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && send(input)}
-          placeholder="保育コーチに相談する…" maxLength={200}
-          style={{ flex: 1, border: 'none', outline: 'none', fontSize: 14, background: 'transparent' }}
+          placeholder="ほいくコーチにそうだんする…" maxLength={200}
+          style={{
+            flex: 1, border: '2.5px solid var(--border)', outline: 'none', fontSize: 14,
+            background: 'var(--bg)', borderRadius: 20, padding: '10px 16px',
+            fontFamily: 'inherit', fontWeight: 600, color: 'var(--text)',
+          }}
         />
         <button onClick={() => send(input)} style={{
-          width: 40, height: 40, borderRadius: '50%', background: 'var(--primary)',
+          width: 44, height: 44, borderRadius: '50%',
+          background: 'linear-gradient(135deg, var(--primary), #F4A0B5)',
           border: 'none', cursor: 'pointer', fontSize: 18, color: 'white',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
+          boxShadow: '0 3px 10px rgba(244,132,111,0.4)', flexShrink: 0,
         }}>➤</button>
       </div>
-
-      <style>{`
-        @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
-        @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
-      `}</style>
     </div>
   );
 }

@@ -1,28 +1,67 @@
 :root {
-  --primary: #5B8EF0;
-  --primary-light: #EBF0FE;
-  --secondary: #F4A261;
-  --secondary-light: #FEF3E2;
-  --accent: #6FCF97;
-  --accent-light: #E8F8EF;
-  --purple: #BB6BD9;
-  --bg: #F8F6F3;
+  --bg: #FFF8EF;
+  --bg-card: #FFFCF7;
+  --primary: #F4846F;
+  --primary-light: #FEE9E5;
+  --mint: #7DCFB6;
+  --mint-light: #E6F8F3;
+  --yellow: #F9E784;
+  --yellow-light: #FEFAE5;
+  --pink: #F4A0B5;
+  --pink-light: #FDE8EF;
+  --blue: #85C1E9;
+  --blue-light: #E8F4FD;
+  --purple: #C39BD3;
+  --purple-light: #F4EBF8;
   --surface: #FFFFFF;
-  --text: #2C2C2C;
-  --text-mid: #6B7280;
-  --text-light: #9CA3AF;
-  --border: #F0EDE8;
-  --radius: 20px;
-  --radius-sm: 12px;
-  --shadow: 0 2px 16px rgba(0,0,0,0.07);
-  --shadow-md: 0 4px 24px rgba(0,0,0,0.10);
+  --text: #4A3728;
+  --text-mid: #8B7355;
+  --text-light: #B8A090;
+  --border: #F0E6D8;
+  --radius: 24px;
+  --radius-sm: 16px;
+  --shadow: 0 3px 16px rgba(200,150,100,0.12);
+  --shadow-md: 0 6px 24px rgba(200,150,100,0.18);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
 body {
-  font-family: -apple-system, "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  font-family: -apple-system, "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic UI", sans-serif;
   background: var(--bg);
   color: var(--text);
   max-width: 480px;
   margin: 0 auto;
+  min-height: 100vh;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pop {
+  0% { transform: scale(0.7); opacity: 0; }
+  70% { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.95); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes coinFall {
+  0% { transform: translateY(-30px) scale(0); opacity: 0; }
+  60% { opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
 }

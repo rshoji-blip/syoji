@@ -6,10 +6,10 @@ interface Props {
 }
 
 const items = [
-  { key: 'home', icon: '🏠', label: 'ホーム' },
-  { key: 'record', icon: '✏️', label: '記録' },
-  { key: 'growth', icon: '📊', label: '成長' },
-  { key: 'coach', icon: '💭', label: '相談' },
+  { key: 'home', icon: '🏡', label: 'ホーム' },
+  { key: 'record', icon: '✏️', label: 'きろく' },
+  { key: 'growth', icon: '🌿', label: 'せいちょう' },
+  { key: 'coach', icon: '🌸', label: 'そうだん' },
 ] as const;
 
 export default function BottomNav({ active, onNavigate }: Props) {
@@ -17,20 +17,32 @@ export default function BottomNav({ active, onNavigate }: Props) {
     <nav style={{
       position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
       width: '100%', maxWidth: 480,
-      background: '#fff', borderTop: '1px solid #F0EDE8',
-      display: 'flex', padding: '8px 0',
+      background: 'white',
+      borderTop: '3px solid var(--border)',
+      display: 'flex',
+      padding: '10px 0 14px',
       zIndex: 200,
+      borderRadius: '24px 24px 0 0',
+      boxShadow: '0 -4px 20px rgba(200,150,100,0.10)',
     }}>
       {items.map(item => (
         <button key={item.key}
           onClick={() => onNavigate(item.key)}
           style={{
             flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center',
-            gap: 3, background: 'none', border: 'none', cursor: 'pointer', padding: '6px 0',
+            gap: 4, background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0',
+            transition: 'transform 0.15s',
           }}>
-          <span style={{ fontSize: 22 }}>{item.icon}</span>
+          <div style={{
+            width: 44, height: 44, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 22,
+            background: active === item.key ? 'var(--primary)' : 'transparent',
+            boxShadow: active === item.key ? '0 3px 10px rgba(244,132,111,0.4)' : 'none',
+            transform: active === item.key ? 'scale(1.1)' : 'scale(1)',
+            transition: 'all 0.2s',
+          }}>{item.icon}</div>
           <span style={{
-            fontSize: 10, fontWeight: 700,
+            fontSize: 10, fontWeight: 800,
             color: active === item.key ? 'var(--primary)' : 'var(--text-light)',
           }}>{item.label}</span>
         </button>
