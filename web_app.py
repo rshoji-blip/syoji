@@ -154,8 +154,20 @@ def api_home():
         weak_cats = sorted(ALL_CATEGORIES, key=lambda c: monthly.get(c, 0))[:2]
 
     # 足りないカテゴリに合わせたおすすめ遊びを優先表示
-    weak_plays = suggest_plays(age_months, weather["tag"], "まったり", count=5,
+    plays_raw = suggest_plays(age_months, weather["tag"], "まったり", count=5,
                                preferred_cats=weak_cats)
+    # materialsとeffectsを付加
+    all_plays = load_plays()
+    play_detail_map = {p["id"]: p for p in all_plays}
+    weak_plays = []
+    for p in plays_raw:
+        detail = play_detail_map.get(p["id"], p)
+        weak_plays.append({
+            **p,
+            "materials": detail.get("materials", []),
+            "effects": detail.get("effects", ""),
+            "steps_count": len(detail.get("steps", [])),
+        })
 
     # 今日が土日かどうか
     is_weekend = date.today().weekday() >= 5

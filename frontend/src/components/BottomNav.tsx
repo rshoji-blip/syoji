@@ -1,16 +1,18 @@
 import React from 'react';
 
+type Page = 'home' | 'browse' | 'record' | 'growth';
+
 interface Props {
-  active: 'home' | 'record' | 'growth' | 'coach';
-  onNavigate: (page: 'home' | 'record' | 'growth' | 'coach') => void;
+  active: Page;
+  onNavigate: (page: Page) => void;
 }
 
-const items = [
-  { key: 'home', icon: '🏡', label: 'ホーム' },
+const items: { key: Page; icon: string; label: string }[] = [
+  { key: 'home',   icon: '🏡', label: 'ホーム' },
+  { key: 'browse', icon: '🔍', label: 'さがす' },
   { key: 'record', icon: '✏️', label: 'きろく' },
   { key: 'growth', icon: '🌿', label: 'せいちょう' },
-  { key: 'coach', icon: '🌸', label: 'そうだん' },
-] as const;
+];
 
 export default function BottomNav({ active, onNavigate }: Props) {
   return (
@@ -31,10 +33,10 @@ export default function BottomNav({ active, onNavigate }: Props) {
           style={{
             flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center',
             gap: 4, background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0',
-            transition: 'transform 0.15s',
           }}>
           <div style={{
-            width: 44, height: 44, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            width: 44, height: 44, borderRadius: '50%',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontSize: 22,
             background: active === item.key ? 'var(--primary)' : 'transparent',
             boxShadow: active === item.key ? '0 3px 10px rgba(244,132,111,0.4)' : 'none',
