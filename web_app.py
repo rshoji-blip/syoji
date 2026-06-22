@@ -342,7 +342,35 @@ def pwa_sw():
                                mimetype="application/javascript")
 
 # ── Push notification endpoints ───────────────────────────────────────────
-@app.route("/api/push/vapid_public_key")
+@app.route("/api/milestones")
+def api_milestones():
+    child_name, birthdate = _ensure_child()
+    if not child_name:
+        return jsonify({"error": "no child"}), 400
+    age_months = calc_age_months(birthdate)
+    milestones_file = Path(__file__).parent / "data" / "milestones.json"
+    all_groups = json.loads(milestones_file.read_text(encoding="utf-8"))
+    # 現在の月齢グループ
+    current = next(
+        (g for g in all_groups if g["age_min_months"] <= age_months <= g["age_max_months"]),
+        all_groups[-1]
+    )
+    # 前後のグループも渡す
+    idx = all_groups.index(current)
+    prev_group = all_groups[idx - 1] if idx > 0 else None
+    next_group = all_groups[idx + 1] if idx < len(all_groups) - 1 else None
+    return jsonify({
+        "child_name": child_name,
+        "age_str": get_age_str(age_months),
+        "age_months": age_months,
+        "current": current,
+        "prev": prev_group,
+        "next": next_group,
+        "all_groups": all_groups,
+    })
+
+
+
 def api_vapid_public_key():
     keys = get_or_create_vapid_keys()
     return jsonify({"public_key": keys["public_key"]})
