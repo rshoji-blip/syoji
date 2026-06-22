@@ -508,7 +508,7 @@ if __name__ == "__main__":
 
     _setup_scheduler()
 
-    print("🌟 そよじ を起動中...")
+    print("🌟 あそぼ を起動中...")
     if not STATIC_APP.exists():
         print("⚠️  React ビルドが見つかりません: cd frontend && npm run build")
     print(f"📱 このMacで開く  → http://localhost:5000")
