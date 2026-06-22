@@ -12,6 +12,7 @@ from syoji.play import suggest_plays, load_plays
 from syoji.log import save_log, get_logs_for_child, get_favorites_for_child, get_play_ranking
 
 STATIC_APP = Path(__file__).parent / "static" / "app"
+STATIC_ROOT = Path(__file__).parent / "static"
 app = Flask(__name__, static_folder=str(STATIC_APP), static_url_path="/app")
 app.secret_key = "syoji-secret-2024"
 
@@ -306,10 +307,29 @@ def api_log():
 def serve_app_static(path):
     return send_from_directory(str(STATIC_APP), path)
 
+# PWA: manifest / sw
+@app.route("/manifest.json")
+@app.route("/app/manifest.json")
+def pwa_manifest():
+    return send_from_directory(str(STATIC_ROOT), "manifest.json")
+
+@app.route("/sw.js")
+def pwa_sw():
+    return send_from_directory(str(STATIC_ROOT), "sw.js",
+                               mimetype="application/javascript")
+
 if __name__ == "__main__":
+    import socket
+    hostname = socket.gethostname()
+    try:
+        lan_ip = socket.gethostbyname(hostname)
+    except Exception:
+        lan_ip = "確認できませんでした"
+
     print("🌟 そよじ を起動中...")
     if not STATIC_APP.exists():
-        print("⚠️  React ビルドが見つかりません。以下を実行してください:")
-        print("   cd frontend && npm run build")
-    print("ブラウザで http://localhost:5000 を開いてください")
-    app.run(debug=False, port=5000)
+        print("⚠️  React ビルドが見つかりません: cd frontend && npm run build")
+    print(f"📱 このMacで開く  → http://localhost:5000")
+    print(f"📱 スマホで開く   → http://{lan_ip}:5000")
+    print("   ※ スマホとMacが同じWi-Fiに接続している必要があります")
+    app.run(debug=False, host="0.0.0.0", port=5000)
