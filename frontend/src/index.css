@@ -1,0 +1,28 @@
+:root {
+  --primary: #5B8EF0;
+  --primary-light: #EBF0FE;
+  --secondary: #F4A261;
+  --secondary-light: #FEF3E2;
+  --accent: #6FCF97;
+  --accent-light: #E8F8EF;
+  --purple: #BB6BD9;
+  --bg: #F8F6F3;
+  --surface: #FFFFFF;
+  --text: #2C2C2C;
+  --text-mid: #6B7280;
+  --text-light: #9CA3AF;
+  --border: #F0EDE8;
+  --radius: 20px;
+  --radius-sm: 12px;
+  --shadow: 0 2px 16px rgba(0,0,0,0.07);
+  --shadow-md: 0 4px 24px rgba(0,0,0,0.10);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: -apple-system, "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  max-width: 480px;
+  margin: 0 auto;
+}

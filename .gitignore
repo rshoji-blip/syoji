@@ -8,3 +8,5 @@ out/
 syoji/__pycache__/
 .claude/
 __pycache__/
+node_modules/
+frontend/node_modules/

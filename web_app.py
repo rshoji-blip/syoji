@@ -5,13 +5,14 @@ from pathlib import Path
 import sys
 
 sys.path.insert(0, str(Path(__file__).parent))
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, send_from_directory
 from syoji.user import load_users, register_child, calc_age_months
 from syoji.weather import fetch_weather
 from syoji.play import suggest_plays, load_plays
 from syoji.log import save_log, get_logs_for_child, get_favorites_for_child, get_play_ranking
 
-app = Flask(__name__)
+STATIC_APP = Path(__file__).parent / "static" / "app"
+app = Flask(__name__, static_folder=str(STATIC_APP), static_url_path="/app")
 app.secret_key = "syoji-secret-2024"
 
 ALL_CATEGORIES = ["探索", "創造", "会話", "運動", "感覚", "協力", "挑戦"]
@@ -103,62 +104,84 @@ def generate_coach_message(child_name, age_months):
         ]
     return random.choice(messages)
 
+# ── React SPA entry point ─────────────────────────────────────────────────
 @app.route("/")
-def index():
+def spa():
+    if STATIC_APP.exists():
+        return send_from_directory(str(STATIC_APP), "index.html")
+    return "<h2>静的ファイルが見つかりません。<code>npm run build</code> を実行してください。</h2>", 404
+
+# ── API endpoints ─────────────────────────────────────────────────────────
+def _ensure_child():
     users = load_users()
     if not users:
-        return redirect(url_for("register"))
+        return None, None
     if "child_name" not in session:
         child = users[0]
         session["child_name"] = child["name"]
         session["child_birthdate"] = child["birthdate"]
-    child_name = session["child_name"]
-    age_months = calc_age_months(session["child_birthdate"])
-    age_str = get_age_str(age_months)
+    return session["child_name"], session["child_birthdate"]
+
+@app.route("/api/app_state")
+def api_app_state():
+    users = load_users()
+    if not users:
+        return jsonify({"has_users": False})
+    child_name, _ = _ensure_child()
+    return jsonify({"has_users": True, "child_name": child_name})
+
+@app.route("/api/home")
+def api_home():
+    users = load_users()
+    if not users:
+        return jsonify({"error": "no users"}), 400
+    child_name, birthdate = _ensure_child()
+    age_months = calc_age_months(birthdate)
     weather = fetch_weather()
     plays = suggest_plays(age_months, weather["tag"], "まったり", count=3)
     category_counts = get_today_category_counts(child_name)
     total_today = sum(category_counts.values())
     for u in users:
         u["age_str"] = get_age_str(calc_age_months(u["birthdate"]))
-    return render_template("home.html",
-        child_name=child_name, age_str=age_str,
-        weather=weather, plays=plays,
-        category_counts=category_counts,
-        total_today=total_today,
-        all_categories=ALL_CATEGORIES,
-        category_icons=CATEGORY_ICONS,
-        users=users,
-    )
+    return jsonify({
+        "child_name": child_name,
+        "age_str": get_age_str(age_months),
+        "weather": weather,
+        "plays": plays,
+        "category_counts": category_counts,
+        "total_today": total_today,
+        "users": users,
+    })
 
-@app.route("/switch_child", methods=["POST"])
-def switch_child():
-    idx = int(request.form["child_idx"])
+@app.route("/api/switch_child", methods=["POST"])
+def api_switch_child():
+    data = request.get_json()
+    idx = int(data.get("child_idx", 0))
     users = load_users()
     child = users[idx]
     session["child_name"] = child["name"]
     session["child_birthdate"] = child["birthdate"]
-    return redirect(url_for("index"))
+    return jsonify({"ok": True})
 
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    if request.method == "POST":
-        name = request.form["name"]
-        birthdate = request.form["birthdate"]
-        register_child(name, birthdate)
-        users = load_users()
-        child = next(u for u in users if u["name"] == name)
-        session["child_name"] = child["name"]
-        session["child_birthdate"] = child["birthdate"]
-        return redirect(url_for("index"))
-    return render_template("register.html")
+@app.route("/api/register_child", methods=["POST"])
+def api_register_child():
+    data = request.get_json()
+    name = data["name"]
+    birthdate = data["birthdate"]
+    register_child(name, birthdate)
+    users = load_users()
+    child = next(u for u in users if u["name"] == name)
+    session["child_name"] = child["name"]
+    session["child_birthdate"] = child["birthdate"]
+    return jsonify({"ok": True})
 
-@app.route("/record")
-def record():
-    if "child_name" not in session:
-        return redirect(url_for("index"))
+@app.route("/api/record_data")
+def api_record_data():
+    child_name, birthdate = _ensure_child()
+    if not child_name:
+        return jsonify({"error": "no child"}), 400
     plays = load_plays()
-    age_months = calc_age_months(session["child_birthdate"])
+    age_months = calc_age_months(birthdate)
     plays_by_cat = {}
     for cat in ALL_CATEGORIES:
         matching = [p for p in plays
@@ -166,29 +189,23 @@ def record():
                     and p["age_min_months"] <= age_months <= p["age_max_months"]]
         if matching:
             plays_by_cat[cat] = matching
-    return render_template("record.html",
-        child_name=session["child_name"],
-        plays_by_cat=plays_by_cat,
-        all_categories=ALL_CATEGORIES,
-        category_icons=CATEGORY_ICONS,
-    )
+    return jsonify({"child_name": child_name, "plays_by_cat": plays_by_cat})
 
-@app.route("/record/log", methods=["POST"])
-def record_log():
-    if "child_name" not in session:
+@app.route("/api/record_log", methods=["POST"])
+def api_record_log():
+    child_name, _ = _ensure_child()
+    if not child_name:
         return jsonify({"ok": False})
     data = request.get_json()
-    save_log(session["child_name"], data["play_id"], data["play_name"],
-             favorite=data.get("favorite", False))
+    save_log(child_name, data["play_id"], data["play_name"], favorite=data.get("favorite", False))
     return jsonify({"ok": True})
 
-@app.route("/growth")
-def growth():
-    if "child_name" not in session:
-        return redirect(url_for("index"))
-    child_name = session["child_name"]
-    age_months = calc_age_months(session["child_birthdate"])
-    age_str = get_age_str(age_months)
+@app.route("/api/growth_data")
+def api_growth_data():
+    child_name, birthdate = _ensure_child()
+    if not child_name:
+        return jsonify({"error": "no child"}), 400
+    age_months = calc_age_months(birthdate)
     monthly = get_monthly_highlights(child_name)
     weekly = get_weekly_calendar(child_name)
     ranking_tuples = get_play_ranking(child_name, top_n=5)
@@ -196,34 +213,35 @@ def growth():
     total_month = sum(monthly.values())
     top_cats = sorted(monthly.items(), key=lambda x: -x[1])
     now = date.today()
-    month_label = f"{now.month}月"
-    return render_template("growth.html",
-        child_name=child_name, age_str=age_str,
-        monthly=monthly, weekly=weekly, ranking=ranking,
-        total_month=total_month, top_cats=top_cats,
-        all_categories=ALL_CATEGORIES, category_icons=CATEGORY_ICONS,
-        month_label=month_label,
-    )
+    return jsonify({
+        "child_name": child_name,
+        "age_str": get_age_str(age_months),
+        "monthly": monthly,
+        "weekly": weekly,
+        "ranking": ranking,
+        "total_month": total_month,
+        "top_cats": top_cats,
+        "month_label": f"{now.month}月",
+    })
 
-@app.route("/coach")
-def coach():
-    if "child_name" not in session:
-        return redirect(url_for("index"))
-    child_name = session["child_name"]
-    age_months = calc_age_months(session["child_birthdate"])
-    age_str = get_age_str(age_months)
-    initial_msg = generate_coach_message(child_name, age_months)
-    return render_template("coach.html",
-        child_name=child_name, age_str=age_str,
-        initial_msg=initial_msg,
-    )
+@app.route("/api/coach_data")
+def api_coach_data():
+    child_name, birthdate = _ensure_child()
+    if not child_name:
+        return jsonify({"error": "no child"}), 400
+    age_months = calc_age_months(birthdate)
+    return jsonify({
+        "child_name": child_name,
+        "age_str": get_age_str(age_months),
+        "initial_msg": generate_coach_message(child_name, age_months),
+    })
 
-@app.route("/coach/message", methods=["POST"])
-def coach_message():
-    if "child_name" not in session:
+@app.route("/api/coach_message", methods=["POST"])
+def api_coach_message():
+    child_name, birthdate = _ensure_child()
+    if not child_name:
         return jsonify({"ok": False})
-    child_name = session["child_name"]
-    age_months = calc_age_months(session["child_birthdate"])
+    age_months = calc_age_months(birthdate)
     user_msg = request.get_json().get("message", "")
     logs = get_logs_for_child(child_name)
     plays = load_plays()
@@ -265,26 +283,33 @@ def coach_message():
         reply = random.choice(generic)
     return jsonify({"ok": True, "reply": reply})
 
-@app.route("/play/<play_id>")
-def play_detail(play_id):
-    if "child_name" not in session:
-        return redirect(url_for("index"))
+@app.route("/api/play_data/<play_id>")
+def api_play_data(play_id):
+    child_name, _ = _ensure_child()
     plays = load_plays()
     play = next((p for p in plays if p["id"] == play_id), None)
     if not play:
-        return redirect(url_for("index"))
-    return render_template("play_detail.html", play=play, child_name=session["child_name"])
+        return jsonify({"error": "not found"}), 404
+    return jsonify({"play": play, "child_name": child_name})
 
-@app.route("/log", methods=["POST"])
-def log_play():
-    data = request.get_json()
-    if "child_name" not in session:
+@app.route("/api/log", methods=["POST"])
+def api_log():
+    child_name, _ = _ensure_child()
+    if not child_name:
         return jsonify({"ok": False})
-    save_log(session["child_name"], data["play_id"], data["play_name"],
-             favorite=data.get("favorite", False))
+    data = request.get_json()
+    save_log(child_name, data["play_id"], data["play_name"], favorite=data.get("favorite", False))
     return jsonify({"ok": True})
+
+# Serve React static assets
+@app.route("/app/<path:path>")
+def serve_app_static(path):
+    return send_from_directory(str(STATIC_APP), path)
 
 if __name__ == "__main__":
     print("🌟 そよじ を起動中...")
+    if not STATIC_APP.exists():
+        print("⚠️  React ビルドが見つかりません。以下を実行してください:")
+        print("   cd frontend && npm run build")
     print("ブラウザで http://localhost:5000 を開いてください")
     app.run(debug=False, port=5000)
