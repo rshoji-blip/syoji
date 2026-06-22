@@ -8,6 +8,7 @@ import Coach from './pages/Coach';
 import PlayDetail from './pages/PlayDetail';
 import Register from './pages/Register';
 import Children from './pages/Children';
+import PlayBrowse from './pages/PlayBrowse';
 import { useGet } from './hooks/useApi';
 
 type Page = 'home' | 'record' | 'growth' | 'coach';
@@ -18,6 +19,8 @@ export default function App() {
   const [page, setPage] = useState<Page>('home');
   const [playDetailId, setPlayDetailId] = useState<string | null>(null);
   const [showChildren, setShowChildren] = useState(false);
+  const [showBrowse, setShowBrowse] = useState(false);
+  const [browseCategory, setBrowseCategory] = useState<string | undefined>(undefined);
   const { data, loading, refetch } = useGet<AppState>('/app_state');
 
   if (loading) return (
@@ -34,6 +37,14 @@ export default function App() {
     <Children
       onBack={() => setShowChildren(false)}
       onSwitch={() => { refetch(); setShowChildren(false); }}
+    />
+  );
+
+  if (showBrowse) return (
+    <PlayBrowse
+      initialCategory={browseCategory}
+      onBack={() => { setShowBrowse(false); setBrowseCategory(undefined); }}
+      onPlayDetail={id => { setShowBrowse(false); setBrowseCategory(undefined); setPlayDetailId(id); }}
     />
   );
 
@@ -83,7 +94,7 @@ export default function App() {
 
       {/* Pages */}
       <div style={{ minHeight: 'calc(100vh - 130px)' }}>
-        {page === 'home' && <Home onNavigate={setPage} onPlayDetail={id => setPlayDetailId(id)} />}
+        {page === 'home' && <Home onNavigate={setPage} onPlayDetail={id => setPlayDetailId(id)} onBrowse={cat => { setBrowseCategory(cat); setShowBrowse(true); }} />}
         {page === 'record' && <Record />}
         {page === 'growth' && <Growth />}
         {page === 'coach' && <Coach />}
