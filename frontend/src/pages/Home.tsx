@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGet, apiPost } from '../hooks/useApi';
 import RadarChart from '../components/RadarChart';
 import { CATEGORY_ICONS, ALL_CATEGORIES } from '../types';
@@ -14,6 +14,19 @@ interface HomeData {
   weak_cats: string[];
   monthly: Record<string, number>;
   is_weekend: boolean;
+}
+
+interface WeeklyReview {
+  child_name: string;
+  week_start: string;
+  week_end: string;
+  total_plays: number;
+  active_days: number;
+  category_counts: Record<string, number>;
+  top_cat: string | null;
+  next_challenge: string;
+  comment: string;
+  generated_at: string;
 }
 
 interface Props {
@@ -46,8 +59,45 @@ const GROW_REASON: Record<string, string> = {
   "挑戦": "少し難しいことにトライして、自信をつけましょう！",
 };
 
+// VAPID urlsafe base64 decode helper
+function urlBase64ToUint8Array(base64String: string): Uint8Array {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+  const rawData = window.atob(base64);
+  return Uint8Array.from([...rawData].map(c => c.charCodeAt(0)));
+}
+
 export default function Home({ onNavigate, onPlayDetail }: Props) {
   const { data, loading, refetch } = useGet<HomeData>('/home');
+  const { data: reviewData } = useGet<WeeklyReview>('/weekly_review');
+  const [pushState, setPushState] = useState<'idle' | 'requesting' | 'granted' | 'denied'>('idle');
+
+  useEffect(() => {
+    if ('Notification' in window) {
+      if (Notification.permission === 'granted') setPushState('granted');
+      else if (Notification.permission === 'denied') setPushState('denied');
+    }
+  }, []);
+
+  const requestPush = async () => {
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+    setPushState('requesting');
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') { setPushState('denied'); return; }
+      const reg = await navigator.serviceWorker.ready;
+      const keyRes = await fetch('/api/push/vapid_public_key');
+      const { public_key } = await keyRes.json();
+      const sub = await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(public_key),
+      });
+      await apiPost('/push/subscribe', sub.toJSON());
+      setPushState('granted');
+    } catch {
+      setPushState('denied');
+    }
+  };
 
   const switchChild = async (idx: number) => {
     await apiPost('/switch_child', { child_idx: idx });
@@ -232,6 +282,111 @@ export default function Home({ onNavigate, onPlayDetail }: Props) {
             boxShadow: '0 4px 14px rgba(244,132,111,0.4)',
           }}>✏️ 一緒に遊んだことを記録する</button>
         </div>
+
+        {/* 週次振り返りカード */}
+        {reviewData && (
+          <div style={{
+            background: 'white', borderRadius: 'var(--radius)', padding: 20,
+            margin: '0 0 16px', boxShadow: 'var(--shadow)',
+            border: '2px solid #85C1E9',
+            animation: 'fadeUp 0.4s ease 0.3s both',
+          }}>
+            <div style={{ fontSize: 13, fontWeight: 900, color: '#85C1E9', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
+              📝 <span>今週の振り返り（{reviewData.week_start.slice(5).replace('-','/')}〜{reviewData.week_end.slice(5).replace('-','/')}）</span>
+            </div>
+            {/* サマリー数値 */}
+            <div style={{ display: 'flex', gap: 10, marginBottom: 12 }}>
+              {[
+                { label: '遊びの回数', value: `${reviewData.total_plays}回`, icon: '🎮' },
+                { label: '遊んだ日数', value: `${reviewData.active_days}日`, icon: '📅' },
+              ].map(item => (
+                <div key={item.label} style={{
+                  flex: 1, background: '#F0F8FF', borderRadius: 12, padding: '12px 8px',
+                  textAlign: 'center', border: '2px solid #D6EAF8',
+                }}>
+                  <div style={{ fontSize: 22 }}>{item.icon}</div>
+                  <div style={{ fontSize: 20, fontWeight: 900, color: 'var(--text)' }}>{item.value}</div>
+                  <div style={{ fontSize: 11, color: 'var(--text-light)', fontWeight: 700 }}>{item.label}</div>
+                </div>
+              ))}
+            </div>
+            {/* カテゴリ棒グラフ */}
+            <div style={{ marginBottom: 12 }}>
+              {ALL_CATEGORIES.map(cat => {
+                const count = reviewData.category_counts[cat] || 0;
+                const max = Math.max(...Object.values(reviewData.category_counts), 1);
+                return (
+                  <div key={cat} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 5 }}>
+                    <div style={{ width: 52, fontSize: 11, fontWeight: 700, color: 'var(--text-mid)', textAlign: 'right', flexShrink: 0 }}>
+                      {CATEGORY_ICONS[cat]}{cat}
+                    </div>
+                    <div style={{ flex: 1, height: 10, background: '#F0F0F0', borderRadius: 5, overflow: 'hidden' }}>
+                      <div style={{
+                        height: '100%', borderRadius: 5,
+                        width: `${Math.round(count / max * 100)}%`,
+                        background: cat === reviewData.top_cat
+                          ? 'linear-gradient(90deg, #7DCFB6, #85C1E9)'
+                          : '#D6EAF8',
+                        transition: 'width 0.6s ease',
+                        minWidth: count > 0 ? 6 : 0,
+                      }} />
+                    </div>
+                    <div style={{ width: 20, fontSize: 12, fontWeight: 800, color: 'var(--text)', textAlign: 'right' }}>{count}</div>
+                  </div>
+                );
+              })}
+            </div>
+            {/* コメント */}
+            <div style={{
+              background: '#F8FEFF', borderRadius: 10, padding: '10px 14px',
+              border: '1.5px solid #D6EAF8', fontSize: 13, color: 'var(--text-mid)',
+              fontWeight: 600, lineHeight: 1.6,
+            }}>
+              {reviewData.comment}
+            </div>
+            {reviewData.next_challenge && (
+              <div style={{ marginTop: 10, fontSize: 12, fontWeight: 800, color: '#7DCFB6', display: 'flex', alignItems: 'center', gap: 4 }}>
+                🌱 来週のおすすめ：「{reviewData.next_challenge}」を試してみよう
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* プッシュ通知バナー */}
+        {pushState === 'idle' && 'Notification' in window && (
+          <div style={{
+            background: 'linear-gradient(135deg, #E8F4FD, #EAF8F0)',
+            borderRadius: 'var(--radius)', padding: 16, margin: '0 0 20px',
+            border: '2px solid #85C1E9',
+            display: 'flex', alignItems: 'center', gap: 14,
+            animation: 'fadeUp 0.4s ease 0.4s both',
+          }}>
+            <div style={{ fontSize: 36, flexShrink: 0 }}>🔔</div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontSize: 13, fontWeight: 900, color: 'var(--text)', marginBottom: 3 }}>
+                土日に「今日遊ぼう！」と通知を受け取る
+              </div>
+              <div style={{ fontSize: 11, color: 'var(--text-light)', fontWeight: 600 }}>
+                毎週土日9時にお子さんとの遊びをリマインド
+              </div>
+            </div>
+            <button onClick={requestPush} style={{
+              padding: '8px 14px', borderRadius: 20, flexShrink: 0,
+              background: '#85C1E9', color: 'white',
+              border: 'none', fontSize: 12, fontWeight: 900, cursor: 'pointer',
+            }}>許可する</button>
+          </div>
+        )}
+        {pushState === 'granted' && (
+          <div style={{
+            background: '#EAFAF1', borderRadius: 'var(--radius)', padding: 14,
+            margin: '0 0 20px', border: '2px solid #7DCFB6',
+            fontSize: 13, fontWeight: 700, color: '#27AE60',
+            display: 'flex', alignItems: 'center', gap: 8,
+          }}>
+            ✅ 土日の朝9時に遊びの通知が届きます！
+          </div>
+        )}
 
       </div>
     </div>

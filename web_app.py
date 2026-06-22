@@ -10,6 +10,8 @@ from syoji.user import load_users, register_child, calc_age_months
 from syoji.weather import fetch_weather
 from syoji.play import suggest_plays, load_plays
 from syoji.log import save_log, get_logs_for_child, get_favorites_for_child, get_play_ranking
+from syoji.push import get_or_create_vapid_keys, save_subscription, broadcast
+from syoji.review import save_weekly_review, get_latest_review, generate_weekly_review
 
 STATIC_APP = Path(__file__).parent / "static" / "app"
 STATIC_ROOT = Path(__file__).parent / "static"
@@ -337,6 +339,102 @@ def pwa_sw():
     return send_from_directory(str(STATIC_ROOT), "sw.js",
                                mimetype="application/javascript")
 
+# ── Push notification endpoints ───────────────────────────────────────────
+@app.route("/api/push/vapid_public_key")
+def api_vapid_public_key():
+    keys = get_or_create_vapid_keys()
+    return jsonify({"public_key": keys["public_key"]})
+
+@app.route("/api/push/subscribe", methods=["POST"])
+def api_push_subscribe():
+    sub = request.get_json()
+    if not sub or "endpoint" not in sub:
+        return jsonify({"ok": False}), 400
+    save_subscription(sub)
+    return jsonify({"ok": True})
+
+@app.route("/api/push/test", methods=["POST"])
+def api_push_test():
+    child_name, birthdate = _ensure_child()
+    if not child_name:
+        return jsonify({"ok": False})
+    age_months = calc_age_months(birthdate)
+    from syoji.review import generate_weekly_review
+    review = generate_weekly_review(child_name)
+    payload = {
+        "title": f"🌱 {child_name}ちゃんと遊ぼう！",
+        "body": f"今週は{review['total_plays']}回遊びを記録しました。今日もおすすめの遊びをチェック！",
+        "url": "/",
+    }
+    broadcast(payload)
+    return jsonify({"ok": True})
+
+# ── Weekly review endpoints ────────────────────────────────────────────────
+@app.route("/api/weekly_review")
+def api_weekly_review():
+    child_name, _ = _ensure_child()
+    if not child_name:
+        return jsonify({"error": "no child"}), 400
+    review = get_latest_review(child_name)
+    if not review:
+        review = generate_weekly_review(child_name)
+    return jsonify(review)
+
+@app.route("/api/weekly_review/generate", methods=["POST"])
+def api_weekly_review_generate():
+    child_name, _ = _ensure_child()
+    if not child_name:
+        return jsonify({"ok": False})
+    review = save_weekly_review(child_name)
+    return jsonify({"ok": True, "review": review})
+
+
+# ── APScheduler: weekend push + weekly review ─────────────────────────────
+def _setup_scheduler():
+    try:
+        from apscheduler.schedulers.background import BackgroundScheduler
+        import pytz
+
+        scheduler = BackgroundScheduler(timezone=pytz.timezone("Asia/Tokyo"))
+
+        def weekend_push():
+            today = date.today()
+            if today.weekday() < 5:
+                return
+            users = load_users()
+            if not users:
+                return
+            child_name = users[0]["name"]
+            weekday = ["月","火","水","木","金","土","日"][today.weekday()]
+            review = generate_weekly_review(child_name)
+            payload = {
+                "title": f"🌱 {child_name}ちゃんと遊ぼう！",
+                "body": f"{weekday}曜日！今日のおすすめ遊びをチェックしよう",
+                "url": "/",
+            }
+            broadcast(payload)
+
+        def sunday_review():
+            today = date.today()
+            if today.weekday() != 6:  # 日曜のみ
+                return
+            users = load_users()
+            for user in users:
+                save_weekly_review(user["name"])
+
+        # 土日 9:00 に通知
+        scheduler.add_job(weekend_push, "cron", day_of_week="sat,sun", hour=9, minute=0)
+        # 日曜 21:00 に振り返り自動生成
+        scheduler.add_job(sunday_review, "cron", day_of_week="sun", hour=21, minute=0)
+
+        scheduler.start()
+        print("📅 スケジューラ起動: 土日9:00通知 / 日曜21:00振り返り自動生成")
+    except ImportError:
+        print("⚠️  apscheduler not installed. Scheduler disabled.")
+    except Exception as e:
+        print(f"⚠️  Scheduler error: {e}")
+
+
 if __name__ == "__main__":
     import socket
     hostname = socket.gethostname()
@@ -344,6 +442,8 @@ if __name__ == "__main__":
         lan_ip = socket.gethostbyname(hostname)
     except Exception:
         lan_ip = "確認できませんでした"
+
+    _setup_scheduler()
 
     print("🌟 そよじ を起動中...")
     if not STATIC_APP.exists():
