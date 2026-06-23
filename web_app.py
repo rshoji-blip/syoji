@@ -171,6 +171,7 @@ def api_home():
             "effects": detail.get("effects", ""),
             "steps_count": len(detail.get("steps", [])),
             "location_tags": detail.get("location_tags", []),
+            "icon": detail.get("icon", ""),
         })
 
     is_weekend = date.today().weekday() >= 5

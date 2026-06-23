@@ -10,6 +10,7 @@ interface Play {
   effects: string;
   steps_count: number;
   location_tags: string[];
+  icon?: string;
 }
 
 interface HomeData {
@@ -223,18 +224,17 @@ export default function Home({ onNavigate, onPlayDetail, onBrowse }: Props) {
               border: `2px solid ${color.border}40`,
               cursor: 'pointer', width: '100%', textAlign: 'left',
             }}>
-              {/* カテゴリイラスト */}
+              {/* 遊びイラスト */}
               <div style={{
                 width: 70, height: 70, borderRadius: 14, flexShrink: 0,
                 background: color.bg, border: `2px solid ${color.border}60`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden',
               }}>
-                {color.img ? (
-                  <img src={color.img} alt={mainCat}
-                    style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                ) : (
-                  <span style={{ fontSize: 30 }}>{CATEGORY_ICONS[mainCat]}</span>
-                )}
+                <img
+                  src={play.icon || color.img || ''}
+                  alt={play.name}
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                />
               </div>
 
               <div style={{ flex: 1, minWidth: 0 }}>

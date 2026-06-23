@@ -28,7 +28,8 @@
     "dev_categories": [
       "会話",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_rabbit.png"
   },
   {
     "id": "play_002",
@@ -59,7 +60,8 @@
     "dev_categories": [
       "感覚",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_chick.png"
   },
   {
     "id": "play_003",
@@ -91,7 +93,8 @@
     "dev_categories": [
       "運動",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_tummy.png"
   },
   {
     "id": "play_004",
@@ -122,7 +125,8 @@
     "dev_categories": [
       "創造",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_draw.png"
   },
   {
     "id": "play_005",
@@ -155,7 +159,8 @@
     "dev_categories": [
       "感覚",
       "創造"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_fluffy.png"
   },
   {
     "id": "play_006",
@@ -190,7 +195,8 @@
     "dev_categories": [
       "運動",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_dino.png"
   },
   {
     "id": "play_007",
@@ -223,7 +229,8 @@
     "dev_categories": [
       "会話",
       "協力"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_playtwo.png"
   },
   {
     "id": "play_008",
@@ -257,7 +264,8 @@
     "dev_categories": [
       "探索",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_bear.png"
   },
   {
     "id": "play_009",
@@ -290,7 +298,8 @@
       "感覚",
       "探索",
       "創造"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_chick.png"
   },
   {
     "id": "play_010",
@@ -324,7 +333,8 @@
     "dev_categories": [
       "創造",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_blocks.png"
   },
   {
     "id": "play_011",
@@ -357,7 +367,8 @@
     "dev_categories": [
       "会話",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_numbook.png"
   },
   {
     "id": "play_012",
@@ -389,7 +400,8 @@
     "dev_categories": [
       "運動",
       "協力"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_group.png"
   },
   {
     "id": "play_013",
@@ -421,7 +433,8 @@
     "dev_categories": [
       "運動",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_bubble_big.png"
   },
   {
     "id": "play_014",
@@ -455,7 +468,8 @@
     "dev_categories": [
       "創造",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_draw.png"
   },
   {
     "id": "play_015",
@@ -489,7 +503,8 @@
     "dev_categories": [
       "感覚",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_penguin.png"
   },
   {
     "id": "play_016",
@@ -521,7 +536,8 @@
     "dev_categories": [
       "会話",
       "協力"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_book.png"
   },
   {
     "id": "play_017",
@@ -554,7 +570,8 @@
     "dev_categories": [
       "探索",
       "運動"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_bear.png"
   },
   {
     "id": "play_018",
@@ -590,7 +607,8 @@
     "dev_categories": [
       "創造",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_draw.png"
   },
   {
     "id": "play_019",
@@ -627,7 +645,8 @@
     "dev_categories": [
       "感覚",
       "創造"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_fluffy.png"
   },
   {
     "id": "play_020",
@@ -660,7 +679,8 @@
     "dev_categories": [
       "挑戦",
       "運動"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_stack.png"
   },
   {
     "id": "play_021",
@@ -695,7 +715,8 @@
     "dev_categories": [
       "挑戦",
       "運動"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_dino.png"
   },
   {
     "id": "play_022",
@@ -733,7 +754,8 @@
     "dev_categories": [
       "探索",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_penguin.png"
   },
   {
     "id": "play_023",
@@ -769,7 +791,8 @@
     "dev_categories": [
       "創造",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_dino.png"
   },
   {
     "id": "play_024",
@@ -802,7 +825,8 @@
     "dev_categories": [
       "感覚",
       "会話"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_chick.png"
   },
   {
     "id": "play_025",
@@ -834,7 +858,8 @@
     "dev_categories": [
       "挑戦",
       "創造"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_tower.png"
   },
   {
     "id": "play_026",
@@ -869,7 +894,8 @@
     "dev_categories": [
       "運動",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_ball.png"
   },
   {
     "id": "play_027",
@@ -902,7 +928,8 @@
     "dev_categories": [
       "挑戦",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_book.png"
   },
   {
     "id": "play_028",
@@ -932,7 +959,8 @@
     ],
     "dev_categories": [
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_fluffy.png"
   },
   {
     "id": "play_029",
@@ -961,7 +989,8 @@
     "dev_categories": [
       "感覚",
       "会話"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_rabbit.png"
   },
   {
     "id": "play_030",
@@ -989,7 +1018,8 @@
     "dev_categories": [
       "感覚",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_chick.png"
   },
   {
     "id": "play_031",
@@ -1018,7 +1048,8 @@
     "dev_categories": [
       "運動",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_tummy.png"
   },
   {
     "id": "play_032",
@@ -1048,7 +1079,8 @@
     "dev_categories": [
       "運動",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_penguin.png"
   },
   {
     "id": "play_033",
@@ -1077,7 +1109,8 @@
     "dev_categories": [
       "運動",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_rabbit.png"
   },
   {
     "id": "play_034",
@@ -1106,7 +1139,8 @@
     "dev_categories": [
       "探索",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_rabbit.png"
   },
   {
     "id": "play_035",
@@ -1136,7 +1170,8 @@
     "dev_categories": [
       "探索",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_stack.png"
   },
   {
     "id": "play_036",
@@ -1166,7 +1201,8 @@
     "dev_categories": [
       "探索",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_dino.png"
   },
   {
     "id": "play_037",
@@ -1195,7 +1231,8 @@
     "dev_categories": [
       "会話",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_chick.png"
   },
   {
     "id": "play_038",
@@ -1224,7 +1261,8 @@
     "dev_categories": [
       "会話",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_rabbit.png"
   },
   {
     "id": "play_039",
@@ -1253,7 +1291,8 @@
     "dev_categories": [
       "会話",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_bear.png"
   },
   {
     "id": "play_040",
@@ -1282,7 +1321,8 @@
     "dev_categories": [
       "会話",
       "協力"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_book.png"
   },
   {
     "id": "play_041",
@@ -1312,7 +1352,8 @@
     "dev_categories": [
       "協力",
       "運動"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_pass.png"
   },
   {
     "id": "play_042",
@@ -1342,7 +1383,8 @@
     "dev_categories": [
       "運動",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_tummy.png"
   },
   {
     "id": "play_043",
@@ -1372,7 +1414,8 @@
     "dev_categories": [
       "挑戦",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_stack.png"
   },
   {
     "id": "play_044",
@@ -1401,7 +1444,8 @@
     "dev_categories": [
       "感覚",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_bear.png"
   },
   {
     "id": "play_045",
@@ -1432,7 +1476,8 @@
     "dev_categories": [
       "感覚",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_penguin.png"
   },
   {
     "id": "play_046",
@@ -1463,7 +1508,8 @@
     "dev_categories": [
       "感覚",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_bubbles_girl.png"
   },
   {
     "id": "play_047",
@@ -1494,7 +1540,8 @@
       "感覚",
       "探索",
       "会話"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_bear.png"
   },
   {
     "id": "play_048",
@@ -1523,7 +1570,8 @@
     "dev_categories": [
       "探索",
       "会話"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_dino.png"
   },
   {
     "id": "play_049",
@@ -1552,7 +1600,8 @@
     "dev_categories": [
       "探索",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_hedgehog.png"
   },
   {
     "id": "play_050",
@@ -1582,7 +1631,8 @@
     "dev_categories": [
       "探索",
       "運動"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_penguin.png"
   },
   {
     "id": "play_051",
@@ -1611,7 +1661,8 @@
     "dev_categories": [
       "探索",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_hedgehog.png"
   },
   {
     "id": "play_052",
@@ -1641,7 +1692,8 @@
     "dev_categories": [
       "創造",
       "会話"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_draw.png"
   },
   {
     "id": "play_053",
@@ -1672,7 +1724,8 @@
     "dev_categories": [
       "創造",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_draw.png"
   },
   {
     "id": "play_054",
@@ -1703,7 +1756,8 @@
     "dev_categories": [
       "創造",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_draw.png"
   },
   {
     "id": "play_055",
@@ -1734,7 +1788,8 @@
     "dev_categories": [
       "創造",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_blocks.png"
   },
   {
     "id": "play_056",
@@ -1765,7 +1820,8 @@
     "dev_categories": [
       "創造",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_fluffy.png"
   },
   {
     "id": "play_057",
@@ -1795,7 +1851,8 @@
     "dev_categories": [
       "会話",
       "運動"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_bear.png"
   },
   {
     "id": "play_058",
@@ -1825,7 +1882,8 @@
     "dev_categories": [
       "会話",
       "協力"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_playtwo.png"
   },
   {
     "id": "play_059",
@@ -1855,7 +1913,8 @@
     "dev_categories": [
       "会話",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_reading.png"
   },
   {
     "id": "play_060",
@@ -1884,7 +1943,8 @@
     "dev_categories": [
       "会話",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_reading.png"
   },
   {
     "id": "play_061",
@@ -1914,7 +1974,8 @@
     "dev_categories": [
       "運動",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_tummy.png"
   },
   {
     "id": "play_062",
@@ -1944,7 +2005,8 @@
     "dev_categories": [
       "運動",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_dino.png"
   },
   {
     "id": "play_063",
@@ -1975,7 +2037,8 @@
     "dev_categories": [
       "運動",
       "協力"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_soccer.png"
   },
   {
     "id": "play_064",
@@ -2006,7 +2069,8 @@
     "dev_categories": [
       "運動",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_group.png"
   },
   {
     "id": "play_065",
@@ -2036,7 +2100,8 @@
     "dev_categories": [
       "運動",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_penguin.png"
   },
   {
     "id": "play_066",
@@ -2066,7 +2131,8 @@
     "dev_categories": [
       "協力",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_playtwo.png"
   },
   {
     "id": "play_067",
@@ -2096,7 +2162,8 @@
     "dev_categories": [
       "協力",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_playtwo.png"
   },
   {
     "id": "play_068",
@@ -2125,7 +2192,8 @@
     "dev_categories": [
       "協力",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_pass.png"
   },
   {
     "id": "play_069",
@@ -2156,7 +2224,8 @@
       "協力",
       "感覚",
       "運動"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_bubbles_girl.png"
   },
   {
     "id": "play_070",
@@ -2185,7 +2254,8 @@
     "dev_categories": [
       "挑戦",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_blocks.png"
   },
   {
     "id": "play_071",
@@ -2216,7 +2286,8 @@
     "dev_categories": [
       "挑戦",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_hedgehog.png"
   },
   {
     "id": "play_072",
@@ -2247,7 +2318,8 @@
     "dev_categories": [
       "挑戦",
       "運動"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_ball.png"
   },
   {
     "id": "play_073",
@@ -2277,7 +2349,8 @@
     "dev_categories": [
       "挑戦",
       "創造"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_fluffy.png"
   },
   {
     "id": "play_074",
@@ -2306,7 +2379,8 @@
     "dev_categories": [
       "感覚",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_penguin.png"
   },
   {
     "id": "play_075",
@@ -2336,7 +2410,8 @@
     "dev_categories": [
       "感覚",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_hedgehog.png"
   },
   {
     "id": "play_076",
@@ -2365,7 +2440,8 @@
     "dev_categories": [
       "感覚",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_bear.png"
   },
   {
     "id": "play_077",
@@ -2394,7 +2470,8 @@
     "dev_categories": [
       "探索",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_hedgehog.png"
   },
   {
     "id": "play_078",
@@ -2426,7 +2503,8 @@
     "dev_categories": [
       "探索",
       "協力"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_mushroom.png"
   },
   {
     "id": "play_079",
@@ -2455,7 +2533,8 @@
     "dev_categories": [
       "探索",
       "創造"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_dino.png"
   },
   {
     "id": "play_080",
@@ -2484,7 +2563,8 @@
     "dev_categories": [
       "創造",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_fluffy.png"
   },
   {
     "id": "play_081",
@@ -2515,7 +2595,8 @@
     "dev_categories": [
       "創造",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_chick.png"
   },
   {
     "id": "play_082",
@@ -2547,7 +2628,8 @@
     "dev_categories": [
       "創造",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_penguin.png"
   },
   {
     "id": "play_083",
@@ -2577,7 +2659,8 @@
     "dev_categories": [
       "創造",
       "会話"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_rabbit.png"
   },
   {
     "id": "play_084",
@@ -2606,7 +2689,8 @@
     "dev_categories": [
       "会話",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_playtwo.png"
   },
   {
     "id": "play_085",
@@ -2635,7 +2719,8 @@
     "dev_categories": [
       "会話",
       "創造"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_reading.png"
   },
   {
     "id": "play_086",
@@ -2664,7 +2749,8 @@
     "dev_categories": [
       "会話",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_rabbit.png"
   },
   {
     "id": "play_087",
@@ -2695,7 +2781,8 @@
     "dev_categories": [
       "運動",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_soccer.png"
   },
   {
     "id": "play_088",
@@ -2724,7 +2811,8 @@
     "dev_categories": [
       "運動",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_penguin.png"
   },
   {
     "id": "play_089",
@@ -2755,7 +2843,8 @@
     "dev_categories": [
       "運動",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_ball.png"
   },
   {
     "id": "play_090",
@@ -2785,7 +2874,8 @@
     "dev_categories": [
       "協力",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_playtwo.png"
   },
   {
     "id": "play_091",
@@ -2815,7 +2905,8 @@
     "dev_categories": [
       "協力",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_pass.png"
   },
   {
     "id": "play_092",
@@ -2845,7 +2936,8 @@
     "dev_categories": [
       "挑戦",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_dino.png"
   },
   {
     "id": "play_093",
@@ -2875,7 +2967,8 @@
     "dev_categories": [
       "挑戦",
       "運動"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_soccer.png"
   },
   {
     "id": "play_094",
@@ -2904,7 +2997,8 @@
     "dev_categories": [
       "挑戦",
       "会話"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_abc.png"
   },
   {
     "id": "play_095",
@@ -2935,7 +3029,8 @@
     "dev_categories": [
       "探索",
       "創造"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_chick.png"
   },
   {
     "id": "play_096",
@@ -2966,7 +3061,8 @@
     "dev_categories": [
       "探索",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_hedgehog.png"
   },
   {
     "id": "play_097",
@@ -2996,7 +3092,8 @@
     "dev_categories": [
       "探索",
       "創造"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_bear.png"
   },
   {
     "id": "play_098",
@@ -3026,7 +3123,8 @@
     "dev_categories": [
       "探索",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_hedgehog.png"
   },
   {
     "id": "play_099",
@@ -3057,7 +3155,8 @@
     "dev_categories": [
       "創造",
       "会話"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_book.png"
   },
   {
     "id": "play_100",
@@ -3089,7 +3188,8 @@
     "dev_categories": [
       "創造",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_draw.png"
   },
   {
     "id": "play_101",
@@ -3119,7 +3219,8 @@
     "dev_categories": [
       "創造",
       "会話"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_playtwo.png"
   },
   {
     "id": "play_102",
@@ -3149,7 +3250,8 @@
     "dev_categories": [
       "会話",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_rabbit.png"
   },
   {
     "id": "play_103",
@@ -3178,7 +3280,8 @@
     "dev_categories": [
       "会話",
       "創造"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_playtwo.png"
   },
   {
     "id": "play_104",
@@ -3208,7 +3311,8 @@
     "dev_categories": [
       "会話",
       "創造"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_draw.png"
   },
   {
     "id": "play_105",
@@ -3237,7 +3341,8 @@
     "dev_categories": [
       "運動",
       "協力"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_group.png"
   },
   {
     "id": "play_106",
@@ -3266,7 +3371,8 @@
     "dev_categories": [
       "運動",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_soccer.png"
   },
   {
     "id": "play_107",
@@ -3295,7 +3401,8 @@
     "dev_categories": [
       "運動",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_dino.png"
   },
   {
     "id": "play_108",
@@ -3326,7 +3433,8 @@
     "dev_categories": [
       "協力",
       "創造"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_mushroom.png"
   },
   {
     "id": "play_109",
@@ -3356,7 +3464,8 @@
     "dev_categories": [
       "協力",
       "会話"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_pass.png"
   },
   {
     "id": "play_110",
@@ -3388,7 +3497,8 @@
     "dev_categories": [
       "協力",
       "創造"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_group.png"
   },
   {
     "id": "play_111",
@@ -3418,7 +3528,8 @@
     "dev_categories": [
       "挑戦",
       "創造"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_tower.png"
   },
   {
     "id": "play_112",
@@ -3448,7 +3559,8 @@
     "dev_categories": [
       "挑戦",
       "創造"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_draw.png"
   },
   {
     "id": "play_113",
@@ -3478,7 +3590,8 @@
     "dev_categories": [
       "挑戦",
       "会話"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_numbook.png"
   },
   {
     "id": "play_114",
@@ -3508,7 +3621,8 @@
     "dev_categories": [
       "挑戦",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_tower.png"
   },
   {
     "id": "play_115",
@@ -3540,7 +3654,8 @@
     "dev_categories": [
       "創造",
       "協力"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_dino.png"
   },
   {
     "id": "play_116",
@@ -3570,7 +3685,8 @@
     "dev_categories": [
       "創造",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_draw.png"
   },
   {
     "id": "play_117",
@@ -3602,7 +3718,8 @@
     "dev_categories": [
       "創造",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_chick.png"
   },
   {
     "id": "play_118",
@@ -3633,7 +3750,8 @@
     "dev_categories": [
       "探索",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_hedgehog.png"
   },
   {
     "id": "play_119",
@@ -3664,7 +3782,8 @@
     "dev_categories": [
       "挑戦",
       "創造"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_pass.png"
   },
   {
     "id": "play_120",
@@ -3694,7 +3813,8 @@
     "dev_categories": [
       "感覚",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_bear.png"
   },
   {
     "id": "play_121",
@@ -3725,7 +3845,8 @@
     "dev_categories": [
       "創造",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_bubble_big.png"
   },
   {
     "id": "play_122",
@@ -3756,7 +3877,8 @@
     "dev_categories": [
       "創造",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_bear.png"
   },
   {
     "id": "play_123",
@@ -3785,7 +3907,8 @@
     "dev_categories": [
       "運動",
       "挑戦"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_soccer.png"
   },
   {
     "id": "play_124",
@@ -3815,7 +3938,8 @@
     "dev_categories": [
       "創造",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_bear.png"
   },
   {
     "id": "play_125",
@@ -3845,7 +3969,8 @@
     "dev_categories": [
       "創造",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_draw.png"
   },
   {
     "id": "play_126",
@@ -3874,7 +3999,8 @@
     "dev_categories": [
       "感覚",
       "探索"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_fluffy.png"
   },
   {
     "id": "play_127",
@@ -3903,7 +4029,8 @@
     "dev_categories": [
       "会話",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_rabbit.png"
   },
   {
     "id": "play_128",
@@ -3932,7 +4059,8 @@
     "dev_categories": [
       "運動",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_tummy.png"
   },
   {
     "id": "play_129",
@@ -3961,7 +4089,8 @@
     "dev_categories": [
       "運動",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_tummy.png"
   },
   {
     "id": "play_130",
@@ -3992,7 +4121,8 @@
       "創造",
       "会話",
       "協力"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_book.png"
   },
   {
     "id": "play_131",
@@ -4022,7 +4152,8 @@
       "挑戦",
       "会話",
       "協力"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_group.png"
   },
   {
     "id": "play_132",
@@ -4053,6 +4184,7 @@
       "協力",
       "創造",
       "感覚"
-    ]
+    ],
+    "icon": "/static/images/icons/icon_playtwo.png"
   }
 ]

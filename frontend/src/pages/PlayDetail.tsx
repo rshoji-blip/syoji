@@ -4,7 +4,7 @@ import { CATEGORY_ICONS } from '../types';
 
 interface Play {
   id: string; name: string; style: string; dev_categories: string[];
-  materials: string[]; steps: string[]; effects: string[]; reference_url?: string;
+  materials: string[]; steps: string[]; effects: string[]; reference_url?: string; icon?: string;
 }
 
 interface Props { playId: string; childName: string; onBack: () => void; }
@@ -49,10 +49,7 @@ export default function PlayDetail({ playId, childName, onBack }: Props) {
         padding: '28px 20px', textAlign: 'center',
         borderBottom: `3px solid ${heroColor.border}40`,
       }}>
-        {heroColor.img
-          ? <img src={heroColor.img} alt={mainCat} style={{ width: 110, height: 110, objectFit: 'contain', marginBottom: 12, borderRadius: 16 }} />
-          : <div style={{ fontSize: 60, marginBottom: 10 }}>🎮</div>
-        }
+        <img src={play.icon || heroColor.img || ''} alt={play.name} style={{ width: 110, height: 110, objectFit: 'contain', marginBottom: 12, borderRadius: 16 }} />
         <div style={{ fontSize: 22, fontWeight: 900, color: 'var(--text)' }}>{play.name}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7, justifyContent: 'center', marginTop: 12 }}>
           {play.dev_categories.map(cat => {
