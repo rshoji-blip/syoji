@@ -104,6 +104,7 @@ export default function App() {
         {page === 'browse' && (
           <PlayBrowse
             initialCategory={browseCategory}
+            fromNav={!browseCategory}
             onBack={() => setPage('home')}
             onPlayDetail={id => setPlayDetailId(id)}
           />

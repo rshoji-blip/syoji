@@ -131,59 +131,59 @@ export default function Home({ onNavigate, onPlayDetail, onBrowse }: Props) {
               }}>
                 {color.img ? (
                   <img src={color.img} alt={mainCat}
-                    style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
                 ) : (
                   <span style={{ fontSize: 30 }}>{CATEGORY_ICONS[mainCat]}</span>
                 )}
               </div>
 
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 15, fontWeight: 900, color: 'var(--text)', marginBottom: 3 }}>
-                  {play.name}
-                </div>
-                {/* 一言効果 */}
-                {play.effects && (
-                  <div style={{
-                    fontSize: 13, color: '#444', fontWeight: 700, marginBottom: 6, lineHeight: 1.5,
-                    background: `${color.bg}`, borderLeft: `3px solid ${color.border}`,
-                    padding: '4px 8px', borderRadius: '0 6px 6px 0',
-                  }}>
-                    {play.effects.length > 50 ? play.effects.slice(0, 50) + '…' : play.effects}
+                {/* 遊び名 + 場所タグ */}
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6, marginBottom: 5, flexWrap: 'wrap' }}>
+                  <div style={{ fontSize: 15, fontWeight: 900, color: 'var(--text)', lineHeight: 1.3 }}>
+                    {play.name}
                   </div>
-                )}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                  {/* 場所タグ */}
-                  {play.location_tags?.map(tag => {
-                    const tagEmoji: Record<string, string> = { '室内': '🏠', '屋外': '🌳', '室外': '🌳' };
+                  {play.location_tags?.slice(0, 1).map(tag => {
+                    const tagMap: Record<string, { emoji: string; color: string }> = {
+                      '室内': { emoji: '🏠', color: '#64B5F6' },
+                      '屋外': { emoji: '🌳', color: '#81C784' },
+                      '室外': { emoji: '🌳', color: '#81C784' },
+                    };
+                    const t = tagMap[tag] || { emoji: '📍', color: '#AAA' };
                     return (
-                      <div key={tag} style={{ fontSize: 11, color: '#666', fontWeight: 700, background: '#F0F0F0', padding: '2px 6px', borderRadius: 6 }}>
-                        {tagEmoji[tag] || '📍'}{tag}
-                      </div>
+                      <span key={tag} style={{
+                        fontSize: 10, fontWeight: 800, padding: '2px 7px', borderRadius: 10,
+                        background: `${t.color}22`, color: t.color,
+                        border: `1.5px solid ${t.color}66`, whiteSpace: 'nowrap',
+                      }}>{t.emoji} {tag}</span>
                     );
                   })}
-                  {/* 用意するもの */}
-                  {materials.length > 0 && (
-                    <div style={{ fontSize: 11, color: 'var(--text-light)', fontWeight: 600 }}>
-                      🧰 {materials.join('・')}
-                    </div>
-                  )}
-                  {/* ステップ数 */}
-                  {play.steps_count > 0 && (
-                    <div style={{ fontSize: 11, color: 'var(--primary)', fontWeight: 700 }}>
-                      {play.steps_count}ステップ
-                    </div>
-                  )}
                 </div>
-                {/* カテゴリバッジ */}
-                <div style={{ display: 'flex', gap: 4, marginTop: 5, flexWrap: 'wrap' }}>
+                {/* 一言効果：最重要情報として大きく */}
+                {play.effects && (
+                  <div style={{
+                    fontSize: 12, color: '#555', fontWeight: 700, marginBottom: 7, lineHeight: 1.5,
+                    borderLeft: `3px solid ${color.border}`,
+                    paddingLeft: 8,
+                  }}>
+                    {play.effects.length > 48 ? play.effects.slice(0, 48) + '…' : play.effects}
+                  </div>
+                )}
+                {/* カテゴリバッジ + ステップ数（補助情報として小さく） */}
+                <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', alignItems: 'center' }}>
                   {play.dev_categories.slice(0, 2).map(c => (
                     <span key={c} style={{
-                      fontSize: 10, fontWeight: 800, padding: '2px 7px', borderRadius: 8,
+                      fontSize: 10, fontWeight: 800, padding: '1px 6px', borderRadius: 8,
                       background: (CAT_COLORS[c] || { bg: '#f5f5f5' }).bg,
                       color: (CAT_COLORS[c] || { border: '#999' }).border,
-                      border: `1.5px solid ${(CAT_COLORS[c] || { border: '#ddd' }).border}50`,
+                      border: `1px solid ${(CAT_COLORS[c] || { border: '#ddd' }).border}50`,
                     }}>{CATEGORY_ICONS[c]}{c}</span>
                   ))}
+                  {play.steps_count > 0 && (
+                    <span style={{ fontSize: 10, color: 'var(--text-light)', fontWeight: 600 }}>
+                      {play.steps_count}ステップ
+                    </span>
+                  )}
                 </div>
               </div>
               <div style={{ color: '#CCC', fontSize: 20, flexShrink: 0 }}>›</div>

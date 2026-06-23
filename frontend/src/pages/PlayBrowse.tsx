@@ -11,6 +11,7 @@ interface CategorySummary { name: string; icon: string; count: number; }
 
 interface Props {
   initialCategory?: string;
+  fromNav?: boolean;
   onBack: () => void;
   onPlayDetail: (id: string) => void;
 }
@@ -40,7 +41,7 @@ function ageStr(min: number, max: number) {
   return `${fmt(min)}〜${fmt(max)}`;
 }
 
-export default function PlayBrowse({ initialCategory, onBack, onPlayDetail }: Props) {
+export default function PlayBrowse({ initialCategory, fromNav, onBack, onPlayDetail }: Props) {
   const [selectedCat, setSelectedCat] = useState<string | null>(initialCategory || null);
   const { data: catData } = useGet<{ categories: CategorySummary[] }>('/categories_summary');
   const { data: playsData, loading } = useGet<{ plays: Play[]; total: number }>(
@@ -61,12 +62,15 @@ export default function PlayBrowse({ initialCategory, onBack, onPlayDetail }: Pr
         boxShadow: '0 2px 10px rgba(200,150,100,0.08)',
         position: 'sticky', top: 0, zIndex: 100,
       }}>
-        <button onClick={selectedCat ? () => setSelectedCat(null) : onBack} style={{
-          background: 'var(--bg)', border: '2px solid var(--border)', borderRadius: 20,
-          padding: '6px 14px', fontSize: 13, fontWeight: 800, cursor: 'pointer', color: 'var(--text-mid)',
-        }}>‹ もどる</button>
+        {(selectedCat || !fromNav) && (
+          <button onClick={selectedCat ? () => setSelectedCat(null) : onBack} style={{
+            background: 'var(--bg)', border: '2px solid var(--border)', borderRadius: 20,
+            padding: '6px 14px', fontSize: 13, fontWeight: 800, cursor: 'pointer', color: 'var(--text-mid)',
+            flexShrink: 0,
+          }}>‹ もどる</button>
+        )}
         <div style={{ fontSize: 16, fontWeight: 900 }}>
-          {selectedCat ? `${CAT_COLORS[selectedCat] ? selectedCat : ''}の遊び一覧` : '🎮 カテゴリから探す'}
+          {selectedCat ? `${selectedCat}の遊び一覧` : '🔍 カテゴリから探す'}
         </div>
       </div>
 
@@ -88,7 +92,7 @@ export default function PlayBrowse({ initialCategory, onBack, onPlayDetail }: Pr
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   {CAT_IMG[cat.name] ? (
                     <img src={CAT_IMG[cat.name]} alt={cat.name}
-                      style={{ width: 64, height: 64, objectFit: 'contain', flexShrink: 0 }} />
+                      style={{ width: 64, height: 64, objectFit: 'cover', objectPosition: 'top', flexShrink: 0, borderRadius: 8 }} />
                   ) : (
                     <div style={{ fontSize: 28 }}>{cat.icon}</div>
                   )}

@@ -42,7 +42,7 @@ export default function PlayDetail({ playId, childName, onBack }: Props) {
   const heroColor = CAT_COLORS[mainCat] || { bg: '#FFF3E0', border: '#FFB74D', img: '' };
 
   return (
-    <div style={{ paddingBottom: 100, animation: 'fadeUp 0.3s ease both' }}>
+    <div style={{ paddingBottom: 140, animation: 'fadeUp 0.3s ease both' }}>
       {/* Hero */}
       <div style={{
         background: `linear-gradient(135deg, ${heroColor.bg}, white)`,
@@ -50,7 +50,7 @@ export default function PlayDetail({ playId, childName, onBack }: Props) {
         borderBottom: `3px solid ${heroColor.border}40`,
       }}>
         {heroColor.img
-          ? <img src={heroColor.img} alt={mainCat} style={{ width: 110, height: 110, objectFit: 'contain', marginBottom: 12 }} />
+          ? <img src={heroColor.img} alt={mainCat} style={{ width: 110, height: 110, objectFit: 'cover', objectPosition: 'top', marginBottom: 12, borderRadius: 16 }} />
           : <div style={{ fontSize: 60, marginBottom: 10 }}>🎮</div>
         }
         <div style={{ fontSize: 22, fontWeight: 900, color: 'var(--text)' }}>{play.name}</div>
