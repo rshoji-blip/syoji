@@ -140,8 +140,12 @@ def api_home():
         return jsonify({"error": "no users"}), 400
     child_name, birthdate = _ensure_child()
     age_months = calc_age_months(birthdate)
-    weather = fetch_weather()
-    plays = suggest_plays(age_months, weather["tag"], "まったり", count=3)
+
+    # 天気はフロントから受け取る（外部API不要）
+    weather_param = request.args.get("weather", "全天候")
+    WEATHER_LABELS = {"晴れ": "晴れ ☀️", "雨": "雨・室内向け 🌧️", "全天候": "いつでも"}
+    weather = {"label": WEATHER_LABELS.get(weather_param, "いつでも"), "tag": weather_param}
+
     category_counts = get_today_category_counts(child_name)
     total_today = sum(category_counts.values())
     for u in users:
@@ -156,7 +160,6 @@ def api_home():
     # 足りないカテゴリに合わせたおすすめ遊びを優先表示
     plays_raw = suggest_plays(age_months, weather["tag"], "まったり", count=5,
                                preferred_cats=weak_cats)
-    # materialsとeffectsを付加
     all_plays = load_plays()
     play_detail_map = {p["id"]: p for p in all_plays}
     weak_plays = []
@@ -170,7 +173,6 @@ def api_home():
             "location_tags": detail.get("location_tags", []),
         })
 
-    # 今日が土日かどうか
     is_weekend = date.today().weekday() >= 5
 
     return jsonify({

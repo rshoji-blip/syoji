@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useGet, apiPost } from '../hooks/useApi';
 import { CATEGORY_ICONS } from '../types';
 
@@ -43,8 +43,17 @@ const WEATHER_EMOJI: Record<string, string> = {
   sunny: '☀️', cloudy: '☁️', rainy: '🌧️', snowy: '❄️',
 };
 
+type WeatherMode = '全天候' | '晴れ' | '雨';
+
+const WEATHER_OPTIONS: { key: WeatherMode; emoji: string; label: string }[] = [
+  { key: '全天候', emoji: '🌤️', label: 'すべて' },
+  { key: '晴れ',  emoji: '☀️', label: 'そとあそび' },
+  { key: '雨',    emoji: '🌧️', label: 'うちあそび' },
+];
+
 export default function Home({ onNavigate, onPlayDetail, onBrowse }: Props) {
-  const { data, loading, refetch } = useGet<HomeData>('/home');
+  const [weather, setWeather] = useState<WeatherMode>('全天候');
+  const { data, loading, refetch } = useGet<HomeData>(`/home?weather=${encodeURIComponent(weather)}`, [weather]);
 
   const switchChild = async (idx: number) => {
     await apiPost('/switch_child', { child_idx: idx });
@@ -78,6 +87,21 @@ export default function Home({ onNavigate, onPlayDetail, onBrowse }: Props) {
         </div>
         <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.9)', marginTop: 6, fontWeight: 600 }}>
           {data.age_str} · 成長に合わせた遊びをピックアップしました
+        </div>
+
+        {/* 天気トグル */}
+        <div style={{ display: 'flex', gap: 6, marginTop: 14 }}>
+          {WEATHER_OPTIONS.map(opt => (
+            <button key={opt.key} onClick={() => setWeather(opt.key)} style={{
+              padding: '6px 14px', borderRadius: 20, fontSize: 12, fontWeight: 800,
+              cursor: 'pointer', transition: 'all 0.2s',
+              border: weather === opt.key ? '2px solid white' : '2px solid rgba(255,255,255,0.4)',
+              background: weather === opt.key ? 'white' : 'transparent',
+              color: weather === opt.key ? '#7DCFB6' : 'white',
+            }}>
+              {opt.emoji} {opt.label}
+            </button>
+          ))}
         </div>
 
         {/* 子ども切り替え */}
