@@ -131,7 +131,7 @@ export default function Home({ onNavigate, onPlayDetail, onBrowse }: Props) {
               }}>
                 {color.img ? (
                   <img src={color.img} alt={mainCat}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+                    style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                 ) : (
                   <span style={{ fontSize: 30 }}>{CATEGORY_ICONS[mainCat]}</span>
                 )}

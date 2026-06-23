@@ -46,7 +46,7 @@ export default function Onboarding({ onDone }: Props) {
       padding: '40px 28px', transition: 'background 0.4s ease',
     }}>
       <img src={slide.img} alt=""
-        style={{ width: 180, height: 180, objectFit: 'cover', objectPosition: 'top', marginBottom: 32, borderRadius: 20 }} />
+        style={{ width: 180, height: 180, objectFit: 'contain', marginBottom: 32, borderRadius: 20 }} />
 
       <div style={{ fontSize: 22, fontWeight: 900, color: '#333', textAlign: 'center', lineHeight: 1.5, marginBottom: 16, whiteSpace: 'pre-line' }}>
         {slide.title}

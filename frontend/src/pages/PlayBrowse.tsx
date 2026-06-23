@@ -92,7 +92,7 @@ export default function PlayBrowse({ initialCategory, fromNav, onBack, onPlayDet
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   {CAT_IMG[cat.name] ? (
                     <img src={CAT_IMG[cat.name]} alt={cat.name}
-                      style={{ width: 64, height: 64, objectFit: 'cover', objectPosition: 'top', flexShrink: 0, borderRadius: 8 }} />
+                      style={{ width: 64, height: 64, objectFit: 'contain', flexShrink: 0, borderRadius: 8 }} />
                   ) : (
                     <div style={{ fontSize: 28 }}>{cat.icon}</div>
                   )}
