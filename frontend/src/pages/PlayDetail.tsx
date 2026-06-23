@@ -9,11 +9,14 @@ interface Play {
 
 interface Props { playId: string; childName: string; onBack: () => void; }
 
-const CAT_COLORS: Record<string, { bg: string; border: string }> = {
-  "探索": { bg: "#E8F4FD", border: "#85C1E9" }, "創造": { bg: "#FDE8EF", border: "#F4A0B5" },
-  "会話": { bg: "#E6F8F3", border: "#7DCFB6" }, "運動": { bg: "#F4EBF8", border: "#C39BD3" },
-  "感覚": { bg: "#FEFAE5", border: "#D4B800" }, "協力": { bg: "#FEE9E5", border: "#F4846F" },
-  "挑戦": { bg: "#EAFAF1", border: "#52BE80" },
+const CAT_COLORS: Record<string, { bg: string; border: string; img: string }> = {
+  "探索": { bg: "#FFF3E0", border: "#FFB74D", img: "/static/images/icons/cat_explore.png" },
+  "創造": { bg: "#FCE4EC", border: "#F48FB1", img: "/static/images/icons/cat_create.png" },
+  "会話": { bg: "#E8F5E9", border: "#81C784", img: "/static/images/icons/cat_talk.png" },
+  "運動": { bg: "#E3F2FD", border: "#64B5F6", img: "/static/images/icons/cat_sport.png" },
+  "感覚": { bg: "#F3E5F5", border: "#CE93D8", img: "/static/images/icons/cat_sense.png" },
+  "協力": { bg: "#E0F7FA", border: "#4DD0E1", img: "/static/images/icons/cat_coop.png" },
+  "挑戦": { bg: "#FFF8E1", border: "#FFD54F", img: "/static/images/icons/cat_challenge.png" },
 };
 
 export default function PlayDetail({ playId, childName, onBack }: Props) {
@@ -35,16 +38,21 @@ export default function PlayDetail({ playId, childName, onBack }: Props) {
   );
 
   const { play } = data;
+  const mainCat = play.dev_categories[0];
+  const heroColor = CAT_COLORS[mainCat] || { bg: '#FFF3E0', border: '#FFB74D', img: '' };
 
   return (
     <div style={{ paddingBottom: 100, animation: 'fadeUp 0.3s ease both' }}>
       {/* Hero */}
       <div style={{
-        background: 'linear-gradient(135deg, var(--primary-light), #FDE8EF)',
+        background: `linear-gradient(135deg, ${heroColor.bg}, white)`,
         padding: '28px 20px', textAlign: 'center',
-        borderBottom: '3px solid var(--border)',
+        borderBottom: `3px solid ${heroColor.border}40`,
       }}>
-        <div style={{ fontSize: 60, marginBottom: 10 }}>🎮</div>
+        {heroColor.img
+          ? <img src={heroColor.img} alt={mainCat} style={{ width: 110, height: 110, objectFit: 'contain', marginBottom: 12 }} />
+          : <div style={{ fontSize: 60, marginBottom: 10 }}>🎮</div>
+        }
         <div style={{ fontSize: 22, fontWeight: 900, color: 'var(--text)' }}>{play.name}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7, justifyContent: 'center', marginTop: 12 }}>
           {play.dev_categories.map(cat => {
@@ -131,8 +139,8 @@ export default function PlayDetail({ playId, childName, onBack }: Props) {
           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
           width: '100%', padding: 16, borderRadius: 'var(--radius-sm)',
           background: '#FFF0F0', color: '#CC0000',
-          border: '2.5px solid #FFAAAA', fontSize: 16, fontWeight: 900, textDecoration: 'none',
-        }}>▶️ YouTubeで検索する</a>
+          border: '2.5px solid #FFAAAA', fontSize: 15, fontWeight: 900, textDecoration: 'none',
+        }}>▶️ 「{play.name}」をYouTubeで見る</a>
       </div>
 
       {/* Toast */}

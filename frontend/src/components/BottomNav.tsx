@@ -10,7 +10,7 @@ interface Props {
 const items: { key: Page; icon: string; label: string }[] = [
   { key: 'home',   icon: '🏡', label: 'ホーム' },
   { key: 'browse', icon: '🔍', label: 'さがす' },
-  { key: 'record', icon: '✏️', label: 'きろくする' },
+  { key: 'record', icon: '✏️', label: 'きろく' },
   { key: 'growth', icon: '🌿', label: 'せいちょう' },
 ];
 

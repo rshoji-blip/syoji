@@ -143,8 +143,12 @@ export default function Home({ onNavigate, onPlayDetail, onBrowse }: Props) {
                 </div>
                 {/* 一言効果 */}
                 {play.effects && (
-                  <div style={{ fontSize: 12, color: 'var(--text-mid)', fontWeight: 600, marginBottom: 5, lineHeight: 1.4 }}>
-                    {play.effects.length > 40 ? play.effects.slice(0, 40) + '…' : play.effects}
+                  <div style={{
+                    fontSize: 13, color: '#444', fontWeight: 700, marginBottom: 6, lineHeight: 1.5,
+                    background: `${color.bg}`, borderLeft: `3px solid ${color.border}`,
+                    padding: '4px 8px', borderRadius: '0 6px 6px 0',
+                  }}>
+                    {play.effects.length > 50 ? play.effects.slice(0, 50) + '…' : play.effects}
                   </div>
                 )}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
