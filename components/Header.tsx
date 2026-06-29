@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useTheme } from './ThemeProvider';
 
 function YellowHat({ size = 1 }: { size?: number }) {
@@ -55,6 +57,24 @@ function YellowHat({ size = 1 }: { size?: number }) {
         }}
       />
     </div>
+  );
+}
+
+function NavLink({ href, label, title }: { href: string; label: string; title: string }) {
+  const pathname = usePathname();
+  const active = pathname === href;
+  return (
+    <Link
+      href={href}
+      title={title}
+      className={`w-9 h-9 rounded-full flex items-center justify-center text-lg transition-all ${
+        active
+          ? 'bg-white/50 shadow-inner border-2 border-white/60'
+          : 'bg-white/20 hover:bg-white/40 border-2 border-white/30'
+      }`}
+    >
+      {label}
+    </Link>
   );
 }
 
@@ -115,7 +135,11 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Theme toggle */}
+          {/* Nav + Theme toggle */}
+          <div className="flex items-center gap-2">
+            <NavLink href="/" label="🐵" title="アニメ検索" />
+            <NavLink href="/plays" label="🧸" title="遊び提案" />
+          </div>
           <button
             onClick={toggleTheme}
             className="flex-shrink-0 w-10 h-10 rounded-full bg-white/25 hover:bg-white/45 border-2 border-white/40 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 shadow-md"

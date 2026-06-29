@@ -16,3 +16,21 @@ export interface SearchHistoryItem {
 }
 
 export type Theme = 'light' | 'dark';
+
+export interface Play {
+  id: string;
+  domain: string;
+  domain_sub: string;
+  name: string;
+  age_min_months: number;
+  age_max_months: number;
+  location: string[];
+  weather: string[];
+  materials: string[];
+  preparation: string[];
+  overview: string;
+  steps: string[];
+  voice_guidance: string[];
+  effects: string[];
+  reference_url?: string;
+}
