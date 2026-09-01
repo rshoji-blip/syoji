@@ -135,6 +135,7 @@ const YOUTUBE_IDS: Record<string, string> = {
   'おおきいのはどっち？': 'RAbjXuMNbZw',
   'マルコとジョージ': 'flnuNrT-8X8',
   'ちかてつだいぼうけん': 'K8LberuwrC4',
+  'よくできましたジョージ': '_HMuToNaP50',
   'ホームランをうとう': 'fJuzZawYVKA',
   'かぜのちから': 'McaqjpzoOtA',
   'ジョージのアヒルのこ': '6WQBFacT6Oc',
@@ -186,6 +187,7 @@ const YOUTUBE_IDS: Record<string, string> = {
   'シカをたすけろ': 'M59EoRF7ERA',
   // Season 10
   'ジョージの新しい音': '78fvaxbqeL4',
+  'ビルの車いす': '8iklRa9HLbU',
   'ドングリ泥棒': 'eeuHw3ERYqg',
   'オイルがだいかつやく': 'KhLc3NRoZUk',
   'ピクルス作り': 'Of6YOUh0LSo',
@@ -207,6 +209,10 @@ const YOUTUBE_IDS: Record<string, string> = {
   'おとのものがたり': 'ETCRu5oWZH8',
   'ライツ！カメラ！アクション！': 'ZYskj8R5D7M',
   'すごいぞマジシャン': 'Bg8jNx_bzO8',
+  'ねこのもりびと': 'SK_YbAf_5YY',
+  'あらってあらって': 'WCjIDnTuHJ0',
+  // Season 12
+  'あひるをたすけろ': '_vnqf9SWskI',
   // Season 13
   'コンパスへのものがたり': 'bnL3zbKTZu4',
   'とりのなかまたち': 'qitY9f4cLqA',
