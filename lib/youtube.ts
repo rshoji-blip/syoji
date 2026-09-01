@@ -95,7 +95,6 @@ const YOUTUBE_IDS: Record<string, string> = {
   '船でぶらり旅': 'tfFdX9wJ32Q',
   'とんでけー！': 'b3uHe9k74_M',
   'プレーリードッグだよ': 'gMgEWQX0OzA',
-  'ゆきのなかで': 'ew9leL6ddzk',
   // Season 4
   'せんたくしよう': 'KPmExrGaRjE',
   'おてんばアリー': '8gOPLWJUnQM',
@@ -154,6 +153,8 @@ const YOUTUBE_IDS: Record<string, string> = {
   'シロップコンコン': 'vtgr5YA9PAU',
   'オンエアまっさかり': '0HPUi65-tFM',
   'すなのおえかき': 'fQCMfJjjhmw',
+  // Season 3
+  'ゆきのなかで': 'ew9leL6ddzk',
   // Season 7
   'ハンドリーJr.': 'zgSD2nqdwd8',
   'トゥートゥートゥッツィさようなら': 'NKEsZhWjwyk',
@@ -168,6 +169,7 @@ const YOUTUBE_IDS: Record<string, string> = {
   'たまごをさがせ': 'DDS3kuCvuBw',
   'ジョージとアリーのにわ': 'mtJDKIKGNQY',
   'たからさがし': 'o2v6l8T7-DA',
+  'かぜひいたジョージ': 'sHJJNP5viN0',
   // Season 8
   'おもちゃのジョージ': 'YOuCNWUEXJ0',
   'ホースダンス': 'i7e8vKZMQ84',
@@ -211,6 +213,7 @@ const YOUTUBE_IDS: Record<string, string> = {
   'すごいぞマジシャン': 'Bg8jNx_bzO8',
   'ねこのもりびと': 'SK_YbAf_5YY',
   'あらってあらって': 'WCjIDnTuHJ0',
+  'そうじをしよう': 'C--yEz89EsU',
   // Season 12
   'あひるをたすけろ': '_vnqf9SWskI',
   // Season 13
