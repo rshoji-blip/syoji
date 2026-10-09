@@ -9,9 +9,10 @@ phones={}
 if len(sys.argv)>4:
     for no,nm,tel,conf,url,memo in csv.reader(open(sys.argv[4],encoding='utf-8'),delimiter='\t'):
         phones[int(no)]=dict(tel=tel,conf=conf,src=url,memo=memo)
-PREF='北海道'
+import re
 recs=[]
 for name,addr,sid,course in csv.reader(open(src,encoding='utf-8'),delimiter='\t'):
+    PREF=re.match(r'(北海道|東京都|(?:京都|大阪)府|.{2,3}県)',addr).group(1)
     recs.append(dict(name=name,pref=PREF,city=addr[len(PREF):],url=f'https://www.gakkou.net/kou/view/index_{sid}.html',course=course))
 F='Yu Gothic'
 f=lambda **k:Font(name=F,size=k.pop('size',10),**k)
@@ -20,7 +21,7 @@ HF=PatternFill('solid',fgColor='1F4E78'); IN=PatternFill('solid',fgColor='FFF2CC
 RESULTS=['未架電','不在・折返し待ち','担当者不在','資料送付','アポ獲得','検討中','NG','番号不明']
 wb=Workbook(); ws=wb.active; ws.title='架電リスト'
 ws['A1']=f'私立高等学校 架電リスト（{region}／{len(recs)}校）'; ws['A1'].font=f(size=14,bold=True)
-ws['A2']=('出典：学校ネット 私立高校検索結果（ご提供の貼り付けデータ）。電話番号は2026年10月にWeb検索で調査（出典・確度はM〜N列）。架電前に「確度：中・低」の番号は念のためご確認ください。' if phones else '出典：学校ネット 私立高校検索結果（ご提供の貼り付けデータ）。電話番号は元データに記載がないため空欄です。黄色の列に入力してください。'); ws['A2'].font=f(size=9,color='595959')
+ws['A2']=('出典：学校ネット 私立高校検索結果（ご提供の貼り付けデータ）。電話番号は2026年10月にWeb検索で調査（確度はF列、出典はN列）。架電前に「確度：中・低」の番号は念のためご確認ください。' if phones else '出典：学校ネット 私立高校検索結果（ご提供の貼り付けデータ）。電話番号は元データに記載がないため空欄です。黄色の列に入力してください。'); ws['A2'].font=f(size=9,color='595959')
 H=['No.','都道府県','所在地（市区町村）','学校名','電話番号','番号の確度','学科','架電日','担当者','架電結果','次回連絡日','メモ','電話番号の補足','電話番号の出典','学校情報ページ']
 W=[6,10,18,38,15,9,16,12,12,16,12,30,46,40,12]
 hr=4
@@ -91,7 +92,7 @@ notes=['■ 使い方',
 '■ 元データについての注意',
 f'・出典：ご提供いただいた学校ネットの検索結果（私立高校・{region}、{len(recs)}校）の貼り付けデータ。並び順は元データの掲載順です。',
 ('・電話番号は元データに記載がないため、2026年10月にWeb検索（学校公式サイト、JS日本の学校、みんなの高校情報、自治体・ハローワーク・道私学協会の資料など）で調査しました。推測による補完はしていません。' if phones else '・元データには電話番号の記載がないため、電話番号欄は空欄です。'),
-'・クラーク記念国際・星槎国際など広域通信制の学校は、所在地が本校のみの表記です。架電先（本校／各キャンパス）にご注意ください。',
+'・通信制（広域通信制）の学校は、所在地・電話番号とも本校のものです。架電先（本校／各キャンパス）にご注意ください。',
 '・閉校・統合・校名変更などは反映されていない可能性があります。架電前にご確認ください。']
 for i,t in enumerate(notes,1):
     x=n.cell(i,1,t); x.font=f(bold=t.startswith('■'),size=11 if t.startswith('■') else 10)
