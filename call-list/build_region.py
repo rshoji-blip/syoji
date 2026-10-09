@@ -53,25 +53,28 @@ ws.conditional_formatting.add(f'A{hr+1}:{L(len(H))}{last}',FormulaRule(formula=[
 ws.conditional_formatting.add(f'A{hr+1}:{L(len(H))}{last}',FormulaRule(formula=[f'$J{hr+1}="NG"'],fill=PatternFill('solid',fgColor='D9D9D9'),font=Font(color='808080')))
 ws.print_title_rows=f'{hr}:{hr}'; ws.page_setup.orientation='landscape'; ws.page_setup.fitToWidth=1; ws.page_setup.fitToHeight=0; ws.sheet_properties.pageSetUpPr.fitToPage=True
 # summary by city (most schools first)
-s=wb.create_sheet('市区町村別集計')
-s['A1']='市区町村別 進捗集計（架電リストの入力に連動して自動計算）'; s['A1'].font=f(size=14,bold=True)
-SH=['所在地','学校数','電話番号入力済','架電済']+RESULTS[1:]
+BYPREF=len({r['pref'] for r in recs})>1
+s=wb.create_sheet('都道府県別集計' if BYPREF else '市区町村別集計')
+s['A1']=('都道府県別' if BYPREF else '市区町村別')+' 進捗集計（架電リストの入力に連動して自動計算）'; s['A1'].font=f(size=14,bold=True)
+SH=['都道府県' if BYPREF else '所在地','学校数','電話番号入力済','架電済']+RESULTS[1:]
 for c,h in enumerate(SH,1):
     x=s.cell(3,c,h); x.font=f(bold=True,color='FFFFFF'); x.fill=HF; x.border=B; x.alignment=Alignment(horizontal='center',vertical='center',wrap_text=True)
     s.column_dimensions[L(c)].width=18 if c==1 else 11
 s.row_dimensions[3].height=30
 R=lambda col:f"'架電リスト'!${col}${hr+1}:${col}${last}"
+KEY='pref' if BYPREF else 'city'; GC='B' if BYPREF else 'C'
 cities=[]
 for r in recs:
-    if r['city'] not in cities: cities.append(r['city'])
-first=list(cities); cities.sort(key=lambda c:(-sum(r['city']==c for r in recs),first.index(c)))
+    if r[KEY] not in cities: cities.append(r[KEY])
+first=list(cities)
+if not BYPREF: cities.sort(key=lambda c:(-sum(r['city']==c for r in recs),first.index(c)))
 for i,cty in enumerate(cities):
     row=4+i; s.cell(row,1,cty)
-    s.cell(row,2,f'=COUNTIF({R("C")},A{row})')
-    s.cell(row,3,f'=COUNTIFS({R("C")},A{row},{R("E")},"<>")')
-    s.cell(row,4,f'=B{row}-COUNTIFS({R("C")},A{row},{R("J")},"未架電")-COUNTIFS({R("C")},A{row},{R("J")},"")')
+    s.cell(row,2,f'=COUNTIF({R(GC)},A{row})')
+    s.cell(row,3,f'=COUNTIFS({R(GC)},A{row},{R("E")},"<>")')
+    s.cell(row,4,f'=B{row}-COUNTIFS({R(GC)},A{row},{R("J")},"未架電")-COUNTIFS({R(GC)},A{row},{R("J")},"")')
     for k,res in enumerate(RESULTS[1:]):
-        s.cell(row,5+k,f'=COUNTIFS({R("C")},$A{row},{R("J")},"{res}")')
+        s.cell(row,5+k,f'=COUNTIFS({R(GC)},$A{row},{R("J")},"{res}")')
 tr=4+len(cities); s.cell(tr,1,'合計')
 for c in range(2,len(SH)+1): s.cell(tr,c,f'=SUM({L(c)}4:{L(c)}{tr-1})')
 for row in s.iter_rows(min_row=4,max_row=tr,max_col=len(SH)):
@@ -84,14 +87,14 @@ notes=['■ 使い方',
 '・「架電リスト」の黄色の列（電話番号・架電日・担当者・架電結果・次回連絡日・メモ）に入力してください。',
 '・架電結果はプルダウンから選択します（アポ獲得＝緑、NG＝グレーで行が自動着色）。',
 '・「学校情報ページ」の「開く」をクリックすると、学校ネットの各校ページが開きます。',
-'・「番号の確度」：高＝公式サイト、または2つ以上の情報源で一致／中＝情報サイト1件のみで確認／低・要調査＝特定できず。',
+'・「番号の確度」：高＝公式サイト、または2つ以上の情報源で一致／中＝情報サイト1件のみ、または代表番号と断定できず（補足欄参照）／低・要調査＝特定できず。',
 '・「電話番号の補足」に、代表番号の共有・別番号（入試事務局など）・移転などの注意を記載しています。架電前にご確認ください。',
-'・市区町村で絞り込む場合は、見出し行「所在地（市区町村）」の▼（フィルター）を使用してください。',
-'・「市区町村別集計」は入力内容に連動して自動で集計されます（学校数の多い順）。',
+'・都道府県や市区町村で絞り込む場合は、見出し行の▼（フィルター）を使用してください。',
+'・集計シートは入力内容に連動して自動で集計されます。',
 '',
 '■ 元データについての注意',
-f'・出典：ご提供いただいた学校ネットの検索結果（私立高校・{region}、{len(recs)}校）の貼り付けデータ。並び順は元データの掲載順です。',
-('・電話番号は元データに記載がないため、2026年10月にWeb検索（学校公式サイト、JS日本の学校、みんなの高校情報、自治体・ハローワーク・道私学協会の資料など）で調査しました。推測による補完はしていません。' if phones else '・元データには電話番号の記載がないため、電話番号欄は空欄です。'),
+f'・出典：ご提供いただいた学校ネットの検索結果（私立高校・{region}、{len(recs)}校）の貼り付けデータ。並び順は都道府県ごとに元データの掲載順です。',
+('・電話番号は元データに記載がないため、2026年10月にWeb検索（学校公式サイト、JS日本の学校、みんなの高校情報、自治体・ハローワーク・各道県の私学協会の資料など）で調査しました。推測による補完はしていません。' if phones else '・元データには電話番号の記載がないため、電話番号欄は空欄です。'),
 '・通信制（広域通信制）の学校は、所在地・電話番号とも本校のものです。架電先（本校／各キャンパス）にご注意ください。',
 '・閉校・統合・校名変更などは反映されていない可能性があります。架電前にご確認ください。']
 for i,t in enumerate(notes,1):
