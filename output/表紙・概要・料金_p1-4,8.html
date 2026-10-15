@@ -163,6 +163,40 @@
   table.bd tr.tot td { border-bottom:none; background:var(--red); color:#fff; font-weight:700; font-size:20px; padding:8px 12px; }
   .fmsg { position:absolute; left:120px; top:738px; width:1680px; height:112px; background:var(--pink); border-left:6px solid var(--red); padding:20px 54px 0 54px; font-size:21px; font-weight:700; line-height:1.75; }
   .tax { position:absolute; left:120px; top:862px; font-size:17px; color:#444; }
+  .info { position:absolute; left:120px; top:244px; width:1680px; display:flex; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .info div { flex:1; padding:14px 0; font-size:18.5px; }
+  .info div + div { padding-left:28px; border-left:1px solid var(--line); }
+  .info b { color:var(--red); font-size:15px; letter-spacing:.16em; margin-right:16px; }
+  .steps { position:absolute; left:120px; top:326px; font-size:20px; font-weight:700; }
+  .steps .st { display:inline-block; background:var(--ink); color:#fff; font-size:14px; letter-spacing:.14em; padding:3px 10px; margin-right:12px; vertical-align:2px; }
+  .steps .ar { color:var(--red); margin:0 22px; }
+  .tc { position:absolute; top:380px; width:542px; height:470px; border:1px solid var(--line); border-top:8px solid var(--red); padding:26px 30px 0 30px; }
+  .tc .tn { font-size:15px; font-weight:700; letter-spacing:.24em; color:var(--red); }
+  .tc .tt { margin-top:8px; font-size:29px; font-weight:900; line-height:1.35; }
+  .tc .tl { margin-top:18px; font-size:14px; font-weight:700; letter-spacing:.14em; color:var(--gray); }
+  .tc ul { list-style:none; margin-top:10px; }
+  .tc li { position:relative; padding-left:22px; font-size:18px; line-height:1.55; margin-bottom:8px; }
+  .tc li::before { content:""; position:absolute; left:0; top:11px; width:7px; height:7px; background:var(--red); }
+  .tc .ti { position:absolute; left:30px; right:30px; bottom:22px; border-top:1px solid var(--line); }
+  .tc .ti .tl { margin-top:14px; margin-bottom:8px; }
+  .chip { display:inline-block; margin:0 8px 6px 0; padding:4px 14px; border:1.5px solid var(--red); color:var(--red); font-size:17px; font-weight:700; }
+  .chip.main { background:var(--red); color:#fff; }
+  .msg2 { position:absolute; left:120px; top:872px; width:1680px; height:104px; background:var(--pink); border-left:6px solid var(--red); padding:18px 44px 0 44px; font-size:22px; font-weight:700; line-height:1.5; }
+  .msg2 .s { display:block; font-size:16px; font-weight:500; color:var(--gray); margin-top:4px; }
+  table.mx { position:absolute; left:120px; top:250px; width:1680px; border-collapse:collapse; }
+  table.mx th { background:var(--pink); font-size:15px; font-weight:700; letter-spacing:.14em; color:var(--red); padding:16px 20px; border-bottom:2px solid var(--red); text-align:center; vertical-align:top; }
+  table.mx th:nth-child(-n+2) { text-align:left; color:var(--ink); font-size:20px; letter-spacing:0; vertical-align:middle; }
+  table.mx th span { display:block; margin-top:6px; font-size:18px; color:var(--ink); letter-spacing:0; line-height:1.4; }
+  table.mx td { padding:16px 20px; border-bottom:1px solid var(--line); font-size:17px; line-height:1.55; text-align:center; vertical-align:middle; }
+  table.mx td.nm { text-align:left; font-size:23px; font-weight:900; color:var(--red); width:190px; white-space:nowrap; }
+  table.mx td.sp { text-align:left; color:#444; width:640px; }
+  table.mx td.sp b { display:block; color:var(--ink); font-size:19px; }
+  table.mx tr.rec td { background:#fdf3f1; }
+  .mk2 { color:var(--red); font-size:34px; font-weight:900; line-height:1; }
+  .mk1 { color:var(--red); font-size:30px; font-weight:700; line-height:1; }
+  .mk0 { color:#c9c2c2; font-size:22px; }
+  .legend { position:absolute; right:120px; top:858px; font-size:17px; color:#444; }
+  .legend span { font-size:22px; margin-right:6px; }
 </style>
 </head>
 <body>
@@ -217,66 +251,47 @@
 <section class="page">
   <div class="eyebrow">OVERVIEW</div>
   <div class="title">講演会のご提案概要</div>
-
-  <div class="ov" style="left:120px;">
-    <div class="lb">対象</div>
-    <div class="tx">全教職員の先生方</div>
-    <div class="nt">探究科のご担当以外の先生方も含め、<br>学校全体でご参加いただく想定です</div>
+  <div class="info">
+    <div><b>対象</b>全教職員の先生方（探究科のご担当以外も含む）</div>
+    <div><b>形式</b>特別講演会（質疑応答あり）／現地またはオンライン</div>
+    <div><b>実施時期</b>2026年11月〜2027年3月</div>
   </div>
-  <div class="ov" style="left:689px;">
-    <div class="lb">形式</div>
-    <div class="tx">特別講演会（質疑応答あり）</div>
-    <div class="nt">現地（貴校）またはオンラインで実施<br>講演中に先生方への問いかけも交えた参加型の構成です</div>
+  <div class="steps"><span class="st">STEP 1</span>3つのテーマから、深めたいテーマを1つお選びください<span class="ar">→</span><span class="st">STEP 2</span>テーマに合わせて、ご関心のある講師をお選びください（P4）</div>
+  <div class="tc" style="left:120px;">
+    <div class="tn">THEME 1</div>
+    <div class="tt">AI時代の到来と<br>教育現場の現在地</div>
+    <div class="tl">この講演で深めること</div>
+    <ul><li>生成AIの進化と、生徒を取り巻く環境の変化</li><li>学校・家庭でのAI利用の実態と教育現場の課題</li><li>AIに任せること・人が判断すべきことの線引き</li></ul>
+    <div class="ti"><div class="tl">対応講師</div><span class="chip main">草郷 雅幸</span><span class="chip">講師A</span><span class="chip">講師B</span></div>
   </div>
-  <div class="ov" style="left:1258px;">
-    <div class="lb">実施時期</div>
-    <div class="tx">2026年11月〜2027年3月</div>
-    <div class="nt">定期考査後や年明けなど、<br>先生方が参加しやすいタイミングで調整します</div>
+  <div class="tc" style="left:689px;">
+    <div class="tn">THEME 2</div>
+    <div class="tt">世界の教育・AI事情<br>（海外の最前線）</div>
+    <div class="tl">この講演で深めること</div>
+    <ul><li>米国などの生成AI・STEAM教育・AR活用の先進事例</li><li>海外の教育現場の「AIとの向き合い方」</li><li>AIをつくる側の考え方と、プライバシー・倫理</li></ul>
+    <div class="ti"><div class="tl">対応講師</div><span class="chip main">草郷 雅幸</span><span class="chip">講師B</span><span class="chip">講師C</span></div>
   </div>
-
-  <div class="flowlb">講演内容（概要）</div>
-  <div class="fl4" style="left:120px;">
-    <div class="n">1</div>
-    <div class="h">AI時代の到来と<br>教育現場の現在地</div>
-    <div class="d">生成AIの進化と、生徒の学びを取り巻く変化</div>
+  <div class="tc" style="left:1258px;">
+    <div class="tn">THEME 3</div>
+    <div class="tt">実社会のリアルと<br>これからの授業のあり方</div>
+    <div class="tl">この講演で深めること</div>
+    <ul><li>ビジネスの最前線で、AIが実際にどう使われているか</li><li>社会で求められる力（問い・判断力・倫理観）</li><li>「問いを立てる学び」へ──授業と教員の役割</li></ul>
+    <div class="ti"><div class="tl">対応講師</div><span class="chip">講師A</span><span class="chip">講師B</span><span class="chip">講師C</span><span class="chip">講師D</span></div>
   </div>
-  <div class="arrow4" style="left:507px;"></div>
-  <div class="fl4" style="left:555px;">
-    <div class="n">2</div>
-    <div class="h">世界の教育・AI事情<br>（海外の最前線）</div>
-    <div class="d">米国などにおける生成AI・STEAM教育・ARを活用した先進事例</div>
-  </div>
-  <div class="arrow4" style="left:942px;"></div>
-  <div class="fl4" style="left:990px;">
-    <div class="n">3</div>
-    <div class="h">実社会のリアルと<br>これからの授業のあり方</div>
-    <div class="d">社会で求められる資質・能力と、「問いを立てる学び」への転換</div>
-  </div>
-  <div class="arrow4" style="left:1377px;"></div>
-  <div class="fl4 red" style="left:1425px;">
-    <div class="n">4</div>
-    <div class="h">質疑応答・<br>意見交換</div>
-    <div class="d">指導方針など、現場の疑問や懸念にお答えします</div>
-  </div>
-
-  <div class="msg">AIが前提となる社会で、学校教育・授業はどうあるべきかを全教職員で考える講演会をお届けします
+  <div class="msg2">1回の講演で1つのテーマをじっくり深め、AIが前提となる社会で学校教育・授業はどうあるべきかを全教職員で考えます
     <span class="s">※内容は、事前のお打ち合わせで貴校のご要望に合わせて調整いたします</span></div>
   <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">03 / 08</span></div>
 </section>
 
 <!-- ===================== 04 / 08 テーマ ===================== -->
 <section class="page">
-  <div class="eyebrow">THEMES</div>
-  <div class="title">講演テーマ例</div>
-  <table class="th">
-    <tr><th>テーマ</th><th>内容</th><th>登壇講師</th></tr>
-    <tr class="rec"><td class="t">AIが前提の社会で、<br>学校教育はどう変わるか<span class="rec-badge">メイン推奨</span></td><td class="c">米国でのSTEAM教育・生成AI活用の知見をもとに、<br>世界の教育・AIの動向と、これからの授業・教育活動のあり方</td><td class="s">草郷 雅幸</td></tr>
-    <tr class="sep"><td colspan="3">別の切り口をご希望の場合の選択肢</td></tr>
-    <tr><td class="t">各教科・授業における<br>データサイエンス・生成AI活用事例</td><td class="c">高校の授業での実践事例と、<br>授業設計のポイント</td><td class="s">講師A</td></tr>
-    <tr><td class="t">生成AI時代の<br>探究学習デザイン</td><td class="c">AIを活用した<br>探究カリキュラムの設計方法</td><td class="s">講師B</td></tr>
-    <tr><td class="t">実社会・ビジネスにおけるAI活用の<br>現場とこれからの教育</td><td class="c">企業・社会で求められるAIリテラシーと、<br>生徒に育むべき力</td><td class="s">講師C</td></tr>
-    <tr><td class="t">生徒が自ら問いを立てる<br>探究学習のファシリテーション</td><td class="c">探究型PBLの進め方と、<br>生徒の主体性を引き出す問いかけ</td><td class="s">講師D</td></tr>
+  <div class="eyebrow">INSTRUCTORS &amp; THEMES</div>
+  <div class="title">テーマ別 対応講師</div>
+  <table class="mx">
+    <tr><th>講師</th><th>専門・強み</th><th>THEME 1<span>AI時代の到来と<br>教育現場の現在地</span></th><th>THEME 2<span>世界の教育・AI事情<br>（海外の最前線）</span></th><th>THEME 3<span>実社会のリアルと<br>これからの授業のあり方</span></th></tr>
+    <tr class="rec"><td class="nm">草郷 雅幸</td><td class="sp"><b>教育DX・米国でのSTEAM教育</b>元Z会 執行役員／Z-kai USA 代表として、米国でSTEAM教育を推進</td><td><span class="mk1">○</span></td><td><span class="mk2">◎</span></td><td><span class="mk0">—</span></td></tr><tr><td class="nm">講師A</td><td class="sp"><b>データサイエンス・AI活用</b>業務でのAI活用と、中高での授業・教員研修の実践</td><td><span class="mk2">◎</span></td><td><span class="mk0">—</span></td><td><span class="mk1">○</span></td></tr><tr><td class="nm">講師B</td><td class="sp"><b>AI活用・探究カリキュラム設計</b>元高校理科教員 × AI駆動開発PM。AI教育プログラムにも参画</td><td><span class="mk2">◎</span></td><td><span class="mk1">○</span></td><td><span class="mk1">○</span></td></tr><tr><td class="nm">講師C</td><td class="sp"><b>実社会のAI活用・教員研修</b>シンクタンクで海外展開を調査。企業のAI導入実態に精通</td><td><span class="mk0">—</span></td><td><span class="mk1">○</span></td><td><span class="mk2">◎</span></td></tr><tr><td class="nm">講師D</td><td class="sp"><b>探究型PBL・ファシリテーション</b>大学で探究型PBLを指導。問いの設定から成果発表まで</td><td><span class="mk0">—</span></td><td><span class="mk0">—</span></td><td><span class="mk1">○</span></td></tr>
   </table>
+  <div class="legend"><span class="mk2">◎</span>特におすすめ　<span class="mk1">○</span>対応可能</div>
   <div class="note">その他、元情報科教員の講師やマーケティング領域のデータサイエンティストなど、テーマに合わせて講師を選定可能です。</div>
   <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">04 / 08</span></div>
 </section>
