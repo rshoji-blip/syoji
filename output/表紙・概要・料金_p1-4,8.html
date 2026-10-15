@@ -108,6 +108,9 @@
   table.th td.c { color:#444; width:745px; }
   table.th td.s { color:var(--red); font-weight:700; font-size:23px; line-height:1.6; }
   table.th tr.rec td { background:#fdf3f1; }
+  table.th tr.sep td { background:#fff !important; padding:14px 28px 8px; font-size:16px; font-weight:700; color:var(--red); letter-spacing:.12em; border-bottom:1px solid var(--line); }
+  table.th tr.sep ~ tr td { background:#fff; }
+  table.th tr.sep ~ tr:nth-child(odd) td { background:#f8f6f5; }
   .rec-badge { display:inline-block; margin-left:10px; padding:2px 10px; background:var(--red); color:#fff; font-size:14px; font-weight:700; letter-spacing:.1em; vertical-align:3px; }
   .note { position:absolute; left:120px; top:946px; font-size:19px; color:#444; }
   .note::before { content:""; position:absolute; left:-29px; top:4px; width:3px; height:24px; background:var(--red); }
@@ -230,10 +233,11 @@
   <div class="title">講演テーマ例</div>
   <table class="th">
     <tr><th>テーマ</th><th>内容</th><th>登壇講師</th></tr>
-    <tr class="rec"><td class="t">AIが前提の社会で、<br>学校教育はどう変わるか<span class="rec-badge">おすすめ</span></td><td class="c">米国でのSTEAM教育・生成AI活用の知見をもとに、<br>世界の教育・AIの動向と、これからの授業・教育活動のあり方</td><td class="s">草郷 雅幸</td></tr>
-    <tr><td class="t">情報科の授業における<br>データサイエンス・生成AI活用事例</td><td class="c">高校の授業での実践事例と、<br>授業設計のポイント</td><td class="s">講師A</td></tr>
+    <tr class="rec"><td class="t">AIが前提の社会で、<br>学校教育はどう変わるか<span class="rec-badge">メイン推奨</span></td><td class="c">米国でのSTEAM教育・生成AI活用の知見をもとに、<br>世界の教育・AIの動向と、これからの授業・教育活動のあり方</td><td class="s">草郷 雅幸</td></tr>
+    <tr class="sep"><td colspan="3">別の切り口をご希望の場合の選択肢</td></tr>
+    <tr><td class="t">各教科・授業における<br>データサイエンス・生成AI活用事例</td><td class="c">高校の授業での実践事例と、<br>授業設計のポイント</td><td class="s">講師A</td></tr>
     <tr><td class="t">生成AI時代の<br>探究学習デザイン</td><td class="c">AIを活用した<br>探究カリキュラムの設計方法</td><td class="s">講師B</td></tr>
-    <tr><td class="t">校務・授業ですぐ使える<br>生成AI活用</td><td class="c">先生方の業務効率化と<br>授業準備への活用</td><td class="s">講師C</td></tr>
+    <tr><td class="t">実社会・ビジネスにおけるAI活用の<br>現場とこれからの教育</td><td class="c">企業・社会で求められるAIリテラシーと、<br>生徒に育むべき力</td><td class="s">講師C</td></tr>
     <tr><td class="t">生徒が自ら問いを立てる<br>探究学習のファシリテーション</td><td class="c">探究型PBLの進め方と、<br>生徒の主体性を引き出す問いかけ</td><td class="s">講師D</td></tr>
   </table>
   <div class="note">その他、元情報科教員の講師やマーケティング領域のデータサイエンティストなど、テーマに合わせて講師を選定可能です。</div>
@@ -274,7 +278,7 @@
     <div class="h">パッケージ型（ご予算に合わせて設計）</div>
     <hr style="margin-top:18px;">
     <ul>
-      <li>複数回の講演・研修、教材やプロンプト集の作成、情報収集など、ご要望に合わせてカスタマイズ</li>
+      <li>複数回の講演、講演資料のカスタマイズ、授業変革ワークショップの共同設計、情報収集など、ご要望に合わせて設計</li>
       <li>ご予算額に合わせて最適な内容をご提案します</li>
     </ul>
   </div>
