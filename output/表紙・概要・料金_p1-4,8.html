@@ -132,6 +132,37 @@
   .contact { position:absolute; left:120px; right:120px; top:900px; border-top:1px solid var(--line); padding-top:22px; }
   .contact .lb { font-size:17px; font-weight:700; color:var(--red); letter-spacing:.16em; }
   .contact .tx { margin-top:6px; font-size:20px; font-weight:500; }
+  .fl4 { position:absolute; top:550px; width:375px; height:230px; background:var(--pink); padding:24px 28px 0 28px; }
+  .fl4.red { background:var(--red); color:#fff; }
+  .fl4 .n { width:40px; height:40px; border-radius:50%; border:2.5px solid var(--red); color:var(--red); font-weight:700; font-size:21px; display:flex; align-items:center; justify-content:center; }
+  .fl4.red .n { border-color:#fff; color:#fff; }
+  .fl4 .h { margin-top:14px; font-size:22px; font-weight:700; line-height:1.4; }
+  .fl4 .d { margin-top:10px; font-size:16.5px; line-height:1.55; color:#444; }
+  .fl4.red .d { color:#fff; }
+  .arrow4 { position:absolute; top:664px; width:32px; height:2px; background:var(--red); }
+  .arrow4::after { content:""; position:absolute; right:0; top:-6px; width:10px; height:10px; border-top:2px solid var(--red); border-right:2px solid var(--red); transform:rotate(45deg); }
+  .fc2 { position:absolute; top:296px; height:420px; border:1px solid var(--line); border-left:6px solid var(--red); padding:24px 32px 0 32px; }
+  .fc2 .n { width:48px; height:48px; border-radius:50%; background:var(--red); color:#fff; font-weight:700; font-size:18px; display:inline-flex; align-items:center; justify-content:center; }
+  .fc2 .badge { display:inline-block; margin-left:12px; vertical-align:14px; padding:3px 12px; background:var(--red); color:#fff; font-size:15px; font-weight:700; letter-spacing:.12em; }
+  .fc2 .h { margin-top:12px; font-size:23px; font-weight:700; }
+  .fc2 .p { margin-top:6px; font-size:52px; font-weight:900; color:var(--red); line-height:1.15; }
+  .fc2 .p small { font-size:22px; font-weight:500; color:#444; margin-left:4px; }
+  .fc2 .pn { font-size:17px; color:#444; }
+  .fc2 hr { border:none; width:40px; height:2px; background:var(--red); margin:16px 0 12px; }
+  .fc2 ul { list-style:none; }
+  .fc2 li { position:relative; padding-left:22px; font-size:18px; line-height:1.55; margin-bottom:6px; }
+  .fc2 li::before { content:""; position:absolute; left:0; top:11px; width:7px; height:7px; background:var(--red); }
+  .fc2.rec { background:#fdf6f5; }
+  .bsplit { display:flex; gap:36px; }
+  .bsplit .bl { width:380px; }
+  table.bd { flex:1; border-collapse:collapse; margin-top:-46px; align-self:flex-start; }
+  table.bd td { font-size:17.5px; padding:6px 4px; border-bottom:1px solid var(--line); }
+  table.bd td:last-child { text-align:right; font-weight:700; white-space:nowrap; }
+  table.bd td span { display:block; font-size:14px; color:var(--gray); }
+  table.bd tr.sum td { border-top:2px solid var(--ink); font-weight:700; }
+  table.bd tr.tot td { border-bottom:none; background:var(--red); color:#fff; font-weight:700; font-size:20px; padding:8px 12px; }
+  .fmsg { position:absolute; left:120px; top:738px; width:1680px; height:112px; background:var(--pink); border-left:6px solid var(--red); padding:20px 54px 0 54px; font-size:21px; font-weight:700; line-height:1.75; }
+  .tax { position:absolute; left:120px; top:862px; font-size:17px; color:#444; }
 </style>
 </head>
 <body>
@@ -177,7 +208,7 @@
 
   <div class="point">
     <div class="lb">本提案のポイント</div>
-    <div class="tx">世界の教育・AIの最前線を知る講師の講演 × 先生方が自ら考えるワークショップで、<br>全校で「AIが前提の教育」を考えるきっかけをつくります</div>
+    <div class="tx">世界の教育・AIの最前線と実社会のリアルを知る講演を通じて、<br>全校で「AIが前提の教育」を考えるきっかけをつくります</div>
   </div>
   <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">02 / 08</span></div>
 </section>
@@ -194,36 +225,42 @@
   </div>
   <div class="ov" style="left:689px;">
     <div class="lb">形式</div>
-    <div class="tx">講演会 ＋ ワークショップ</div>
-    <div class="nt">現地（貴校）またはオンラインで実施<br>ワークショップ内容は事前に貴校と共同で設計します</div>
+    <div class="tx">特別講演会（質疑応答あり）</div>
+    <div class="nt">現地（貴校）またはオンラインで実施<br>講演中に先生方への問いかけも交えた参加型の構成です</div>
   </div>
   <div class="ov" style="left:1258px;">
-    <div class="lb">時間・時期</div>
-    <div class="tx">1コマ60分を想定</div>
-    <div class="nt">最大90分まで1コマとして対応可能<br>2026年11月〜2027年3月の間でご都合に合わせて調整</div>
+    <div class="lb">実施時期</div>
+    <div class="tx">2026年11月〜2027年3月</div>
+    <div class="nt">定期考査後や年明けなど、<br>先生方が参加しやすいタイミングで調整します</div>
   </div>
 
-  <div class="flowlb">FLOW（60分の例）</div>
-  <div class="fl" style="left:120px;">
+  <div class="flowlb">講演内容（概要）</div>
+  <div class="fl4" style="left:120px;">
     <div class="n">1</div>
-    <div class="h">講演（約30分）</div>
-    <div class="d">世界の教育・AIの「今」と、<br>AIが前提の社会で求められる力</div>
+    <div class="h">AI時代の到来と<br>教育現場の現在地</div>
+    <div class="d">生成AIの進化と、生徒の学びを取り巻く変化</div>
   </div>
-  <div class="arrow" style="left:620px;"></div>
-  <div class="fl" style="left:720px;">
+  <div class="arrow4" style="left:507px;"></div>
+  <div class="fl4" style="left:555px;">
     <div class="n">2</div>
-    <div class="h">ワークショップ（約20分）</div>
-    <div class="d">自校の授業・教育活動をどう変えるか、<br>先生方同士で考え・意見を交換</div>
+    <div class="h">世界の教育・AI事情<br>（海外の最前線）</div>
+    <div class="d">米国などにおける生成AI・STEAM教育・ARを活用した先進事例</div>
   </div>
-  <div class="arrow" style="left:1220px;"></div>
-  <div class="fl red" style="left:1320px;">
+  <div class="arrow4" style="left:942px;"></div>
+  <div class="fl4" style="left:990px;">
     <div class="n">3</div>
-    <div class="h">質疑応答・まとめ（約10分）</div>
-    <div class="d">講師との質疑応答と、<br>明日からの授業につながる振り返り</div>
+    <div class="h">実社会のリアルと<br>これからの授業のあり方</div>
+    <div class="d">社会で求められる資質・能力と、「問いを立てる学び」への転換</div>
+  </div>
+  <div class="arrow4" style="left:1377px;"></div>
+  <div class="fl4 red" style="left:1425px;">
+    <div class="n">4</div>
+    <div class="h">質疑応答・<br>意見交換</div>
+    <div class="d">指導方針など、現場の疑問や懸念にお答えします</div>
   </div>
 
   <div class="msg">AIが前提となる社会で、学校教育・授業はどうあるべきかを全教職員で考える講演会をお届けします
-    <span class="s">※時間配分・内容は、事前のお打ち合わせで貴校のご要望に合わせて調整いたします</span></div>
+    <span class="s">※内容は、事前のお打ち合わせで貴校のご要望に合わせて調整いたします</span></div>
   <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">03 / 08</span></div>
 </section>
 
@@ -250,44 +287,47 @@
   <div class="title">講演料について</div>
   <div class="fsub">ご予算に合わせて、2つの実施パターンをご用意しました</div>
 
-  <div class="fc" style="left:120px;">
+  <div class="fc2" style="left:120px; width:640px;">
     <div class="n">A</div>
-    <div class="h">オンライン実施（税込7万円以内）</div>
-    <div class="p">50,000円<small>／コマ</small></div>
+    <div class="h">オンライン開催</div>
+    <div class="p">50,000円<small>／回</small></div>
     <div class="pn">（税込55,000円）</div>
     <hr>
     <ul>
-      <li>1コマ最大90分まで同一料金</li>
-      <li>講演＋ワークショップ＋質疑応答を1コマで実施</li>
-    </ul>
-  </div>
-  <div class="fc" style="left:689px;">
-    <div class="n">B</div>
-    <div class="h">現地（貴校）での実施</div>
-    <div class="p">50,000円<small>／コマ＋実費</small></div>
-    <div class="pn">（交通費・宿泊費は別途お見積り）</div>
-    <hr>
-    <ul>
-      <li>東京駅から貴校までの往復交通費</li>
-      <li>開催時間帯により、前泊・後泊の宿泊費</li>
-      <li>対面ならではのワークショップ・意見交換が可能</li>
-    </ul>
-  </div>
-  <div class="fc" style="left:1258px;">
-    <div class="n">＋</div>
-    <div class="h">パッケージ型（ご予算に合わせて設計）</div>
-    <hr style="margin-top:18px;">
-    <ul>
-      <li>複数回の講演、講演資料のカスタマイズ、授業変革ワークショップの共同設計、情報収集など、ご要望に合わせて設計</li>
-      <li>ご予算額に合わせて最適な内容をご提案します</li>
+      <li>想定ご予算（税込7万円以内）に収まるオンライン講演</li>
+      <li>交通費は不要です</li>
+      <li>講演と質疑応答を1回で実施</li>
     </ul>
   </div>
 
-  <div class="fmsg">役務費・委託費・謝金など、いずれの予算科目でもご対応の実績がございます。<br>ご予算感・ご希望の日程・講師をお知らせいただければ、最適なプランをお見積りいたします。</div>
-  <div class="tax">※表示価格は税別です（括弧内の税込表記を除く）。</div>
+  <div class="fc2 rec" style="left:790px; width:1010px;">
+    <div class="n">B</div><span class="badge">おすすめ</span>
+    <div class="h">対面訪問開催（貴校 現地）</div>
+    <div class="bsplit">
+      <div class="bl">
+        <div class="p">99,000円<small>（税込）</small></div>
+        <div class="pn">税抜 90,000円</div>
+        <hr>
+        <ul>
+          <li>講師が現地に登壇し、先生方へ直接問いかけ・対話を行う対面講演</li>
+        </ul>
+      </div>
+      <table class="bd">
+        <tr><td>① 講演実施費</td><td>50,000円</td></tr>
+        <tr><td>② 交通費実費<span>東京 ⇔ 神戸 往復</span></td><td>30,000円</td></tr>
+        <tr><td>③ 講演資料作成費<span>講演用スライド構成</span></td><td>10,000円</td></tr>
+        <tr class="sum"><td>税抜小計</td><td>90,000円</td></tr>
+        <tr><td>消費税（10%）</td><td>9,000円</td></tr>
+        <tr class="tot"><td>税込提示額</td><td>99,000円</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="fmsg">役務費・委託費・謝金など、予算科目の形式は校内の運用ルールに合わせて柔軟に対応いたします。<br>複数回の講演など、ご予算に合わせたプランのご提案も可能です。お気軽にご相談ください。</div>
+  <div class="tax">※金額は税別表記です（税込と記載のものを除く）。</div>
   <div class="contact">
     <div class="lb">お問い合わせ先</div>
-    <div class="tx">株式会社オープンアップITエンジニア　SAMURAI事業部 文教事業課　チームマネージャー　杉原めぐみ（bunkyo@sejuku.net）</div>
+    <div class="tx">株式会社オープンアップITエンジニア　SAMURAI事業部 文教事業課　東海林 怜（bunkyo@sejuku.net）</div>
   </div>
   <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">08 / 08</span></div>
 </section>
