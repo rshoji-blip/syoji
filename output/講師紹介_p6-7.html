@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-jp@5.0.19/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-jp@5.0.19/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-jp@5.0.19/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-jp@5.0.19/900.css">
+<style>
+  @page { size: 1920px 1080px; margin: 0; }
+  :root { --red:#d62d20; --pink:#f9ecea; --ink:#1f1a1a; --gray:#5a5555; --line:#e5e0e0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background:#fff; }
+  body { font-family: "Noto Sans JP", sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  .page { position: relative; width: 1920px; height: 1080px; overflow: hidden; page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+
+  .eyebrow { position:absolute; left:120px; top:84px; font-size:16px; font-weight:500; letter-spacing:.32em; color:var(--red); }
+  .eyebrow::after { content:""; position:absolute; left:0; top:30px; width:48px; height:4px; background:var(--red); }
+  .title { position:absolute; left:118px; top:138px; font-size:56px; font-weight:900; letter-spacing:.01em; line-height:1.1; }
+
+  .footer { position:absolute; left:120px; right:120px; top:1010px; border-top:1px solid var(--line); }
+  .footer .l { position:absolute; left:0; top:20px; font-size:13.5px; color:#444; letter-spacing:.02em; }
+  .footer .r { position:absolute; right:0; top:19px; font-size:13.5px; color:#444; letter-spacing:.04em; }
+
+  /* ---------- page 6 ---------- */
+  .sub { position:absolute; left:120px; right:120px; top:234px; padding-bottom:12px; border-bottom:1px solid var(--line);
+         font-size:31px; font-weight:700; color:var(--red); }
+  .sub .bar { display:inline-block; width:2px; height:30px; background:var(--red); vertical-align:-4px; margin:0 14px 0 16px; opacity:.85; }
+  .box { position:absolute; background:var(--pink); border-left:6px solid var(--red); padding:20px 34px 0 34px; }
+  .box .lb { font-size:17px; font-weight:700; color:var(--red); letter-spacing:.18em; }
+  .box .tx { margin-top:8px; font-size:22.5px; font-weight:500; line-height:1.55; }
+  .box.red { background:var(--red); border-left:none; padding-left:40px; }
+  .box.red .lb, .box.red .tx { color:#fff; }
+  .box.red .tx { font-weight:700; font-size:24px; line-height:1.45; }
+  .lead { position:absolute; left:120px; top:832px; font-size:18px; color:var(--gray); }
+
+  /* ---------- page 7 ---------- */
+  .card { position:absolute; top:240px; width:542px; height:680px; border:1px solid var(--line); border-top:8px solid var(--red); padding:38px 30px 0 30px; }
+  .num { width:56px; height:56px; border-radius:50%; background:var(--red); color:#fff; font-weight:700; font-size:20px;
+         display:flex; align-items:center; justify-content:center; }
+  .card h3 { margin-top:22px; font-size:44px; font-weight:900; line-height:1.15; }
+  .card .role { margin-top:10px; font-size:21px; font-weight:700; color:var(--red); }
+  .card .role::after { content:""; display:block; width:40px; height:3px; background:var(--red); margin-top:14px; }
+  .card ul { list-style:none; margin-top:20px; }
+  .card li { position:relative; padding-left:24px; font-size:18.5px; line-height:1.5; margin-bottom:8px; letter-spacing:.01em; }
+  .card li::before { content:""; position:absolute; left:0; top:10px; width:8px; height:8px; background:var(--red); }
+  .theme { position:absolute; left:30px; right:30px; bottom:20px; height:94px; background:var(--pink); padding:14px 20px 0 20px; }
+  .theme .lb { font-size:14px; font-weight:700; color:var(--red); letter-spacing:.14em; }
+  .theme .tx { margin-top:8px; font-size:20px; font-weight:700; line-height:1.3; }
+  .others { position:absolute; left:120px; right:120px; top:942px; }
+  .others h4 { position:relative; font-size:23px; font-weight:700; color:var(--red); }
+  .others h4::before { content:""; position:absolute; left:-29px; top:8px; width:3px; height:18px; background:var(--red); }
+  .others .items { display:flex; margin-top:6px; font-size:18.5px; }
+  .others .items span { position:relative; padding-left:24px; width:50%; }
+  .others .items span::before { content:""; position:absolute; left:0; top:10px; width:8px; height:8px; background:var(--red); }
+</style>
+</head>
+<body>
+
+<!-- ===================== 06 / 08 ===================== -->
+<section class="page">
+  <div class="eyebrow">INSTRUCTOR</div>
+  <div class="title">講師紹介</div>
+  <div class="sub">講師A<span class="bar"></span>データサイエンス・AI活用</div>
+
+  <div class="box" style="left:120px; top:330px; width:1680px; height:130px;">
+    <div class="lb">経歴</div>
+    <div class="tx">ChatGPT・Copilot・Difyを用いた業務効率化・開発支援に従事。Claude Codeによる資料作成・アプリ開発にも取り組み、<br>AIに任せられることと人が判断すべきことを、実践を通じて検証</div>
+  </div>
+
+  <div class="box" style="left:120px; top:480px; width:819px; height:140px;">
+    <div class="lb">海外の事例・動向</div>
+    <div class="tx">各社の公式発表や海外の教育・AI活用事例を調査し、<br>国内の教育現場と結びつけて紹介</div>
+  </div>
+  <div class="box" style="left:960px; top:480px; width:840px; height:140px;">
+    <div class="lb">教育実績</div>
+    <div class="tx">私立中学・高等学校での生徒向け授業（全12回）、教員向け生成AI研修、専門学校での授業、自治体のAI人材講座を担当</div>
+  </div>
+
+  <div class="box" style="left:120px; top:640px; width:819px; height:139px;">
+    <div class="lb">指導実績</div>
+    <div class="tx">マンツーマンレッスン 累計1,200回以上</div>
+  </div>
+  <div class="box red" style="left:960px; top:640px; width:840px; height:139px;">
+    <div class="lb">講演テーマ例</div>
+    <div class="tx">情報科の授業における<br>データサイエンス・生成AI活用事例</div>
+  </div>
+
+  <div class="lead">AIを使う中で、生徒の考える力や判断力をどう育てるか——業務でのAI活用と学校現場での指導経験をもとに、授業・評価・情報の扱い方を具体例で語る実務家です。</div>
+
+  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">06 / 08</span></div>
+</section>
+
+<!-- ===================== 07 / 08 ===================== -->
+<section class="page">
+  <div class="eyebrow">INSTRUCTORS</div>
+  <div class="title">講師紹介</div>
+
+  <div class="card" style="left:120px;">
+    <div class="num">02</div>
+    <h3>講師B</h3>
+    <div class="role">AI活用・探究カリキュラム設計</div>
+    <ul>
+      <li>高校理科教員として約8年、進路指導・キャリア学習の責任者を担当。現在も高校の非常勤講師</li>
+      <li>大手企業の基幹システム刷新でAI駆動開発のPM、国の事業に関わる教育系アプリ開発のPMを担当</li>
+      <li>国際NGO・外資系IT企業と連携したAI教育プログラムに参画。AR×デジタル絵本アプリの開発を担当</li>
+      <li>教員向け生成AI研修・講演（県の教育研究会での登壇など）、探究学習の設計・伴走に従事</li>
+    </ul>
+    <div class="theme"><div class="lb">講演テーマ例</div><div class="tx">生成AI時代の探究学習デザイン</div></div>
+  </div>
+
+  <div class="card" style="left:689px;">
+    <div class="num">03</div>
+    <h3>講師C</h3>
+    <div class="role">生成AI活用・教員研修</div>
+    <ul>
+      <li>大手シンクタンクにて約6年、日本企業の海外展開（中国・東南アジアなど）の調査・戦略立案に従事</li>
+      <li>外資系IT企業にて、カスタマーサポート部門のデータ分析・社内研修の企画運営を担当</li>
+      <li>高等学校での生成AI授業・教員研修を担当。専門学校でも非常勤講師として授業を受け持つ</li>
+      <li>AIの「つくる側」「使う側」双方の動向に精通。中堅・中小企業のAI導入実態も共有可能</li>
+    </ul>
+    <div class="theme"><div class="lb">講演テーマ例</div><div class="tx">校務・授業ですぐ使える生成AI活用</div></div>
+  </div>
+
+  <div class="card" style="left:1258px;">
+    <div class="num">04</div>
+    <h3>講師D</h3>
+    <div class="role">探究型PBL・ファシリテーション</div>
+    <ul>
+      <li>首都圏の私立大学 専任講師。必修科目に探究型PBLを導入し、問いの設定から成果発表までを指導</li>
+      <li>複数の大学で、キャリア教育科目の非常勤・客員講師を担当</li>
+      <li>大手新聞社・放送局で約18年間、広報・広告企画・コンテンツ開発に従事。企業研修の登壇経験多数</li>
+      <li>国内ビジネススクール修了（経営管理修士）、国家資格キャリアコンサルタント</li>
+    </ul>
+    <div class="theme"><div class="lb">講演テーマ例</div><div class="tx">生徒が自ら問いを立てる探究学習のファシリテーション</div></div>
+  </div>
+
+  <div class="others">
+    <h4>その他の講師（テーマに応じて組み合わせ可能）</h4>
+    <div class="items">
+      <span>元情報科教員の講師：教員目線での情報科の授業づくり・指導ノウハウ</span>
+      <span>マーケティング領域のデータサイエンティスト：企業でのデータ活用の実例</span>
+    </div>
+  </div>
+
+  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">07 / 08</span></div>
+</section>
+</body>
+</html>
