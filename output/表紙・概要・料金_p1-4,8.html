@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-jp@5.0.19/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-jp@5.0.19/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-jp@5.0.19/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-jp@5.0.19/900.css">
+<style>
+  @page { size: 1920px 1080px; margin: 0; }
+  :root { --red:#d62d20; --pink:#f9ecea; --ink:#1f1a1a; --gray:#5a5555; --line:#e5e0e0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background:#fff; }
+  body { font-family: "Noto Sans JP", sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  .page { position: relative; width: 1920px; height: 1080px; overflow: hidden; page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+
+  .eyebrow { position:absolute; left:120px; top:84px; font-size:16px; font-weight:500; letter-spacing:.32em; color:var(--red); }
+  .eyebrow::after { content:""; position:absolute; left:0; top:30px; width:48px; height:4px; background:var(--red); }
+  .title { position:absolute; left:118px; top:138px; font-size:56px; font-weight:900; letter-spacing:.01em; line-height:1.1; }
+
+  .footer { position:absolute; left:120px; right:120px; top:1010px; border-top:1px solid var(--line); }
+  .footer .l { position:absolute; left:0; top:20px; font-size:13.5px; color:#444; letter-spacing:.02em; }
+  .footer .r { position:absolute; right:0; top:19px; font-size:13.5px; color:#444; letter-spacing:.04em; }
+
+  /* ---------- page 6 ---------- */
+  .sub { position:absolute; left:120px; right:120px; top:234px; padding-bottom:12px; border-bottom:1px solid var(--line);
+         font-size:31px; font-weight:700; color:var(--red); }
+  .sub .bar { display:inline-block; width:2px; height:30px; background:var(--red); vertical-align:-4px; margin:0 14px 0 16px; opacity:.85; }
+  .box { position:absolute; background:var(--pink); border-left:6px solid var(--red); padding:20px 34px 0 34px; }
+  .box .lb { font-size:17px; font-weight:700; color:var(--red); letter-spacing:.18em; }
+  .box .tx { margin-top:8px; font-size:22.5px; font-weight:500; line-height:1.55; }
+  .box.red { background:var(--red); border-left:none; padding-left:40px; }
+  .box.red .lb, .box.red .tx { color:#fff; }
+  .box.red .tx { font-weight:700; font-size:24px; line-height:1.45; }
+  .lead { position:absolute; left:120px; top:832px; font-size:18px; color:var(--gray); }
+
+  /* ---------- page 7 ---------- */
+  .card { position:absolute; top:240px; width:542px; height:680px; border:1px solid var(--line); border-top:8px solid var(--red); padding:38px 30px 0 30px; }
+  .num { width:56px; height:56px; border-radius:50%; background:var(--red); color:#fff; font-weight:700; font-size:20px;
+         display:flex; align-items:center; justify-content:center; }
+  .card h3 { margin-top:22px; font-size:44px; font-weight:900; line-height:1.15; }
+  .card .role { margin-top:10px; font-size:21px; font-weight:700; color:var(--red); }
+  .card .role::after { content:""; display:block; width:40px; height:3px; background:var(--red); margin-top:14px; }
+  .card ul { list-style:none; margin-top:20px; }
+  .card li { position:relative; padding-left:24px; font-size:18.5px; line-height:1.5; margin-bottom:8px; letter-spacing:.01em; }
+  .card li::before { content:""; position:absolute; left:0; top:10px; width:8px; height:8px; background:var(--red); }
+  .theme { position:absolute; left:30px; right:30px; bottom:20px; height:94px; background:var(--pink); padding:14px 20px 0 20px; }
+  .theme .lb { font-size:14px; font-weight:700; color:var(--red); letter-spacing:.14em; }
+  .theme .tx { margin-top:8px; font-size:20px; font-weight:700; line-height:1.3; }
+  .others { position:absolute; left:120px; right:120px; top:942px; }
+  .others h4 { position:relative; font-size:23px; font-weight:700; color:var(--red); }
+  .others h4::before { content:""; position:absolute; left:-29px; top:8px; width:3px; height:18px; background:var(--red); }
+  .others .items { display:flex; margin-top:6px; font-size:18.5px; }
+  .others .items span { position:relative; padding-left:24px; width:50%; }
+  .others .items span::before { content:""; position:absolute; left:0; top:10px; width:8px; height:8px; background:var(--red); }
+
+  /* ---------- cover ---------- */
+  .cv-bar { position:absolute; left:0; top:0; width:32px; height:1080px; background:var(--red); }
+  .cv-dot { position:absolute; left:1730px; top:80px; width:80px; height:80px; border-radius:50%; background:#f7dedb; }
+  .cv-glow { position:absolute; left:1620px; top:120px; width:240px; height:240px; border-radius:50%;
+             background:radial-gradient(circle, rgba(240,170,160,.45) 0%, rgba(250,220,215,.25) 45%, rgba(255,255,255,0) 72%); }
+  .cv-rule { position:absolute; left:120px; top:240px; width:64px; height:2px; background:var(--ink); }
+  .cv-title { position:absolute; left:116px; top:300px; font-size:86px; font-weight:900; line-height:1.15; letter-spacing:.01em; }
+  .cv-red { position:absolute; left:120px; top:570px; width:96px; height:5px; background:var(--red); }
+  .cv-sub { position:absolute; left:120px; top:612px; font-size:31px; font-weight:500; color:#444; }
+  .cv-to { position:absolute; left:120px; top:792px; font-size:27px; font-weight:700; }
+  .cv-date { position:absolute; left:120px; top:842px; font-size:22px; color:#444; }
+  .cv-co { position:absolute; left:120px; top:892px; font-size:22px; color:#444; line-height:1.6; }
+  .cv-co b { color:var(--red); font-weight:700; }
+
+  /* ---------- background page ---------- */
+  .col { position:absolute; top:258px; width:822px; height:520px; border:1px solid var(--line); border-top:8px solid var(--red); padding:30px 36px 0 36px; }
+  .col .hd { display:flex; align-items:center; gap:14px; font-size:27px; font-weight:900; }
+  .col .hd .tag { font-size:14px; font-weight:700; letter-spacing:.24em; color:var(--red); }
+  .col ul { list-style:none; margin-top:22px; }
+  .col li { position:relative; padding-left:26px; font-size:21.5px; line-height:1.6; margin-bottom:20px; }
+  .col li::before { content:""; position:absolute; left:0; top:13px; width:9px; height:9px; background:var(--red); }
+  .col li b { font-weight:700; }
+  .point { position:absolute; left:120px; top:812px; width:1680px; height:150px; background:var(--red); color:#fff; padding:28px 44px 0 44px; }
+  .point .lb { font-size:16px; font-weight:700; letter-spacing:.2em; opacity:.9; }
+  .point .tx { margin-top:10px; font-size:27px; font-weight:700; line-height:1.5; }
+
+  /* ---------- overview page ---------- */
+  .ov { position:absolute; top:258px; width:542px; height:214px; border:1px solid var(--line); border-left:6px solid var(--red); padding:28px 36px 0 36px; }
+  .ov .lb { font-size:16px; font-weight:700; color:var(--red); letter-spacing:.2em; }
+  .ov .tx { margin-top:20px; font-size:25px; font-weight:700; line-height:1.6; }
+  .ov .nt { margin-top:8px; font-size:16.5px; color:var(--gray); line-height:1.5; }
+  .flowlb { position:absolute; left:120px; top:510px; font-size:18px; font-weight:700; letter-spacing:.2em; color:#333; }
+  .fl { position:absolute; top:550px; width:480px; height:220px; background:var(--pink); padding:26px 34px 0 34px; }
+  .fl.red { background:var(--red); color:#fff; }
+  .fl .n { width:40px; height:40px; border-radius:50%; border:2.5px solid var(--red); color:var(--red); font-weight:700; font-size:21px; display:flex; align-items:center; justify-content:center; }
+  .fl.red .n { border-color:#fff; color:#fff; }
+  .fl .h { margin-top:16px; font-size:24px; font-weight:700; line-height:1.4; }
+  .fl .d { margin-top:8px; font-size:17px; line-height:1.55; color:#444; }
+  .fl.red .d { color:#fff; opacity:.95; }
+  .arrow { position:absolute; top:658px; width:82px; height:2px; background:var(--red); }
+  .arrow::after { content:""; position:absolute; right:-1px; top:-10px; width:16px; height:16px; border-top:2px solid var(--red); border-right:2px solid var(--red); transform:rotate(45deg); transform-origin:center; }
+  .msg { position:absolute; left:120px; top:820px; width:1680px; height:110px; background:var(--pink); border-left:6px solid var(--red); padding:22px 54px 0 54px; font-size:26px; font-weight:700; line-height:1.55; }
+  .msg .s { display:block; font-size:16.5px; font-weight:500; color:var(--gray); margin-top:2px; }
+
+  /* ---------- themes page ---------- */
+  table.th { position:absolute; left:120px; top:260px; width:1680px; border-collapse:collapse; }
+  table.th th { background:var(--pink); text-align:left; font-size:23px; font-weight:700; padding:22px 28px; border-bottom:2px solid var(--red); }
+  table.th td { padding:17px 28px; vertical-align:top; font-size:20px; line-height:1.75; border-bottom:1px solid var(--line); }
+  table.th tr:nth-child(even) td { background:#f8f6f5; }
+  table.th td.t { font-weight:700; font-size:23px; line-height:1.6; width:565px; }
+  table.th td.c { color:#444; width:745px; }
+  table.th td.s { color:var(--red); font-weight:700; font-size:23px; line-height:1.6; }
+  table.th tr.rec td { background:#fdf3f1; }
+  .rec-badge { display:inline-block; margin-left:10px; padding:2px 10px; background:var(--red); color:#fff; font-size:14px; font-weight:700; letter-spacing:.1em; vertical-align:3px; }
+  .note { position:absolute; left:120px; top:946px; font-size:19px; color:#444; }
+  .note::before { content:""; position:absolute; left:-29px; top:4px; width:3px; height:24px; background:var(--red); }
+
+  /* ---------- fee page ---------- */
+  .fsub { position:absolute; left:120px; top:236px; font-size:23px; color:#444; }
+  .fc { position:absolute; top:300px; width:542px; height:362px; border:1px solid var(--line); border-left:6px solid var(--red); padding:24px 28px 0 30px; }
+  .fc .n { width:48px; height:48px; border-radius:50%; background:var(--red); color:#fff; font-weight:700; font-size:16px; display:flex; align-items:center; justify-content:center; letter-spacing:.04em; }
+  .fc .h { margin-top:14px; font-size:22px; font-weight:700; }
+  .fc .p { margin-top:4px; font-size:50px; font-weight:900; color:var(--red); line-height:1.2; letter-spacing:-.01em; }
+  .fc .p small { font-size:22px; font-weight:500; color:#444; margin-left:4px; }
+  .fc .pn { font-size:16px; color:#444; }
+  .fc hr { border:none; width:40px; height:2px; background:var(--red); margin:14px 0 12px; }
+  .fc ul { list-style:none; }
+  .fc li { position:relative; padding-left:22px; font-size:18px; line-height:1.55; margin-bottom:6px; }
+  .fc li::before { content:""; position:absolute; left:0; top:11px; width:7px; height:7px; background:var(--red); }
+  .fmsg { position:absolute; left:120px; top:690px; width:1680px; height:150px; background:var(--pink); border-left:6px solid var(--red); padding:30px 54px 0 54px; font-size:23.5px; font-weight:700; line-height:1.7; }
+  .tax { position:absolute; left:120px; top:858px; font-size:17px; color:#444; }
+  .contact { position:absolute; left:120px; right:120px; top:900px; border-top:1px solid var(--line); padding-top:22px; }
+  .contact .lb { font-size:17px; font-weight:700; color:var(--red); letter-spacing:.16em; }
+  .contact .tx { margin-top:6px; font-size:20px; font-weight:500; }
+</style>
+</head>
+<body>
+
+<!-- ===================== 01 / 08 表紙 ===================== -->
+<section class="page">
+  <div class="cv-bar"></div><div class="cv-glow"></div><div class="cv-dot"></div>
+  <div class="cv-rule"></div>
+  <div class="cv-title">教員向け講演会<br>講師派遣のご案内</div>
+  <div class="cv-red"></div>
+  <div class="cv-sub">「AIが前提となる社会の学校教育」をテーマにした講演会のご提案</div>
+  <div class="cv-to">兵庫県立神戸鈴蘭台高等学校　御中</div>
+  <div class="cv-date">2026年10月</div>
+  <div class="cv-co">株式会社オープンアップITエンジニア<br><b>SAMURAI U-SCHOOL</b></div>
+  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">01 / 08</span></div>
+</section>
+
+<!-- ===================== 02 / 08 現状とご要望 ===================== -->
+<section class="page">
+  <div class="eyebrow">BACKGROUND</div>
+  <div class="title">貴校の現状とご要望</div>
+
+  <div class="col" style="left:120px;">
+    <div class="hd"><span class="tag">CURRENT</span>これまでの取り組み</div>
+    <ul>
+      <li><b>DXハイスクール採択3年目。</b>文理探究科を中心に、データサイエンス教育の充実を推進</li>
+      <li>高性能PC・データ収集機器、海外交流向けのデジタル機器などを整備</li>
+      <li>今年6月、外部講師によるGemini活用の特別講座（2時間）を実施。生徒が自分の学習スタイルに合うツールを自ら作成</li>
+      <li>一部の先生方がChatGPT・Copilot・Perplexityなどを活用。生徒にもPerplexityを推奨</li>
+    </ul>
+  </div>
+
+  <div class="col" style="left:978px;">
+    <div class="hd"><span class="tag">NEEDS</span>研修に求めること</div>
+    <ul>
+      <li>校務効率化ではなく、<b>「AIが前提の社会で、学校教育・授業はどうあるべきか」</b>を考えたい</li>
+      <li>探究科が牽引しつつ、探究を担当していない先生方も含め<b>全職員・全生徒へ波及</b>させたい</li>
+      <li>本の中の知識だけでなく、<b>世界の教育・AIの「今」</b>を知る講師の話を聞きたい</li>
+      <li>聞くだけでなく、先生方が<b>自ら考え、意見交換できる時間</b>がほしい</li>
+      <li>先生方の負担感を増やさず、集中できるタイミングで実施したい</li>
+    </ul>
+  </div>
+
+  <div class="point">
+    <div class="lb">本提案のポイント</div>
+    <div class="tx">世界の教育・AIの最前線を知る講師の講演 × 先生方が自ら考えるワークショップで、<br>全校で「AIが前提の教育」を考えるきっかけをつくります</div>
+  </div>
+  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">02 / 08</span></div>
+</section>
+
+<!-- ===================== 03 / 08 概要 ===================== -->
+<section class="page">
+  <div class="eyebrow">OVERVIEW</div>
+  <div class="title">講演会のご提案概要</div>
+
+  <div class="ov" style="left:120px;">
+    <div class="lb">対象</div>
+    <div class="tx">全教職員の先生方</div>
+    <div class="nt">探究科のご担当以外の先生方も含め、<br>学校全体でご参加いただく想定です</div>
+  </div>
+  <div class="ov" style="left:689px;">
+    <div class="lb">形式</div>
+    <div class="tx">講演会 ＋ ワークショップ</div>
+    <div class="nt">現地（貴校）またはオンラインで実施<br>ワークショップ内容は事前に貴校と共同で設計します</div>
+  </div>
+  <div class="ov" style="left:1258px;">
+    <div class="lb">時間・時期</div>
+    <div class="tx">1コマ60分を想定</div>
+    <div class="nt">最大90分まで1コマとして対応可能<br>2026年11月〜2027年3月の間でご都合に合わせて調整</div>
+  </div>
+
+  <div class="flowlb">FLOW（60分の例）</div>
+  <div class="fl" style="left:120px;">
+    <div class="n">1</div>
+    <div class="h">講演（約30分）</div>
+    <div class="d">世界の教育・AIの「今」と、<br>AIが前提の社会で求められる力</div>
+  </div>
+  <div class="arrow" style="left:620px;"></div>
+  <div class="fl" style="left:720px;">
+    <div class="n">2</div>
+    <div class="h">ワークショップ（約20分）</div>
+    <div class="d">自校の授業・教育活動をどう変えるか、<br>先生方同士で考え・意見を交換</div>
+  </div>
+  <div class="arrow" style="left:1220px;"></div>
+  <div class="fl red" style="left:1320px;">
+    <div class="n">3</div>
+    <div class="h">質疑応答・まとめ（約10分）</div>
+    <div class="d">講師との質疑応答と、<br>明日からの授業につながる振り返り</div>
+  </div>
+
+  <div class="msg">AIが前提となる社会で、学校教育・授業はどうあるべきかを全教職員で考える講演会をお届けします
+    <span class="s">※時間配分・内容は、事前のお打ち合わせで貴校のご要望に合わせて調整いたします</span></div>
+  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">03 / 08</span></div>
+</section>
+
+<!-- ===================== 04 / 08 テーマ ===================== -->
+<section class="page">
+  <div class="eyebrow">THEMES</div>
+  <div class="title">講演テーマ例</div>
+  <table class="th">
+    <tr><th>テーマ</th><th>内容</th><th>登壇講師</th></tr>
+    <tr class="rec"><td class="t">AIが前提の社会で、<br>学校教育はどう変わるか<span class="rec-badge">おすすめ</span></td><td class="c">米国でのSTEAM教育・生成AI活用の知見をもとに、<br>世界の教育・AIの動向と、これからの授業・教育活動のあり方</td><td class="s">草郷 雅幸</td></tr>
+    <tr><td class="t">情報科の授業における<br>データサイエンス・生成AI活用事例</td><td class="c">高校の授業での実践事例と、<br>授業設計のポイント</td><td class="s">講師A</td></tr>
+    <tr><td class="t">生成AI時代の<br>探究学習デザイン</td><td class="c">AIを活用した<br>探究カリキュラムの設計方法</td><td class="s">講師B</td></tr>
+    <tr><td class="t">校務・授業ですぐ使える<br>生成AI活用</td><td class="c">先生方の業務効率化と<br>授業準備への活用</td><td class="s">講師C</td></tr>
+    <tr><td class="t">生徒が自ら問いを立てる<br>探究学習のファシリテーション</td><td class="c">探究型PBLの進め方と、<br>生徒の主体性を引き出す問いかけ</td><td class="s">講師D</td></tr>
+  </table>
+  <div class="note">その他、元情報科教員の講師やマーケティング領域のデータサイエンティストなど、テーマに合わせて講師を選定可能です。</div>
+  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">04 / 08</span></div>
+</section>
+
+<!-- ===================== 08 / 08 料金 ===================== -->
+<section class="page">
+  <div class="eyebrow">FEE &amp; CONTACT</div>
+  <div class="title">講演料について</div>
+  <div class="fsub">ご予算に合わせて、2つの実施パターンをご用意しました</div>
+
+  <div class="fc" style="left:120px;">
+    <div class="n">A</div>
+    <div class="h">オンライン実施（税込7万円以内）</div>
+    <div class="p">50,000円<small>／コマ</small></div>
+    <div class="pn">（税込55,000円）</div>
+    <hr>
+    <ul>
+      <li>1コマ最大90分まで同一料金</li>
+      <li>講演＋ワークショップ＋質疑応答を1コマで実施</li>
+    </ul>
+  </div>
+  <div class="fc" style="left:689px;">
+    <div class="n">B</div>
+    <div class="h">現地（貴校）での実施</div>
+    <div class="p">50,000円<small>／コマ＋実費</small></div>
+    <div class="pn">（交通費・宿泊費は別途お見積り）</div>
+    <hr>
+    <ul>
+      <li>東京駅から貴校までの往復交通費</li>
+      <li>開催時間帯により、前泊・後泊の宿泊費</li>
+      <li>対面ならではのワークショップ・意見交換が可能</li>
+    </ul>
+  </div>
+  <div class="fc" style="left:1258px;">
+    <div class="n">＋</div>
+    <div class="h">パッケージ型（ご予算に合わせて設計）</div>
+    <hr style="margin-top:18px;">
+    <ul>
+      <li>複数回の講演・研修、教材やプロンプト集の作成、情報収集など、ご要望に合わせてカスタマイズ</li>
+      <li>ご予算額に合わせて最適な内容をご提案します</li>
+    </ul>
+  </div>
+
+  <div class="fmsg">役務費・委託費・謝金など、いずれの予算科目でもご対応の実績がございます。<br>ご予算感・ご希望の日程・講師をお知らせいただければ、最適なプランをお見積りいたします。</div>
+  <div class="tax">※表示価格は税別です（括弧内の税込表記を除く）。</div>
+  <div class="contact">
+    <div class="lb">お問い合わせ先</div>
+    <div class="tx">株式会社オープンアップITエンジニア　SAMURAI事業部 文教事業課　チームマネージャー　杉原めぐみ（bunkyo@sejuku.net）</div>
+  </div>
+  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">08 / 08</span></div>
+</section>
+</body>
+</html>
