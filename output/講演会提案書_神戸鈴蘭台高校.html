@@ -197,11 +197,71 @@
   .mk0 { color:#c9c2c2; font-size:22px; }
   .legend { position:absolute; right:120px; top:858px; font-size:17px; color:#444; }
   .legend span { font-size:22px; margin-right:6px; }
+
+  /* ---------- recommended plan ---------- */
+  .rp-sub { position:absolute; left:120px; top:236px; font-size:24px; font-weight:500; color:#333; }
+  .rp-sp { position:absolute; left:120px; top:300px; width:560px; height:552px; background:var(--pink); border-top:8px solid var(--red); padding:36px 40px 0 40px; }
+  .rp-sp .tag { font-size:16px; font-weight:700; letter-spacing:.3em; color:var(--red); }
+  .rp-sp .nm { margin-top:10px; font-size:64px; font-weight:900; line-height:1.1; }
+  .rp-sp .rl { margin-top:12px; font-size:23px; font-weight:700; color:var(--red); }
+  .rp-sp .why { margin-top:44px; padding-top:22px; border-top:1px solid #e9cfcb; font-size:15px; font-weight:700; letter-spacing:.2em; color:var(--gray); }
+  .rp-sp ul { list-style:none; margin-top:14px; }
+  .rp-sp li { position:relative; padding-left:24px; font-size:20px; line-height:1.6; margin-bottom:14px; }
+  .rp-sp li::before { content:""; position:absolute; left:0; top:12px; width:8px; height:8px; background:var(--red); }
+  .rp-sp li b { color:var(--red); }
+  .rp-flow { position:absolute; left:720px; top:300px; width:1080px; }
+  .rf { position:relative; border:1px solid var(--line); border-left:6px solid var(--red); padding:16px 28px 16px 190px; margin-bottom:14px; min-height:136px; }
+  .rf .th { position:absolute; left:28px; top:20px; font-size:15px; font-weight:700; letter-spacing:.2em; color:var(--red); }
+  .rf .h { font-size:23px; font-weight:700; }
+  .rf .d { margin-top:6px; font-size:17.5px; line-height:1.6; color:#444; }
+  .rf.last { background:var(--red); border-color:var(--red); min-height:100px; }
+  .rf.last .th, .rf.last .h, .rf.last .d { color:#fff; }
+  .rp-note { position:absolute; left:120px; top:888px; font-size:19px; color:#444; }
+  .rp-note::before { content:""; position:absolute; left:-29px; top:4px; width:3px; height:24px; background:var(--red); }
+
+  .steps .pre { display:inline-block; font-size:16px; color:var(--gray); font-weight:700; margin-right:14px; }
+  table.mx td.nm .rb { display:block; width:fit-content; margin-top:6px; padding:1px 8px; background:var(--red); color:#fff; font-size:13px; letter-spacing:.1em; }
+
+  /* ---------- Kusago page ---------- */
+  .kg-l { position:absolute; left:120px; top:280px; width:500px; height:640px; background:var(--pink); border-top:8px solid var(--red); padding:42px 40px 0 40px; }
+  .kg-l .num { width:64px; height:64px; border-radius:50%; background:var(--red); color:#fff; font-weight:700; font-size:24px; display:flex; align-items:center; justify-content:center; }
+  .kg-l .tag { margin-top:40px; font-size:18px; font-weight:500; letter-spacing:.3em; color:var(--red); }
+  .kg-l .nm { margin-top:14px; font-size:64px; font-weight:900; line-height:1.12; }
+  .kg-l .co { margin-top:60px; font-size:20px; line-height:1.65; color:#444; }
+  .kg-l .ln { margin-top:44px; width:60px; height:3px; background:var(--red); }
+  .kg-r { position:absolute; left:680px; top:286px; width:1120px; }
+  .kg-r > .lb { font-size:17px; font-weight:700; letter-spacing:.2em; color:#444; }
+  .kg-r ul { list-style:none; margin-top:20px; }
+  .kg-r li { position:relative; padding-left:40px; font-size:24px; font-weight:500; line-height:1.5; margin-bottom:34px; }
+  .kg-r li::before { content:""; position:absolute; left:0; top:9px; width:16px; height:16px; background:var(--red); }
+  .kg-th { margin-top:8px; display:inline-block; background:var(--pink); padding:14px 24px; font-size:21px; font-weight:700; }
+  .kg-th .lb { font-size:14px; font-weight:700; letter-spacing:.14em; color:var(--red); margin-right:18px; }
+
+  /* ---------- others (3 items) ---------- */
+  .others .items3 { display:flex; margin-top:6px; font-size:17px; }
+  .others .items3 span { position:relative; padding-left:22px; width:33.3%; }
+  .others .items3 span::before { content:""; position:absolute; left:0; top:9px; width:8px; height:8px; background:var(--red); }
+
+  /* ---------- fee (2 equal cards) ---------- */
+  .fc3 { position:absolute; top:290px; width:825px; height:430px; border:1px solid var(--line); border-left:6px solid var(--red); padding:24px 36px 0 36px; }
+  .fc3.rec { background:#fdf6f5; }
+  .fc3 .hd { display:flex; align-items:center; gap:14px; }
+  .fc3 .n { width:44px; height:44px; border-radius:50%; background:var(--red); color:#fff; font-weight:700; font-size:18px; display:inline-flex; align-items:center; justify-content:center; }
+  .fc3 .h { font-size:23px; font-weight:700; }
+  .fc3 .badge { padding:3px 12px; background:var(--red); color:#fff; font-size:15px; font-weight:700; letter-spacing:.12em; }
+  .fc3 .p { margin-top:10px; font-size:54px; font-weight:900; color:var(--red); line-height:1.15; }
+  .fc3 .p small { font-size:21px; font-weight:500; color:#444; margin-left:6px; }
+  .fc3 .pn { margin-top:2px; font-size:17px; color:#444; }
+  .fc3 table.bd { width:100%; margin-top:16px; }
+  .fc3 table.bd td { font-size:18px; padding:7px 4px; }
+  .fc3 table.bd td.na, .fc3 table.bd td.na span { color:transparent; }
+  .info div:nth-child(2) { flex:1.7; }
+  .fc3 table.bd tr.tot td { border-top:none; }
 </style>
 </head>
 <body>
 
-<!-- ===================== 01 / 08 表紙 ===================== -->
+<!-- ===================== 01 / 09 ===================== -->
 <section class="page">
   <div class="cv-bar"></div><div class="cv-glow"></div><div class="cv-dot"></div>
   <div class="cv-rule"></div>
@@ -211,10 +271,10 @@
   <div class="cv-to">兵庫県立神戸鈴蘭台高等学校　御中</div>
   <div class="cv-date">2026年10月</div>
   <div class="cv-co">株式会社オープンアップITエンジニア<br><b>SAMURAI U-SCHOOL</b></div>
-  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">01 / 08</span></div>
+  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">01 / 09</span></div>
 </section>
 
-<!-- ===================== 02 / 08 現状とご要望 ===================== -->
+<!-- ===================== 02 / 09 ===================== -->
 <section class="page">
   <div class="eyebrow">BACKGROUND</div>
   <div class="title">貴校の現状とご要望</div>
@@ -244,107 +304,254 @@
     <div class="lb">本提案のポイント</div>
     <div class="tx">世界の教育・AIの最前線と実社会のリアルを知る講演を通じて、<br>全校で「AIが前提の教育」を考えるきっかけをつくります</div>
   </div>
-  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">02 / 08</span></div>
+  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">02 / 09</span></div>
 </section>
 
-<!-- ===================== 03 / 08 概要 ===================== -->
+<!-- ===================== 03 / 09 ===================== -->
+<section class="page">
+  <div class="eyebrow">RECOMMENDED PLAN</div>
+  <div class="title">おすすめプラン</div>
+  <div class="rp-sub">講師Aが「世界」「実社会」「これからの授業」を一貫した視点でつなぐ、3テーマ横断の特別講演</div>
+
+  <div class="rp-sp">
+    <div class="tag">SPEAKER</div>
+    <div class="nm">講師A</div>
+    <div class="rl">グローバルAI教育PM × 元高校教員</div>
+    <div class="why">選定理由</div>
+    <ul>
+      <li>3つのテーマすべてを、<b>当事者の経験</b>から語れる</li>
+      <li>海外のAI教育プロジェクトとAI開発の実務を、<b>高校教員の目線</b>で教室につなげられる</li>
+      <li>現在も高校の教壇に立つ現役の教育者</li>
+    </ul>
+  </div>
+
+  <div class="rp-flow">
+    <div class="rf">
+      <div class="th">THEME 1</div>
+      <div class="h">AI時代の到来と教育現場の現在地</div>
+      <div class="d">高校教員として約8年、現在も非常勤講師として教壇に立つ立場から、生徒を取り巻く変化と学校の現在地を共有</div>
+    </div>
+    <div class="rf">
+      <div class="th">THEME 2</div>
+      <div class="h">世界の教育・AI事情（海外の最前線）</div>
+      <div class="d">国際NGO・外資系IT企業と連携したAI教育プログラムや、AR×デジタル絵本アプリ開発の経験から、海外の学びの変化を紹介</div>
+    </div>
+    <div class="rf">
+      <div class="th">THEME 3</div>
+      <div class="h">実社会のリアルとこれからの授業のあり方</div>
+      <div class="d">大手企業のAI駆動開発PMとして、AIを「つくり、使う」現場のリアルと、これからの授業・教員の役割を問いかけ</div>
+    </div>
+    <div class="rf last">
+      <div class="th">CLOSING</div>
+      <div class="h">質疑応答・意見交換</div>
+      <div class="d">先生方の疑問や考えを共有し、明日からの授業につなげます</div>
+    </div>
+  </div>
+
+  <div class="rp-note">別の切り口をご希望の場合は、次ページ以降でテーマ・講師をお選びいただけます</div>
+  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">03 / 09</span></div>
+</section>
+
+<!-- ===================== 04 / 09 ===================== -->
 <section class="page">
   <div class="eyebrow">OVERVIEW</div>
   <div class="title">講演会のご提案概要</div>
   <div class="info">
-    <div><b>対象</b>全教職員の先生方（探究科のご担当以外も含む）</div>
-    <div><b>形式</b>特別講演会（質疑応答あり）／現地またはオンライン</div>
+    <div><b>対象</b>全教職員（探究科のご担当以外も含む）</div>
+    <div><b>形式</b>特別講演会（質疑応答・意見交換の時間を含む）／現地またはオンライン</div>
     <div><b>実施時期</b>2026年11月〜2027年3月</div>
   </div>
-  <div class="steps"><span class="st">STEP 1</span>3つのテーマから、深めたいテーマを1つお選びください<span class="ar">→</span><span class="st">STEP 2</span>テーマに合わせて、ご関心のある講師をお選びください（P4）</div>
+  <div class="steps"><span class="pre">おすすめプラン以外をご希望の場合</span><span class="st">STEP 1</span>深めたいテーマを1つお選びください<span class="ar">→</span><span class="st">STEP 2</span>テーマに合わせて、ご関心のある講師をお選びください（P5）</div>
   <div class="tc" style="left:120px;">
     <div class="tn">THEME 1</div>
     <div class="tt">AI時代の到来と<br>教育現場の現在地</div>
     <div class="tl">この講演で深めること</div>
     <ul><li>生成AIの進化と、生徒を取り巻く環境の変化</li><li>学校・家庭でのAI利用の実態と教育現場の課題</li><li>AIに任せること・人が判断すべきことの線引き</li></ul>
-    <div class="ti"><div class="tl">対応講師</div><span class="chip main">草郷 雅幸</span><span class="chip">講師A</span><span class="chip">講師B</span></div>
+    <div class="ti"><div class="tl">対応講師</div><span class="chip main">講師A</span><span class="chip">草郷 雅幸</span><span class="chip">講師B</span></div>
   </div>
   <div class="tc" style="left:689px;">
     <div class="tn">THEME 2</div>
     <div class="tt">世界の教育・AI事情<br>（海外の最前線）</div>
     <div class="tl">この講演で深めること</div>
     <ul><li>米国などの生成AI・STEAM教育・AR活用の先進事例</li><li>海外の教育現場の「AIとの向き合い方」</li><li>AIをつくる側の考え方と、プライバシー・倫理</li></ul>
-    <div class="ti"><div class="tl">対応講師</div><span class="chip main">草郷 雅幸</span><span class="chip">講師B</span><span class="chip">講師C</span></div>
+    <div class="ti"><div class="tl">対応講師</div><span class="chip main">講師A</span><span class="chip">草郷 雅幸</span><span class="chip">講師C</span></div>
   </div>
   <div class="tc" style="left:1258px;">
     <div class="tn">THEME 3</div>
     <div class="tt">実社会のリアルと<br>これからの授業のあり方</div>
     <div class="tl">この講演で深めること</div>
     <ul><li>ビジネスの最前線で、AIが実際にどう使われているか</li><li>社会で求められる力（問い・判断力・倫理観）</li><li>「問いを立てる学び」へ──授業と教員の役割</li></ul>
-    <div class="ti"><div class="tl">対応講師</div><span class="chip">講師A</span><span class="chip">講師B</span><span class="chip">講師C</span><span class="chip">講師D</span></div>
+    <div class="ti"><div class="tl">対応講師</div><span class="chip main">講師A</span><span class="chip">講師B</span><span class="chip">講師C</span><span class="chip">講師D</span></div>
   </div>
   <div class="msg2">1回の講演で1つのテーマをじっくり深め、AIが前提となる社会で学校教育・授業はどうあるべきかを全教職員で考えます
     <span class="s">※内容は、事前のお打ち合わせで貴校のご要望に合わせて調整いたします</span></div>
-  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">03 / 08</span></div>
+  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">04 / 09</span></div>
 </section>
 
-<!-- ===================== 04 / 08 テーマ ===================== -->
+<!-- ===================== 05 / 09 ===================== -->
 <section class="page">
   <div class="eyebrow">INSTRUCTORS &amp; THEMES</div>
   <div class="title">テーマ別 対応講師</div>
   <table class="mx">
     <tr><th>講師</th><th>専門・強み</th><th>THEME 1<span>AI時代の到来と<br>教育現場の現在地</span></th><th>THEME 2<span>世界の教育・AI事情<br>（海外の最前線）</span></th><th>THEME 3<span>実社会のリアルと<br>これからの授業のあり方</span></th></tr>
-    <tr class="rec"><td class="nm">草郷 雅幸</td><td class="sp"><b>教育DX・米国でのSTEAM教育</b>元Z会 執行役員／Z-kai USA 代表として、米国でSTEAM教育を推進</td><td><span class="mk1">○</span></td><td><span class="mk2">◎</span></td><td><span class="mk0">—</span></td></tr><tr><td class="nm">講師A</td><td class="sp"><b>データサイエンス・AI活用</b>業務でのAI活用と、中高での授業・教員研修の実践</td><td><span class="mk2">◎</span></td><td><span class="mk0">—</span></td><td><span class="mk1">○</span></td></tr><tr><td class="nm">講師B</td><td class="sp"><b>AI活用・探究カリキュラム設計</b>元高校理科教員 × AI駆動開発PM。AI教育プログラムにも参画</td><td><span class="mk2">◎</span></td><td><span class="mk1">○</span></td><td><span class="mk1">○</span></td></tr><tr><td class="nm">講師C</td><td class="sp"><b>実社会のAI活用・教員研修</b>シンクタンクで海外展開を調査。企業のAI導入実態に精通</td><td><span class="mk0">—</span></td><td><span class="mk1">○</span></td><td><span class="mk2">◎</span></td></tr><tr><td class="nm">講師D</td><td class="sp"><b>探究型PBL・ファシリテーション</b>大学で探究型PBLを指導。問いの設定から成果発表まで</td><td><span class="mk0">—</span></td><td><span class="mk0">—</span></td><td><span class="mk1">○</span></td></tr>
+    <tr class="rec"><td class="nm">講師A<span class="rb">おすすめ</span></td><td class="sp"><b>グローバルAI教育PM・元高校教員</b>海外のAI教育プロジェクト × AI駆動開発PM × 高校教員約8年</td><td><span class="mk2">◎</span></td><td><span class="mk2">◎</span></td><td><span class="mk2">◎</span></td></tr><tr><td class="nm">草郷 雅幸</td><td class="sp"><b>教育DX・米国でのSTEAM教育</b>元Z会 執行役員／Z-kai USA 代表として、米国でSTEAM教育を推進</td><td><span class="mk1">○</span></td><td><span class="mk2">◎</span></td><td><span class="mk0">—</span></td></tr><tr><td class="nm">講師B</td><td class="sp"><b>AIツールの実践活用・考える力の育成</b>業務でのAI活用と、中高での授業・教員研修の実践</td><td><span class="mk2">◎</span></td><td><span class="mk0">—</span></td><td><span class="mk1">○</span></td></tr><tr><td class="nm">講師C</td><td class="sp"><b>実社会のAI活用・ソフトスキル</b>シンクタンク・外資系IT企業の知見。企業のAI導入実態に精通</td><td><span class="mk0">—</span></td><td><span class="mk1">○</span></td><td><span class="mk2">◎</span></td></tr><tr><td class="nm">講師D</td><td class="sp"><b>探究学習・これからの教育のあり方</b>探究学習の専門家。全国の学校で教員研修・講演を多数実施</td><td><span class="mk0">—</span></td><td><span class="mk0">—</span></td><td><span class="mk1">○</span></td></tr>
   </table>
   <div class="legend"><span class="mk2">◎</span>特におすすめ　<span class="mk1">○</span>対応可能</div>
-  <div class="note">その他、元情報科教員の講師やマーケティング領域のデータサイエンティストなど、テーマに合わせて講師を選定可能です。</div>
-  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">04 / 08</span></div>
+  <div class="note">その他、AI業務設計の実務家、現役フルスタックエンジニア、エンジニア兼ITインストラクターなど、テーマに合わせて講師を選定可能です。</div>
+  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">05 / 09</span></div>
 </section>
 
-<!-- ===================== 08 / 08 料金 ===================== -->
+<!-- ===================== 06 / 09 ===================== -->
+<section class="page">
+  <div class="eyebrow">INSTRUCTOR</div>
+  <div class="title">講師紹介</div>
+  <div class="kg-l">
+    <div class="num">01</div>
+    <div class="tag">SPEAKER</div>
+    <div class="nm">草郷<br>雅幸</div>
+    <div class="co">株式会社オープンアップITエンジニア<br>SAMURAI U-SCHOOL 事業責任者<br>SAMURAI事業部 部長</div>
+    <div class="ln"></div>
+  </div>
+  <div class="kg-r">
+    <div class="lb">経歴</div>
+    <ul>
+      <li>株式会社Z会 執行役員ICT事業部長として、AIを活用した学習サービス・プログラミング事業を推進</li>
+      <li>Z-kai USA Inc. 代表取締役社長として、米国にてSTEAM教育の研究開発・事業推進</li>
+      <li>経済産業省「未来の教室とEdTech研究会」専門委員</li>
+      <li>全国情報教育コンテスト（全情コン）審査員</li>
+      <li>経済産業省「マナビDXクエスト」第3層ハブ団体の事業統括</li>
+      <li>2025年度、文部科学省よりDXハイスクール認定校への教育支援事業を推進</li>
+    </ul>
+    <div class="kg-th"><span class="lb">対応テーマ</span>○ THEME 1　◎ THEME 2</div>
+  </div>
+  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">06 / 09</span></div>
+</section>
+
+<!-- ===================== 07 / 09 ===================== -->
+<section class="page">
+  <div class="eyebrow">INSTRUCTOR</div>
+  <div class="title">講師紹介</div>
+  <div class="sub">講師A<span class="bar"></span>グローバルAI教育PM・元高校教員</div>
+
+  <div class="box" style="left:120px; top:330px; width:1680px; height:130px;">
+    <div class="lb">実社会・ビジネスでのAI活用</div>
+    <div class="tx">大手企業の基幹システム刷新でAI駆動開発のプロジェクトマネージャー、国の事業に関わる教育系アプリ開発のPMを担当。<br>自身の業務も複数のAIエージェントに分担させて日常的に運用する、AIを「つくり、使う」当事者</div>
+  </div>
+
+  <div class="box" style="left:120px; top:480px; width:819px; height:170px;">
+    <div class="lb">海外の事例・動向</div>
+    <div class="tx">国際NGO・外資系IT企業と連携したAI教育プログラムに参画。海外の国立大学と農村部向けICT事業を共同提案し、AR×デジタル絵本アプリの開発も担当</div>
+  </div>
+  <div class="box" style="left:960px; top:480px; width:840px; height:170px;">
+    <div class="lb">教育実績</div>
+    <div class="tx">高校理科教員として約8年（進路指導・キャリア学習の責任者）。現在も高校の非常勤講師。教員向け生成AI研修・講演、生徒向けAI授業、探究学習の設計・伴走まで対応</div>
+  </div>
+
+  <div class="box" style="left:120px; top:670px; width:819px; height:172px;">
+    <div class="lb">強み</div>
+    <div class="tx">海外のAI教育プロジェクト × AI開発の実務 × 高校教員の経験を一人で兼ね備え、3つのテーマすべてに対応</div>
+  </div>
+  <div class="box red" style="left:960px; top:670px; width:840px; height:172px;">
+    <div class="lb">対応テーマ</div>
+    <div class="tx" style="font-size:20px; line-height:1.55;">◎ THEME 1　AI時代の到来と教育現場の現在地<br>◎ THEME 2　世界の教育・AI事情（海外の最前線）<br>◎ THEME 3　実社会のリアルとこれからの授業のあり方</div>
+  </div>
+
+  <div class="lead" style="top:874px;">当事者としてAIをつくり、使い、教室で教える——世界・実社会・授業のあり方を、学校現場の言葉でつなぐ実務家です。</div>
+  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">07 / 09</span></div>
+</section>
+
+<!-- ===================== 08 / 09 ===================== -->
+<section class="page">
+  <div class="eyebrow">INSTRUCTORS</div>
+  <div class="title">講師紹介</div>
+
+  <div class="card" style="left:120px;">
+    <div class="num">03</div>
+    <h3>講師B</h3>
+    <div class="role">AIツールの実践活用・考える力の育成</div>
+    <ul>
+      <li>ChatGPT・Copilot・Difyを用いた業務効率化・開発支援、最新AIツールでの資料作成・アプリ開発に従事</li>
+      <li>私立中高での生徒向け授業（全12回）、教員向け研修、専門学校での授業を担当</li>
+      <li>マンツーマンレッスン累計1,200回以上</li>
+      <li>AIに任せること・人が判断すべきことを具体例で示し、生徒の考える力・判断力の育て方を提案</li>
+    </ul>
+    <div class="theme"><div class="lb">対応テーマ</div><div class="tx">◎ THEME 1　○ THEME 3</div></div>
+  </div>
+
+  <div class="card" style="left:689px;">
+    <div class="num">04</div>
+    <h3>講師C</h3>
+    <div class="role">実社会のAI活用・ソフトスキル</div>
+    <ul>
+      <li>大手シンクタンクにて約6年、日本企業の海外展開（中国・東南アジアなど）の調査・戦略立案に従事</li>
+      <li>外資系IT企業にて、データ分析・社内研修の企画運営を担当</li>
+      <li>高校での生成AI授業・教員研修、専門学校の非常勤講師を担当。中堅・中小企業のAI導入実態にも精通</li>
+      <li>「問いの力」と、回答を鵜呑みにしない「メタ認知・倫理観」の重要性を先生方と考える</li>
+    </ul>
+    <div class="theme"><div class="lb">対応テーマ</div><div class="tx">◎ THEME 3　○ THEME 2</div></div>
+  </div>
+
+  <div class="card" style="left:1258px;">
+    <div class="num">05</div>
+    <h3>講師D</h3>
+    <div class="role">探究学習・これからの教育のあり方</div>
+    <ul>
+      <li>探究学習の専門家。AI時代になぜ探究が必要か、教員の役割はどう変わるかを語る</li>
+      <li>長野・静岡など全国の学校で教員研修を実施。大学での講演やイベントの基調講演も多数</li>
+      <li>U18 STEMオリンピック日本代表の育成プログラムにスタッフとして参画</li>
+      <li>PISAの結果や学習指導要領から、日本の教育の現状を読み解く</li>
+    </ul>
+    <div class="theme"><div class="lb">対応テーマ</div><div class="tx">○ THEME 3</div></div>
+  </div>
+
+  <div class="others">
+    <h4>その他の講師（テーマに応じて選定可能）</h4>
+    <div class="items3">
+      <span>AI業務設計の実務家：AIの回答を鵜呑みにしない学び</span>
+      <span>現役フルスタックエンジニア：AIを作る当事者の視点</span>
+      <span>エンジニア兼ITインストラクター：出力を検証する力</span>
+    </div>
+  </div>
+  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">08 / 09</span></div>
+</section>
+
+<!-- ===================== 09 / 09 ===================== -->
 <section class="page">
   <div class="eyebrow">FEE &amp; CONTACT</div>
   <div class="title">講演料について</div>
-  <div class="fsub">ご予算に合わせて、2つの実施パターンをご用意しました</div>
+  <div class="fsub">オンライン開催を基本料金とし、対面開催の場合は現地対応費を加算いたします</div>
 
-  <div class="fc2" style="left:120px; width:640px;">
-    <div class="n">A</div>
-    <div class="h">オンライン開催</div>
-    <div class="p">50,000円<small>／回</small></div>
-    <div class="pn">（税込55,000円）</div>
-    <hr>
-    <ul>
-      <li>想定ご予算（税込7万円以内）に収まるオンライン講演</li>
-      <li>交通費は不要です</li>
-      <li>講演と質疑応答を1回で実施</li>
-    </ul>
+  <div class="fc3" style="left:120px;">
+    <div class="hd"><span class="n">A</span><span class="h">オンライン開催</span></div>
+    <div class="p">60,000円<small>（税抜）／回</small></div>
+    <div class="pn">税込66,000円　想定ご予算（税込7万円以内）に収まります</div>
+    <table class="bd">
+      <tr><td>① 講演実施費</td><td>50,000円</td></tr>
+      <tr><td>② 講演資料作成費<span>講演用スライドの構成・作成</span></td><td>10,000円</td></tr>
+      <tr><td class="na">ー<span>ー</span></td><td></td></tr>
+      <tr class="tot"><td>合計（税抜）</td><td>60,000円</td></tr>
+    </table>
   </div>
 
-  <div class="fc2 rec" style="left:790px; width:1010px;">
-    <div class="n">B</div><span class="badge">おすすめ</span>
-    <div class="h">対面訪問開催（貴校 現地）</div>
-    <div class="bsplit">
-      <div class="bl">
-        <div class="p">99,000円<small>（税込）</small></div>
-        <div class="pn">税抜 90,000円</div>
-        <hr>
-        <ul>
-          <li>講師が現地に登壇し、先生方へ直接問いかけ・対話を行う対面講演</li>
-        </ul>
-      </div>
-      <table class="bd">
-        <tr><td>① 講演実施費</td><td>50,000円</td></tr>
-        <tr><td>② 交通費実費<span>東京 ⇔ 神戸 往復</span></td><td>30,000円</td></tr>
-        <tr><td>③ 講演資料作成費<span>講演用スライド構成</span></td><td>10,000円</td></tr>
-        <tr class="sum"><td>税抜小計</td><td>90,000円</td></tr>
-        <tr><td>消費税（10%）</td><td>9,000円</td></tr>
-        <tr class="tot"><td>税込提示額</td><td>99,000円</td></tr>
-      </table>
-    </div>
+  <div class="fc3 rec" style="left:975px;">
+    <div class="hd"><span class="n">B</span><span class="h">対面訪問開催（貴校 現地）</span><span class="badge">おすすめ</span></div>
+    <div class="p">90,000円<small>（税抜）／回</small></div>
+    <div class="pn">税込99,000円　オンライン開催 ＋ 現地対応費</div>
+    <table class="bd">
+      <tr><td>① 講演実施費</td><td>50,000円</td></tr>
+      <tr><td>② 講演資料作成費<span>講演用スライドの構成・作成</span></td><td>10,000円</td></tr>
+      <tr><td>③ 現地対応費<span>講師の貴校への訪問（東京 ⇔ 神戸）</span></td><td>30,000円</td></tr>
+      <tr class="tot"><td>合計（税抜）</td><td>90,000円</td></tr>
+    </table>
   </div>
 
   <div class="fmsg">役務費・委託費・謝金など、予算科目の形式は校内の運用ルールに合わせて柔軟に対応いたします。<br>複数回の講演など、ご予算に合わせたプランのご提案も可能です。お気軽にご相談ください。</div>
-  <div class="tax">※金額は税別表記です（税込と記載のものを除く）。</div>
+  <div class="tax">※金額は税抜表記です（税込と記載のものを除く）。</div>
   <div class="contact">
     <div class="lb">お問い合わせ先</div>
-    <div class="tx">株式会社オープンアップITエンジニア　SAMURAI事業部 文教事業課　東海林 怜（bunkyo@sejuku.net）</div>
+    <div class="tx">株式会社オープンアップITエンジニア　SAMURAI事業部 文教事業開発課　東海林 怜（bunkyo@sejuku.net）</div>
   </div>
-  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">08 / 08</span></div>
+  <div class="footer"><span class="l">SAMURAI U-SCHOOL｜運営：株式会社オープンアップITエンジニア</span><span class="r">09 / 09</span></div>
 </section>
 </body>
 </html>
