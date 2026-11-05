@@ -147,3 +147,20 @@ body::before {
 .mk-stamp         { animation: stamp-in    0.5s cubic-bezier(0.34,1.56,0.64,1) forwards; }
 .mk-levelup-ring  { animation: levelup-ring 1.2s ease-out forwards; }
 .mk-resource-rain { animation: resource-rain 1.0s ease-in forwards; }
+
+/* ── 御霊前名札作成ツール (/reibi-nameplate) ──
+   このページを開いている間だけ、全体の遊び心のある背景(ドット柄)を外して
+   事務用紙らしい落ち着いた背景に切り替える。body に .reibi-active を
+   付け外しするのは ReibiNameplateApp 側（マウント/アンマウント時）。 */
+body.reibi-active {
+  background: #f8f7f4;
+}
+body.reibi-active::before {
+  content: none;
+}
+
+@media print {
+  @page {
+    margin: 0;
+  }
+}
